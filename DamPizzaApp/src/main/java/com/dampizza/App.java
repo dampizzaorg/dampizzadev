@@ -1,5 +1,7 @@
 package com.dampizza;
 
+import com.dampizza.logic.imp.UserManagerImp;
+import com.dampizza.model.entity.User;
 import com.dampizza.views.login.LoginView;
 import com.dampizza.views.login.RecoverView;
 import com.dampizza.views.login.SignupView;
@@ -49,6 +51,11 @@ public class App extends MobileApplication {
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
+        
+        User user = new User("clsan","carlos","santos","clsantos@dampizza.com","mi casa");
+        
+//        UserManagerImp userManager = new UserManagerImp();
+        new UserManagerImp().createUser(user);
     }
 
     @Override
