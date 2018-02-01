@@ -5,48 +5,90 @@
  */
 package com.dampizza.model.entity;
 
+import com.dampizza.logic.dto.UserDTO;
+import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 /**
- * User POJO
+ * User Entity
+ *
  * @author Carlos Santos
  */
 @Entity
-@Table(name="user")
-public class User {
+@Table(name = "user")
+public class UserEntity implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private String username;
     private String email;
     private String name;
     private String surnames;
     private String address;
 
-    public User(){
-    
+    public UserEntity() {
+
     }
-    
+
     /**
      * User constructor with all attributes.
+     *
      * @param username user username
      * @param email user email
      * @param name user name
      * @param surnames user surnames
      * @param address user address
      */
-    public User(String username, String email, String name, String surnames, String address) {
+    public UserEntity(String username, String email, String name, String surnames, String address) {
         this.username = username;
         this.email = email;
         this.name = name;
         this.surnames = surnames;
         this.address = address;
     }
+    
+    /**
+     * User constructor with all attributes.
+     *
+     * @param username user username
+     * @param email user email
+     * @param name user name
+     * @param surnames user surnames
+     * @param address user address
+     */
+    public UserEntity(UserDTO user) {
+        this.username = user.getUsername();
+        this.name = user.getName();
+        this.surnames = user.getSurnames();
+        this.email = user.getEmail();
+        this.address = user.getAddress();
+    }
+
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      * @return the username
      */
+    @Column(updatable = false, name = "username", nullable = false, length = 50, unique = true)
     public String getUsername() {
         return username;
     }
@@ -61,6 +103,7 @@ public class User {
     /**
      * @return the email
      */
+    @Column(name = "email", nullable = false, length = 80, unique = true)
     public String getEmail() {
         return email;
     }
@@ -75,6 +118,7 @@ public class User {
     /**
      * @return the name
      */
+    @Column(name = "name", length = 80)
     public String getName() {
         return name;
     }
@@ -89,6 +133,7 @@ public class User {
     /**
      * @return the surnames
      */
+    @Column(name = "surnames", length = 80)
     public String getSurnames() {
         return surnames;
     }
@@ -103,6 +148,7 @@ public class User {
     /**
      * @return the address
      */
+    @Column(name = "address", length = 200)
     public String getAddress() {
         return address;
     }
@@ -114,6 +160,4 @@ public class User {
         this.address = address;
     }
 
-    
 }
-

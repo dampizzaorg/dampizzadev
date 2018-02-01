@@ -43,7 +43,7 @@ Contributor(s):
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dampizza?zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dampizzatestdb?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">ubuntu</property>
     
@@ -52,7 +52,7 @@ Contributor(s):
         <property name="connection.pool_size">10</property> 
         <property name="hibernate.hbm2ddl.auto">update</property>
         
-        <mapping class="com.dampizza.model.entity.User"></mapping>
+        <mapping class="com.dampizza.model.entity.UserEntity"></mapping>
         
         
     </session-factory>

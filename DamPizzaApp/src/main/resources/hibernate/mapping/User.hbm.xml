@@ -1,5 +1,5 @@
 <?xml version = "1.0" encoding = "utf-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC 
+<!--<!DOCTYPE hibernate-mapping PUBLIC 
 "-//Hibernate/Hibernate Mapping DTD//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
@@ -10,12 +10,12 @@
          This class contains the User details. 
       </meta>
       
-      <id name = "username" type = "string" column = "username"/>
-      
+      <id name="id" type="java.lang.Integer"/>
+      <property name = "username" column = "username" type = "string"/>
       <property name = "name" column = "name" type = "string"/>
       <property name = "surname" column = "surname" type = "string"/>
       <property name = "email" column = "email" type = "string"/>
       <property name = "address" column = "address" type = "address"/>
       
    </class>
-</hibernate-mapping>
+</hibernate-mapping>-->
