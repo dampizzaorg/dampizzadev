@@ -74,6 +74,7 @@ public class UserEntity implements Serializable {
     /**
      * @return the id
      */
+    @Column(updatable = false, name = "id", nullable = false, length = 50, unique = true)
     public long getId() {
         return id;
     }
