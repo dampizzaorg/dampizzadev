@@ -33,7 +33,18 @@ public class UserManagerImp implements UserManagerInterface {
 
         try {
             tx = session.beginTransaction();
-            session.save(new UserEntity(user));
+            UserEntity userCreated = (UserEntity) session.save(new UserEntity(user));
+            try {
+                //session.save(new CredentialEntity());
+            } catch (HibernateException e) {
+                if (tx != null) {
+                    tx.rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                session.close();
+            }
+
             tx.commit();
             res = 1;
 
@@ -121,7 +132,7 @@ public class UserManagerImp implements UserManagerInterface {
 
             if (userToDelete != null) {
                 session.delete(userToDelete);
-                System.out.println(userToDelete.getUsername()+" deleted.");
+                System.out.println(userToDelete.getUsername() + " deleted.");
             }
 
             tx.commit();
