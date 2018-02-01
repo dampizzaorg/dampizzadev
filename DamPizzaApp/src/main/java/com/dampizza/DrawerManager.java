@@ -42,10 +42,10 @@ public class DrawerManager {
         final Item loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), LOGIN_VIEW, ViewStackPolicy.SKIP);
         final Item signupItem = new ViewItem("SignUp", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
         final Item recoverItem = new ViewItem("Recover Password", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), RECOVER_VIEW);
-        final Item profileItem = new ViewItem("Profile Password", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
-        final Item customerItem = new ViewItem("Customer Password", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
-        final Item managerItem = new ViewItem("Manager Password", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
-        final Item dealerItem = new ViewItem("Dealer Password", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
+        final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
+        final Item customerItem = new ViewItem("Customer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
+        final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
+        final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
         
         /* REMEMBER TO ADD ITEMS TO THE DRAWER */
         drawer.getItems().addAll(loginItem, signupItem, recoverItem, profileItem, customerItem, managerItem, dealerItem);

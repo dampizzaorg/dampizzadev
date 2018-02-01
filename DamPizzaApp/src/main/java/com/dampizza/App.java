@@ -1,7 +1,8 @@
 package com.dampizza;
 
+import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.UserManagerImp;
-import com.dampizza.model.entity.User;
+import com.dampizza.model.entity.UserEntity;
 import com.dampizza.views.login.LoginView;
 import com.dampizza.views.login.RecoverView;
 import com.dampizza.views.login.SignupView;
@@ -12,6 +13,7 @@ import com.dampizza.views.user.ProfileView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
+import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -52,10 +54,8 @@ public class App extends MobileApplication {
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
         
-        User user = new User("clsan","carlos","santos","clsantos@dampizza.com","mi casa");
+        //testHibernate();
         
-//        UserManagerImp userManager = new UserManagerImp();
-        new UserManagerImp().createUser(user);
     }
 
     @Override
@@ -65,5 +65,24 @@ public class App extends MobileApplication {
         scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
         //((Stage) scene.getWindow()).getIcons().add(new Image(App.class.getResourceAsStream("/icon.png")));
         ((Stage) scene.getWindow()).getIcons().add(new Image(App.class.getResourceAsStream("/img/pizza_avatar_sm_128.png")));
+    }
+    
+    public void testHibernate(){
+        // TEST CREATE USER
+        UserDTO user = new UserDTO("clsantos","carlos","santos","clsantos@dampizza.com","mi casa");
+        new UserManagerImp().createUser(user);
+
+        System.out.println(user.getUsername());
+        
+        // TEST UPDATE USER
+        user.setName("UPDATE TEST");
+        new UserManagerImp().updateUser(user);
+        
+        // TEST GET ALL USERS
+        List<UserDTO> userList = new UserManagerImp().getAllUsers();
+        userList.forEach(u -> System.out.println(u.toString()));
+        
+        // TEST DELETE USER
+        new UserManagerImp().deleteUser(user);
     }
 }
