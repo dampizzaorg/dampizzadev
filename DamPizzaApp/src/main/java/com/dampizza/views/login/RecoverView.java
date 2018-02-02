@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
  * @author Carlos Santos
  */
 public class RecoverView {
+    
+ 
 
     private final String name;
 
@@ -30,4 +32,6 @@ public class RecoverView {
             return new View(name);
         }
     }
+    
+    
 }
