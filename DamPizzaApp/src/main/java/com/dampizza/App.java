@@ -54,7 +54,7 @@ public class App extends MobileApplication {
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
         
-        //testHibernate();
+        testHibernate();
         
     }
 
@@ -70,19 +70,19 @@ public class App extends MobileApplication {
     public void testHibernate(){
         // TEST CREATE USER
         UserDTO user = new UserDTO("clsantos","carlos","santos","clsantos@dampizza.com","mi casa");
-        new UserManagerImp().createUser(user);
+        new UserManagerImp().createUser(user, "passwordtest");
 
         System.out.println(user.getUsername());
         
-        // TEST UPDATE USER
-        user.setName("UPDATE TEST");
-        new UserManagerImp().updateUser(user);
-        
+//        // TEST UPDATE USER
+//        user.setName("UPDATE TEST");
+//        new UserManagerImp().updateUser(user);
+//        
         // TEST GET ALL USERS
         List<UserDTO> userList = new UserManagerImp().getAllUsers();
         userList.forEach(u -> System.out.println(u.toString()));
-        
-        // TEST DELETE USER
-        new UserManagerImp().deleteUser(user);
+//        
+//        // TEST DELETE USER
+//        new UserManagerImp().deleteUser(user);
     }
 }

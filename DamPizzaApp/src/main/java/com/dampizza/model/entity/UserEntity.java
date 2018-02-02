@@ -7,11 +7,14 @@ package com.dampizza.model.entity;
 
 import com.dampizza.logic.dto.UserDTO;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -20,18 +23,33 @@ import javax.persistence.Table;
  * @author Carlos Santos
  */
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema="dampizzadb")
 public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Column(name = "id")
+    private Long id;
 
-    private String username;
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "user")
+    private CredentialEntity credential;
+    
+    @Column(name = "email", nullable = false, length = 80, unique = true)
     private String email;
+    
+    @Column(name = "name", length = 50)
     private String name;
+    
+    @Column(name = "surnames", length = 80)
     private String surnames;
+    
+    @Column(name = "address", length = 200)
     private String address;
+    
+    @Column(name = "active")
+    private Boolean active;
 
     public UserEntity() {
 
@@ -46,8 +64,7 @@ public class UserEntity implements Serializable {
      * @param surnames user surnames
      * @param address user address
      */
-    public UserEntity(String username, String email, String name, String surnames, String address) {
-        this.username = username;
+    public UserEntity(String email, String name, String surnames, String address) {
         this.email = email;
         this.name = name;
         this.surnames = surnames;
@@ -57,14 +74,12 @@ public class UserEntity implements Serializable {
     /**
      * User constructor with all attributes.
      *
-     * @param username user username
      * @param email user email
      * @param name user name
      * @param surnames user surnames
      * @param address user address
      */
     public UserEntity(UserDTO user) {
-        this.username = user.getUsername();
         this.name = user.getName();
         this.surnames = user.getSurnames();
         this.email = user.getEmail();
@@ -74,37 +89,20 @@ public class UserEntity implements Serializable {
     /**
      * @return the id
      */
-    @Column(updatable = false, name = "id", nullable = false, length = 50, unique = true)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * @return the username
-     */
-    @Column(updatable = false, name = "username", nullable = false, length = 50, unique = true)
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     /**
      * @return the email
      */
-    @Column(name = "email", nullable = false, length = 80, unique = true)
     public String getEmail() {
         return email;
     }
@@ -119,7 +117,7 @@ public class UserEntity implements Serializable {
     /**
      * @return the name
      */
-    @Column(name = "name", length = 80)
+    
     public String getName() {
         return name;
     }
@@ -160,5 +158,21 @@ public class UserEntity implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    /**
+     * @return the credential
+     */
+    public CredentialEntity getCredential() {
+        return credential;
+    }
+
+    /**
+     * @param credential the credential to set
+     */
+    public void setCredential(CredentialEntity credential) {
+        this.credential = credential;
+    }
+    
+    
 
 }

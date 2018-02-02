@@ -7,6 +7,7 @@ package com.dampizza.logic.imp;
 
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.io.UserManagerInterface;
+import com.dampizza.model.entity.CredentialEntity;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.HibernateUtil;
 import java.util.ArrayList;
@@ -26,25 +27,16 @@ import org.hibernate.transform.Transformers;
 public class UserManagerImp implements UserManagerInterface {
 
     @Override
-    public Integer createUser(UserDTO user) {
+    public Integer createUser(UserDTO user, String password) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         Integer res = 0;
+        UserEntity userCreated = null;
 
         try {
             tx = session.beginTransaction();
-            UserEntity userCreated = (UserEntity) session.save(new UserEntity(user));
-            try {
-                //session.save(new CredentialEntity());
-            } catch (HibernateException e) {
-                if (tx != null) {
-                    tx.rollback();
-                }
-                e.printStackTrace();
-            } finally {
-                session.close();
-            }
-
+            Long userId = (Long)session.save(new UserEntity(user));
+            userCreated = (UserEntity)session.get(UserEntity.class, userId);
             tx.commit();
             res = 1;
 
@@ -55,6 +47,11 @@ public class UserManagerImp implements UserManagerInterface {
             e.printStackTrace();
         } finally {
             session.close();
+            if(userCreated!=null){
+                createCredential(userCreated, user.getUsername(), password);
+            }
+            
+            
         }
         return res;
     }
@@ -66,7 +63,7 @@ public class UserManagerImp implements UserManagerInterface {
         List<UserDTO> userList = new ArrayList();
         List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
 
-        userEntities.forEach(u -> userList.add(new UserDTO(u.getUsername(), u.getName(),
+        userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
                 u.getSurnames(), u.getEmail(), u.getAddress())));
 
         return userList;
@@ -132,7 +129,7 @@ public class UserManagerImp implements UserManagerInterface {
 
             if (userToDelete != null) {
                 session.delete(userToDelete);
-                System.out.println(userToDelete.getUsername() + " deleted.");
+                System.out.println(userToDelete.getCredential().getUsername() + " deleted.");
             }
 
             tx.commit();
@@ -146,5 +143,29 @@ public class UserManagerImp implements UserManagerInterface {
         }
         return res;
     }
+
+    @Override
+    public void createCredential(UserEntity user, String username, String password) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            session.save(new CredentialEntity(user, username, password));
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }    
+
+    }
+    
+    
 
 }
