@@ -36,7 +36,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="335.0" spacing="20.0">
                <children>
-                  <TextField fx:id="tfDirection" prefHeight="37.0" prefWidth="468.0" />
+                  <TextField fx:id="tfAddress" prefHeight="37.0" prefWidth="468.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="335.0" spacing="20.0">
@@ -46,12 +46,12 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="335.0" spacing="20.0">
                <children>
-                  <PasswordField fx:id="tfPassword" prefHeight="26.0" prefWidth="381.0" />
+                  <PasswordField fx:id="pfPassword" prefHeight="26.0" prefWidth="381.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="335.0" spacing="20.0">
                <children>
-                  <PasswordField fx:id="tfRepeatPassword" prefHeight="26.0" prefWidth="381.0" />
+                  <PasswordField fx:id="pfRepeatPassword" prefHeight="26.0" prefWidth="381.0" />
                </children>
             </HBox>
          </children>
@@ -86,7 +86,7 @@
    <bottom>
       <HBox alignment="TOP_CENTER" prefHeight="125.0" prefWidth="335.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnRegister" mnemonicParsing="false" text="REGISTER" />
+            <Button fx:id="btnSignUp" onAction="#btnActionSignUp" mnemonicParsing="false" text="REGISTER" />
          </children>
       </HBox>
    </bottom>
