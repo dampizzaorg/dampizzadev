@@ -1,19 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.dampizza.model.entity;
 
-import com.dampizza.logic.dto.UserDTO;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  * User Entity
@@ -21,76 +20,82 @@ import javax.persistence.Table;
  * @author Carlos Santos
  */
 @Entity
-@Table(name = "credentials")
+@Table(name = "credential", schema="dampizzadb")
 public class CredentialEntity implements Serializable {
 
-    @Id
-    private long userId;
+    @Id  
+    @GeneratedValue(generator="myGenerator")  
+    @GenericGenerator(name="myGenerator", strategy="foreign", parameters=@Parameter(value="user", name = "property"))  
+    private Long id;
 
+    @Column(name = "username", nullable = false, length = 80, unique = true)
     private String username;
+    
+    @Column(name = "password", nullable = false, length = 80)
     private String password;
+    
+    @Column(name = "last_access", nullable = false)
     private Date lastAccess ;
+    
+    @Column(name = "last_pass_change")
     private Date lastPassChange;
-    private Integer status;
-    private Boolean active;
+    
+    // 1: Manager, 2: Dealer, 8: Customer
+    @Column(name = "credential_type")
+    private Integer credentialType;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     public CredentialEntity() {
 
     }
 
     /**
-     * 
+     * Create credential object
      * @param username
-     * @param email
-     * @param name
-     * @param surnames
-     * @param address 
+     * @param password
+     * @param user 
      */
-    public CredentialEntity(String username, String password, Date lastAccess, Date lastPassChange, Integer status, Boolean active) {
+    public CredentialEntity(UserEntity user, String username, String password) {
         this.username = username;
-        this.password = password;
-        this.lastAccess = lastAccess;
-        this.lastPassChange = lastPassChange;
-        this.status = status;
-        this.active = active;
-    }
-    
-   /**
-    * 
-    * @param user 
-    */
-    
-    public CredentialEntity(UserDTO user,Integer status,String Password) {
-        this.username = user.getUsername();
         this.password = password;
         this.lastAccess = new Date();
         this.lastPassChange = new Date();
-       this.status = status;
-       this.active= true;
+        this.credentialType = 8;
+        this.user = user;
     }
-
+    
+    /**
+     * Create credential object with type parameter
+     * @param username
+     * @param password
+     * @param user 
+     */
+    public CredentialEntity(UserEntity user, String username, String password, Integer credentialType) {
+        this.username = username;
+        this.password = password;
+        this.lastAccess = new Date();
+        this.lastPassChange = new Date();
+        this.credentialType = credentialType;
+        this.user = user;
+    }
+    
     /**
      * @return the id
      */
-    public long getId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
-        this.userId = userId;
-    }
-    @Column(name = "User_id", nullable = false, length = 80, unique = true)
-    public long getUserId() {
-        return userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-    @Column(name = "username", nullable = false, length = 80, unique = true)
     public String getUsername() {
         return username;
     }
@@ -98,7 +103,7 @@ public class CredentialEntity implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-    @Column(name = "password", nullable = false, length = 80)
+    
     public String getPassword() {
         return password;
     }
@@ -106,7 +111,7 @@ public class CredentialEntity implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    @Column(name = "lastAcess", nullable = false)
+    
     public Date getLastAccess() {
         return lastAccess;
     }
@@ -114,7 +119,7 @@ public class CredentialEntity implements Serializable {
     public void setLastAccess(Date lastAccess) {
         this.lastAccess = lastAccess;
     }
-    @Column(name = "lastPassChange")
+    @Column(name = "last_pass_change")
     public Date getLastPassChange() {
         return lastPassChange;
     }
@@ -122,22 +127,36 @@ public class CredentialEntity implements Serializable {
     public void setLastPassChange(Date lastPassChange) {
         this.lastPassChange = lastPassChange;
     }
-    @Column(name = "status", nullable = false)
-    public Integer getStatus() {
-        return status;
+
+    /**
+     * @return the credentialType
+     */
+    public Integer getCredentialType() {
+        return credentialType;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-    @Column(name = "active")
-    public Boolean getActive() {
-        return active;
+    /**
+     * @param credentialType the credentialType to set
+     */
+    public void setCredentialType(Integer credentialType) {
+        this.credentialType = credentialType;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    /**
+     * @return the user
+     */
+    public UserEntity getUser() {
+        return user;
     }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+    
+    
 
     
 }
