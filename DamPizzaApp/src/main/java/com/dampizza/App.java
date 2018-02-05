@@ -1,8 +1,10 @@
 package com.dampizza;
 
 import com.dampizza.logic.dto.IngredientDTO;
+import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.IngredientManagerImp;
+import com.dampizza.logic.imp.ProductManagerImp;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.views.login.LoginView;
@@ -15,6 +17,7 @@ import com.dampizza.views.user.ProfileView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -106,6 +109,31 @@ public class App extends MobileApplication {
         List<IngredientDTO> ingredientList = new IngredientManagerImp().getIngredients();
         ingredientList.forEach(u -> System.out.println(u.toString()));
 
+        
+        // TEST CREATE PRODUCT
+//        List<IngredientDTO> ingredientProduct = new ArrayList<IngredientDTO>();
+//        ingredientProduct.add(new IngredientDTO(new Long(1), "Tomate", 1.50));
+//        ingredientProduct.add(new IngredientDTO(new Long(7), "Queso", 1.50));
+//        
+//        
+        ProductManagerImp pm = new ProductManagerImp();
+//        pm.createProduct(new ProductDTO("Margarita", "", 6.00, 1, ingredientProduct));
+//        pm.createProduct(new ProductDTO("New York", "", 6.00, 1, null));
+//        pm.createProduct(new ProductDTO("Manhattan", "", 6.00, 1, null));
+//        pm.createProduct(new ProductDTO("Bilbao", "", 6.00, 1, null));
+//        pm.createProduct(new ProductDTO("Madrid", "", 6.00, 1, null));
+//        pm.createProduct(new ProductDTO("Vegetal", "", 6.00, 1, null));
+//        pm.createProduct(new ProductDTO("Cesar", "", 6.00, 1, null));
+//        
+//        pm.createProduct(new ProductDTO("Agua", "", 6.00, 2, null));
+//        pm.createProduct(new ProductDTO("Coca Cola", "", 6.00, 2, null));
+//        pm.createProduct(new ProductDTO("7up", "", 6.00, 1, null));
+//        pm.createProduct(new ProductDTO("Fanta Naranja", "", 6.00, 2, null));
+//        pm.createProduct(new ProductDTO("Heineken", "", 6.00, 2, null));
+        
+        
+        pm.getAllProducts();
+        
 
 
     }

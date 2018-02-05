@@ -14,6 +14,7 @@ import com.dampizza.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -21,7 +22,7 @@ import org.hibernate.Transaction;
  *
  * @author Carlos
  */
-public class IngredientManagerImp implements IngredientManagerInterface{
+public class IngredientManagerImp implements IngredientManagerInterface {
 
     @Override
     public Integer createIngredient(IngredientDTO ingredient) {
@@ -41,7 +42,7 @@ public class IngredientManagerImp implements IngredientManagerInterface{
             }
             e.printStackTrace();
         } finally {
-            session.close();     
+            session.close();
         }
         return res;
     }
@@ -66,11 +67,91 @@ public class IngredientManagerImp implements IngredientManagerInterface{
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         List<IngredientDTO> ingredientList = new ArrayList();
-        List<IngredientEntity> ingredientEntities = session.createQuery("from IngredientEntity").list();
+        
 
-        ingredientEntities.forEach(i -> ingredientList.add(new IngredientDTO(i.getId(), i.getName(), i.getPrice())));
+        try {
+            tx = session.beginTransaction();
+            List<IngredientEntity> ingredientEntities = session.createQuery("from IngredientEntity").list();
+            ingredientEntities.forEach(i -> ingredientList.add(new IngredientDTO(i.getId(), i.getName(), i.getPrice())));
+            tx.commit();
 
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return ingredientList;
     }
+
+    @Override
+    public IngredientDTO getIngredientById(Long id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        IngredientEntity ingredient = null;
+
+        try {
+            tx = session.beginTransaction();
+            ingredient = (IngredientEntity)session.get(IngredientEntity.class, id);
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close(); 
+        }
+        return null;
+    }
+
+    @Override
+    public List<IngredientEntity> getIngredientsEntities() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        List<IngredientEntity> ingredientEntities = new ArrayList();
+        
+        try {
+            tx = session.beginTransaction();
+            ingredientEntities = ingredientEntities = session.createQuery("from IngredientEntity").list();
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close(); 
+        }
+
+        return ingredientEntities;
+    }
+
+    @Override
+    public IngredientEntity getIngredientEntityById(Long id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        IngredientEntity ingredient = null;
+
+        try {
+            tx = session.beginTransaction();
+            ingredient = (IngredientEntity)session.get(IngredientEntity.class, id);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close(); 
+        }
+        return ingredient;
+    }
+
     
+
 }
