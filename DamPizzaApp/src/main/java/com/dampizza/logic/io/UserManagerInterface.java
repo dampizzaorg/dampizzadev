@@ -15,13 +15,21 @@ import java.util.List;
  * @author Carlos Santos
  */
 public interface UserManagerInterface {
-    public Integer createUser(UserDTO user,String password);
+
+    public Integer createUser(UserDTO user, String password);
+
     public Integer updateUser(UserDTO user);
+
     public Integer deleteUser(UserDTO user);
-    
+
     public List<UserDTO> getAllUsers();
+
     public UserDTO getUserByLogin();
     
+    
+
     // CREDENTIAL METHODS
     public void createCredential(UserEntity user, String username, String password);
+
+   
 }
