@@ -57,11 +57,11 @@ public class LoginPresenter {
                 /* Leave on true for testing, change to false when the app is finished */
                 appBar.setVisible(false);
 
-                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
-                        -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-                appBar.setTitleText("Login");
-                appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e
+                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button(e
                         -> System.out.println("Search")));
+                appBar.setTitleText("Login");
+                //appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e
+                       // -> System.out.println("Search")));
                 
                 ivDampizza.setImage(new Image("/img/pizza_avatar_128.png"));
 
