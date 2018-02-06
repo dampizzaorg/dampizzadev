@@ -10,6 +10,7 @@ import static com.dampizza.App.CUSTOMER_VIEW;
 import static com.dampizza.App.ORDER_VIEW;
 import com.dampizza.DrawerManager;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
+import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
 import java.io.File;
 import javafx.fxml.FXML;
@@ -53,11 +54,9 @@ public class CustomerPresenter {
     
     @FXML
     void buttonClick() {
-        image.setImage(new Image("img/pizza_avatar_128.png"));
-        
-        ViewItem orderItem = new ViewItem("Order", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
+         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
         DrawerManager drawer = new DrawerManager();
-        drawer.updateView(orderItem);
+        drawer.updateView(Item);
         
       
         
