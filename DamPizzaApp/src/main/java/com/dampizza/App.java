@@ -19,6 +19,8 @@ import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -35,6 +37,9 @@ import javafx.stage.Stage;
  */
 public class App extends MobileApplication {
     
+    public static Locale locale;
+    public static ResourceBundle bundle;
+    
     public static final String LOGIN_VIEW = HOME_VIEW;
     public static final String SIGNUP_VIEW = "SignUp view";
     public static final String RECOVER_VIEW = "Recover Password view";
@@ -48,6 +53,9 @@ public class App extends MobileApplication {
     
     @Override
     public void init() {
+        // Init ResourceBundle
+        //locale = new Locale("es");
+        //bundle = ResourceBundle.getBundle("resources.properties.MessageString");
         
         /* ADD VIEWS TO VIEW FACTORY */
         addViewFactory(LOGIN_VIEW, () -> new LoginView(LOGIN_VIEW).getView());

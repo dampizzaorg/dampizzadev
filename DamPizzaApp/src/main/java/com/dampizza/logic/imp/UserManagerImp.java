@@ -210,7 +210,6 @@ public class UserManagerImp implements UserManagerInterface {
             session.close();
         }
 
-
         return res;
     }
 
@@ -236,6 +235,40 @@ public class UserManagerImp implements UserManagerInterface {
             e.printStackTrace();
         }*/
         return exist;
+    }
+
+    @Override
+    public Integer resetPassword(String username, String password) {
+        Integer res = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String hql = "from CredentialEntity where username = :username";
+        
+        try {
+            tx = session.beginTransaction();
+
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            CredentialEntity credential = (CredentialEntity) query.uniqueResult();
+
+            if (credential != null) {
+                credential.setPassword(password);
+                session.update(credential);
+                res = 1;
+            }else{
+                res= 2;
+            }
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return res;
     }
 
 

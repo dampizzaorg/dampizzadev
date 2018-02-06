@@ -17,14 +17,11 @@ import java.util.List;
 public interface UserManagerInterface {
 
     public Integer createUser(UserDTO user, String password);
-
     public Integer updateUser(UserDTO user);
-
     public Integer deleteUser(UserDTO user);
-
     public List<UserDTO> getAllUsers();
-
     public UserDTO getUserByLogin();
+    
     
     
     
@@ -32,12 +29,9 @@ public interface UserManagerInterface {
 
     // CREDENTIAL METHODS
     public void createCredential(UserEntity user, String username, String password);
-
-    
     public Integer checkCredential(String username, String password);
-
-    
     public Boolean userExist(String user);
+    public Integer resetPassword(String username, String password);
 
 
 }
