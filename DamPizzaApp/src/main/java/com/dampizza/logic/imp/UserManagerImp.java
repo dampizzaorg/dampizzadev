@@ -12,6 +12,7 @@ import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -35,8 +36,8 @@ public class UserManagerImp implements UserManagerInterface {
 
         try {
             tx = session.beginTransaction();
-            Long userId = (Long)session.save(new UserEntity(user));
-            userCreated = (UserEntity)session.get(UserEntity.class, userId);
+            Long userId = (Long) session.save(new UserEntity(user));
+            userCreated = (UserEntity) session.get(UserEntity.class, userId);
             tx.commit();
             res = 1;
 
@@ -47,11 +48,10 @@ public class UserManagerImp implements UserManagerInterface {
             e.printStackTrace();
         } finally {
             session.close();
-            if(userCreated!=null){
+            if (userCreated != null) {
                 createCredential(userCreated, user.getUsername(), password);
             }
-            
-            
+
         }
         return res;
     }
@@ -61,10 +61,21 @@ public class UserManagerImp implements UserManagerInterface {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         List<UserDTO> userList = new ArrayList();
-        List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
 
-        userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
-                u.getSurnames(), u.getEmail(), u.getAddress())));
+        try {
+            List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
+
+            userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
+                    u.getSurnames(), u.getEmail(), u.getAddress())));
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
 
         return userList;
     }
@@ -162,10 +173,45 @@ public class UserManagerImp implements UserManagerInterface {
             e.printStackTrace();
         } finally {
             session.close();
-        }    
-
+        }
     }
-    
-    
+
+    @Override
+    public Integer checkCredential(String username, String password) {
+        Integer res = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String hql = "from CredentialEntity where username = :username and password = :password";
+        
+        try {
+            tx = session.beginTransaction();
+
+            // Retrieve user to update
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            CredentialEntity credential = (CredentialEntity) query.uniqueResult();
+
+            if (credential != null) {
+                credential.setLastAccess(new Date());
+                session.update(credential);
+                res = 1;
+            }else{
+                res= 2;
+            }
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+
+        return res;
+    }
 
 }

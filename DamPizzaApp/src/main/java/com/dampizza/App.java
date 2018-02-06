@@ -59,7 +59,7 @@ public class App extends MobileApplication {
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
         
-//        testHibernate();
+        testHibernate();
         
     }
 
@@ -74,6 +74,7 @@ public class App extends MobileApplication {
     
     public void testHibernate(){
         // TEST CREATE USER
+        UserManagerImp umi = new UserManagerImp();
 //        UserDTO user = new UserDTO("clsantos","carlos","santos","clsantos@dampizza.com","mi casa");
 //        new UserManagerImp().createUser(user, "passwordtest");
 //        
@@ -85,8 +86,8 @@ public class App extends MobileApplication {
 //        new UserManagerImp().updateUser(user);
 //        
         // TEST GET ALL USERS
-        List<UserDTO> userList = new UserManagerImp().getAllUsers();
-        userList.forEach(u -> System.out.println(u.toString()));
+//        List<UserDTO> userList = umi.getAllUsers();
+//        userList.forEach(u -> System.out.println(u.toString()));
 //        
 //        // TEST DELETE USER
 //        new UserManagerImp().deleteUser(user);
@@ -135,6 +136,16 @@ public class App extends MobileApplication {
         pm.getAllProducts();
         
 
+        // TEST CREDENTIAL
+        
+        Integer res = umi.checkCredential("clsantos", "passwordtest");
+        if(res==1){
+            System.out.println("Login Successfull");
+        }else if(res==2){
+            System.out.println("Login incorrect");
+        }else{
+            System.out.println("Login error.");
+        }
 
     }
 }
