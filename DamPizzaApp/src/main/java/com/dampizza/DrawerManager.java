@@ -86,7 +86,4 @@ public class DrawerManager {
         return drawer;
     }
     
-    public void updateView(Item item){
-        drawer.setSelectedItem(item);
-    }
 }

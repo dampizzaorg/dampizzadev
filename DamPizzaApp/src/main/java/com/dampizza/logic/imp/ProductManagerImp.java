@@ -6,7 +6,6 @@
 package com.dampizza.logic.imp;
 
 import com.dampizza.logic.dto.ProductDTO;
-import com.dampizza.logic.dto.IngredientDTO;
 import com.dampizza.logic.io.ProductManagerInterface;
 import com.dampizza.model.entity.IngredientEntity;
 import com.dampizza.model.entity.ProductEntity;
@@ -14,17 +13,23 @@ import com.dampizza.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- *
+ * Product Manager Implementation
  * @author Carlos
  */
 public class ProductManagerImp implements ProductManagerInterface {
 
     private IngredientManagerImp imi = new IngredientManagerImp();
 
+    /**
+     * Create product
+     * @param product
+     * @return 
+     */
     @Override
     public Integer createProduct(ProductDTO product) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -39,8 +44,7 @@ public class ProductManagerImp implements ProductManagerInterface {
                 // Get list of all ingredients in db
                 List<IngredientEntity> ingredientEntities = imi.getIngredientsEntities();
 
-//                product.getIngredients().forEach(i -> ingredientFilteredList.add(imi.getIngredientEntityById(i.getId())));
-                    
+//                product.getIngredients().forEach(i -> ingredientFilteredList.add(imi.getIngredientEntityById(i.getId())));       
                 
             }
         }catch(Exception ex){
@@ -86,6 +90,7 @@ public class ProductManagerImp implements ProductManagerInterface {
         List<ProductDTO> productList = new ArrayList();
         List<ProductEntity> productEntities = session.createQuery("from ProductEntity").list();
 
+        // TODO REVISAR INGREDIENTS
         productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
                 p.getDescription(), p.getPrice(), p.getCategory(), null)));
 
@@ -95,6 +100,37 @@ public class ProductManagerImp implements ProductManagerInterface {
     @Override
     public ProductDTO getProductById() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ProductDTO> getProductByType(Integer category) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        Integer res = 0;
+        String hql = "from ProductEntity where category = :category";
+        List<ProductDTO> productList = null;
+
+        try {
+            tx = session.beginTransaction();
+
+            // Retrieve user to update
+            Query query = session.createQuery(hql);
+            query.setParameter("category", category);
+            List<ProductEntity> productEntities = (List<ProductEntity>) query.list();
+            
+            productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
+                p.getDescription(), p.getPrice(), p.getCategory(), null)));
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return productList;
     }
 
 }

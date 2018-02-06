@@ -13,5 +13,6 @@ public interface ProductManagerInterface {
     public Integer deleteProduct(Integer id);
     
     public List<ProductDTO> getAllProducts();
+    public List<ProductDTO> getProductByType(Integer category);
     public ProductDTO getProductById();
 }

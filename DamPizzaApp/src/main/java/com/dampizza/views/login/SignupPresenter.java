@@ -11,7 +11,7 @@ import com.dampizza.DrawerManager;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.logic.io.UserManagerInterface;
-import com.dampizza.util.EcrypterUtil;
+import com.dampizza.util.EncrypterUtil;
 import com.dampizza.util.EmailValidator;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.Alert;
@@ -83,7 +83,7 @@ public class SignupPresenter {
             String surname = tfFirstSurName.getText() + " " + tfSecondSurName.getText();
             //encrypt the password
 
-            String password = EcrypterUtil.encrypt(pfPassword.getText());
+            String password = EncrypterUtil.encrypt(pfPassword.getText());
 
             System.out.println(password);
             //Create and upload the user into the DB with the specified data
