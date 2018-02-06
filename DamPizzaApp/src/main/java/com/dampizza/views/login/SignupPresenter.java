@@ -82,7 +82,9 @@ public class SignupPresenter {
             //pair the surnames on one string
             String surname = tfFirstSurName.getText() + " " + tfSecondSurName.getText();
             //encrypt the password
+
             String password = EcrypterUtil.encrypt(pfPassword.getText());
+
             System.out.println(password);
             //Create and upload the user into the DB with the specified data
             UserDTO user = new UserDTO(tfUserName.getText(), tfName.getText(), surname, tfEmail.getText(), tfAddress.getText());
