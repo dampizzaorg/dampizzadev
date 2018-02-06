@@ -6,6 +6,7 @@ import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.IngredientManagerImp;
 import com.dampizza.logic.imp.ProductManagerImp;
 import com.dampizza.logic.imp.UserManagerImp;
+import com.dampizza.model.entity.CredentialEntity;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.views.login.LoginView;
 import com.dampizza.views.login.RecoverView;
@@ -19,6 +20,8 @@ import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -35,6 +38,10 @@ import javafx.stage.Stage;
  */
 public class App extends MobileApplication {
     
+    public static Locale locale;
+    public static ResourceBundle bundle;
+    public static CredentialEntity userLoggedIn = null;
+    
     public static final String LOGIN_VIEW = HOME_VIEW;
     public static final String SIGNUP_VIEW = "SignUp view";
     public static final String RECOVER_VIEW = "Recover Password view";
@@ -48,6 +55,9 @@ public class App extends MobileApplication {
     
     @Override
     public void init() {
+        // Init ResourceBundle
+        //locale = new Locale("es");
+        //bundle = ResourceBundle.getBundle("resources.properties.MessageString");
         
         /* ADD VIEWS TO VIEW FACTORY */
         addViewFactory(LOGIN_VIEW, () -> new LoginView(LOGIN_VIEW).getView());
@@ -57,7 +67,7 @@ public class App extends MobileApplication {
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
-         addViewFactory(ORDER_VIEW, () -> new DealerView(ORDER_VIEW).getView());
+        addViewFactory(ORDER_VIEW, () -> new DealerView(ORDER_VIEW).getView());
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
         

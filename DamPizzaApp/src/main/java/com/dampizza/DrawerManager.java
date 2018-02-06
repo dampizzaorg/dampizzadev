@@ -22,8 +22,8 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 
 /**
- * Drawer Manager.
- * Manage drawer items and behavior.
+ * Drawer Manager. Manage drawer items and behavior.
+ *
  * @author Carlos Santos
  */
 public class DrawerManager {
@@ -32,12 +32,12 @@ public class DrawerManager {
 
     public DrawerManager() {
         this.drawer = new NavigationDrawer();
-        
+
         NavigationDrawer.Header header = new NavigationDrawer.Header("DamPizza",
                 "Mobile App",
                 new Avatar(21, new Image(DrawerManager.class.getResourceAsStream("/img/pizza_avatar_128.png"))));
         drawer.setHeader(header);
-        
+
         /* CREATE NEW DRAWER ITEMS HERE*/
         final Item loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), LOGIN_VIEW, ViewStackPolicy.SKIP);
         final Item signupItem = new ViewItem("SignUp", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
@@ -46,10 +46,10 @@ public class DrawerManager {
         final Item customerItem = new ViewItem("Customer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
         final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
         final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
-        
+
         /* REMEMBER TO ADD ITEMS TO THE DRAWER */
         drawer.getItems().addAll(loginItem, signupItem, recoverItem, profileItem, customerItem, managerItem, dealerItem);
-        
+
         if (Platform.isDesktop()) {
             final Item quitItem = new Item("Quit", MaterialDesignIcon.EXIT_TO_APP.graphic());
             quitItem.selectedProperty().addListener((obs, ov, nv) -> {
@@ -59,29 +59,40 @@ public class DrawerManager {
             });
             drawer.getItems().add(quitItem);
         }
-        
-        drawer.addEventHandler(NavigationDrawer.ITEM_SELECTED, 
+
+        drawer.addEventHandler(NavigationDrawer.ITEM_SELECTED,
                 e -> MobileApplication.getInstance().hideLayer(MENU_LAYER));
-        
+
         MobileApplication.getInstance().viewProperty().addListener((obs, oldView, newView) -> updateItem(newView.getName()));
         updateItem(LOGIN_VIEW);
     }
-    
-    private void updateItem(String nameView) {
+
+    /**
+     * Update item
+     * @param viewName 
+     */
+    private void updateItem(String viewName) {
         for (Node item : drawer.getItems()) {
-            if (item instanceof ViewItem && ((ViewItem) item).getViewName().equals(nameView)) {
+            if (item instanceof ViewItem && ((ViewItem) item).getViewName().equals(viewName)) {
                 drawer.setSelectedItem(item);
                 break;
             }
         }
     }
-    
 
-     public void updateView(Item Item){
+    /**
+     * Update view
+     * @param Item 
+     */
+    public void updateView(Item Item) {
         drawer.setSelectedItem(Item);
 
     }
-    
+
+    /**
+     * Returns Drawer
+     * @return NavigationDrawer object
+     */
     public NavigationDrawer getDrawer() {
         return drawer;
     }
