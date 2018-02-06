@@ -24,4 +24,6 @@ public interface UserManagerInterface {
     
     // CREDENTIAL METHODS
     public void createCredential(UserEntity user, String username, String password);
+    
+    public Boolean userExist(String user);
 }

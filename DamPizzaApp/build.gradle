@@ -29,7 +29,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
     // https://mvnrepository.com/artifact/javax.mail/javax.mail-api
-    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.6.0'
+    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.5.0'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-email
     compile group: 'org.apache.commons', name: 'commons-email', version: '1.5'
     // https://mvnrepository.com/artifact/commons-net/commons-net

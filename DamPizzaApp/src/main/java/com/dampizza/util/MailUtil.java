@@ -36,7 +36,7 @@ public class MailUtil {
             email.setAuthenticator(da);
             email.setSSLOnConnect(true);
             //set from
-            email.setFrom("dampizza123@gmail.com", "Me");
+            email.setFrom("dampizza123@gmail.com", "DamPizza");
             //set subject
             email.setSubject(subject);
             //set the message
