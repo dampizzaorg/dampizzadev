@@ -42,6 +42,7 @@ public class App extends MobileApplication {
     public static final String CUSTOMER_VIEW = "Customer Password view";
     public static final String MANAGER_VIEW = "Manager view";
     public static final String DEALER_VIEW = "Dealer Password view";
+    public static final String ORDER_VIEW = "ORder view";
     
     public static final String MENU_LAYER = "Side Menu";
     
@@ -56,6 +57,7 @@ public class App extends MobileApplication {
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
+         addViewFactory(ORDER_VIEW, () -> new DealerView(ORDER_VIEW).getView());
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
         

@@ -24,8 +24,7 @@ public class PasswordGenerator {
    * @return String suitable for use as a temporary password
    * @since 2.4
    */
-  public static void generateRandomPassword(String email)
-  {
+  public static void generateRandomPassword(String email){
       // Pick from some letters that won't be easily mistaken for each
       // other. So, for example, omit o O and 0, 1 l and L.
       String letters = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789+@!#$%&/()=?¿";
@@ -36,10 +35,12 @@ public class PasswordGenerator {
           int index = (int)(RANDOM.nextDouble()*letters.length());
           pw += letters.substring(index, index+1);
       }
+      System.out.println(pw);
       sendEmail(pw,email);
            
-     //ENCRIPTAR + llamada a la BD para cambiar la contraseña update credential
+      pw=EncrypterUtil.encrypt(pw);
       
+      //Llamada a la BD para actualizar contraseña variable pw
   }
 
     private static void sendEmail(String pw,String email) {
