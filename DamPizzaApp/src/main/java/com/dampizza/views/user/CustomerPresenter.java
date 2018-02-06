@@ -6,8 +6,16 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
+import static com.dampizza.App.CUSTOMER_VIEW;
+import static com.dampizza.App.ORDER_VIEW;
+import com.dampizza.DrawerManager;
+import com.gluonhq.charm.glisten.application.ViewStackPolicy;
+import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
+import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Presenter for customer.fxml
@@ -21,6 +29,9 @@ public class CustomerPresenter {
 
     @FXML
     private Label label;
+    
+    @FXML
+    private ImageView image;
 
     public void initialize() {
         
@@ -42,7 +53,14 @@ public class CustomerPresenter {
     
     @FXML
     void buttonClick() {
-        label.setText("ESKETIT!");
+        image.setImage(new Image("img/pizza_avatar_128.png"));
+        
+        ViewItem orderItem = new ViewItem("Order", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
+        DrawerManager drawer = new DrawerManager();
+        drawer.updateView(orderItem);
+        
+      
+        
     }
     
 }

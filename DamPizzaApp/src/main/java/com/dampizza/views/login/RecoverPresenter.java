@@ -1,4 +1,4 @@
-package com.dampizza.views.login;
+ package com.dampizza.views.login;
 
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -39,7 +39,7 @@ public class RecoverPresenter {
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setTitleText("Recover");
-                appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> 
+                appBar.getActionItems().add(MaterialDesignIcon.CASINO.button(e -> 
                         System.out.println("Search")));
                 
             }
@@ -57,9 +57,8 @@ public class RecoverPresenter {
             if(!result.get().getButtonData().isCancelButton()){
                 //Comprobar que el email existe si no salir
                 //metodo findbyEmail para la BD
-                //uf(findbyEmail(tfUsername.getText)){
-                PasswordGenerator gen= new PasswordGenerator(); 
-                gen.generateRandomPassword(tfUserName.getText());
+                //if(findbyEmail(tfUsername.getText)){
+                PasswordGenerator.generateRandomPassword(tfUserName.getText());
             }
             
             

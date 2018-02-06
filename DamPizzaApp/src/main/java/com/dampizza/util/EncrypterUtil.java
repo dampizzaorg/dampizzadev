@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author Carlos
  */
-public class EcrypterUtil {
+public class EncrypterUtil {
     
     public static String encrypt(String message){
         MessageDigest md;
