@@ -16,7 +16,19 @@ import java.util.List;
  */
 public interface UserManagerInterface {
 
+    /**
+     * Create user
+     * @param user user dto object
+     * @param password password string
+     * @return Success: 1, Already Exists:2, Error:0
+     */
     public Integer createUser(UserDTO user, String password);
+    
+    /**
+     * 
+     * @param user
+     * @return 
+     */
     public Integer updateUser(UserDTO user);
     public Integer deleteUser(UserDTO user);
     public List<UserDTO> getAllUsers();

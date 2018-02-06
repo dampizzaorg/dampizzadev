@@ -5,6 +5,7 @@
  */
 package com.dampizza.logic.imp;
 
+import com.dampizza.App;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.io.UserManagerInterface;
 import com.dampizza.model.entity.CredentialEntity;
@@ -195,6 +196,8 @@ public class UserManagerImp implements UserManagerInterface {
             if (credential != null) {
                 credential.setLastAccess(new Date());
                 session.update(credential);
+                // Set user logged for the app
+                App.userLoggedIn=credential;
                 res = 1;
             }else{
                 res= 2;
