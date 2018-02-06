@@ -96,5 +96,4 @@ public class DrawerManager {
     public NavigationDrawer getDrawer() {
         return drawer;
     }
-
 }
