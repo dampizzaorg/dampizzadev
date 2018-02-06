@@ -86,6 +86,7 @@ public class LoginPresenter {
             Integer status=userManager.checkStatus(tfUsername.getText());
             ViewItem loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), CUSTOMER_VIEW, ViewStackPolicy.SKIP);
             DrawerManager drawer = new DrawerManager(status);
+             System.out.println("holaaeeeeeeeeeeee");
             drawer.updateView(loginItem);
             //If the value is 0 then the user is not correct
         }
