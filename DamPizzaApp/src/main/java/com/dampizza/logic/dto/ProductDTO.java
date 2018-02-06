@@ -5,6 +5,7 @@
  */
 package com.dampizza.logic.dto;
 
+import java.util.Collection;
 import java.util.List;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -24,7 +25,7 @@ public class ProductDTO {
     private SimpleStringProperty description;
     private SimpleDoubleProperty price;
     private SimpleIntegerProperty category;
-    private SimpleObjectProperty<IngredientDTO> ingredients;
+    private SimpleObjectProperty<List<IngredientDTO>> ingredients;
 
     public ProductDTO() {
         this.id = new SimpleLongProperty();
@@ -51,6 +52,98 @@ public class ProductDTO {
         this.price = new SimpleDoubleProperty(price);
         this.category = new SimpleIntegerProperty(category);
         this.ingredients = new SimpleObjectProperty(ingredients);
+        
     }
 
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id.get();
+    }
+
+//    /**
+//     * @param id the id to set
+//     */
+//    public void setId(Integer id) {
+//        this.id.set(id);
+//    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name.get();
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description.get();
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
+    /**
+     * @return the price
+     */
+    public Double getPrice() {
+        return price.get();
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(Double price) {
+        this.price.set(price);
+    }
+
+    /**
+     * @return the category
+     */
+    public Integer getCategory() {
+        return category.get();
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(Integer category) {
+        this.category.set(category);
+    }
+
+    /**
+     * @return the ingredients
+     */
+    public List<IngredientDTO> getIngredients() {
+        return ingredients.get();
+    }
+
+    /**
+     * @param ingredients the ingredients to set
+     */
+    public void setIngredients(List<IngredientDTO> ingredients) {
+        this.ingredients.set(ingredients);
+    }
+    
+    @Override
+    public String toString(){
+        return "id: "+this.getId()+", name: "+this.getName()+", description: "+this.getDescription()+
+                ", price: "+this.getPrice()+", category: "+this.getCategory();
+    }
+
+    
 }

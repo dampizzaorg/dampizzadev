@@ -6,6 +6,7 @@
 package com.dampizza.logic.io;
 
 import com.dampizza.logic.dto.IngredientDTO;
+import com.dampizza.model.entity.IngredientEntity;
 import java.util.List;
 
 /**
@@ -18,6 +19,12 @@ public interface IngredientManagerInterface {
     public Integer deletIngredient(String name);
     
     public IngredientDTO getIngredientByName(String name);
+    public IngredientDTO getIngredientById(Long id);
     public List<IngredientDTO> getIngredients();
+    
+    public List<IngredientEntity> getIngredientsEntities();
+    public IngredientEntity getIngredientEntityById(Long id);
+    
+    
     
 }

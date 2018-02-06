@@ -1,5 +1,6 @@
 package com.dampizza.model.entity;
 
+import com.dampizza.logic.dto.ProductDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -76,6 +77,14 @@ public class ProductEntity implements Serializable{
         this.price=price;
         this.category=category;
         this.ingredients=null;
+    }
+    
+    public ProductEntity(ProductDTO product, List<IngredientEntity> ingredientes){
+        this.name=product.getName();
+        this.description=product.getDescription();
+        this.price=product.getPrice();
+        this.category=product.getCategory();
+        this.ingredients=ingredientes;
     }
 
     /**

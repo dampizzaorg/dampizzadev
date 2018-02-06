@@ -27,11 +27,17 @@ public interface UserManagerInterface {
     public UserDTO getUserByLogin();
     
     
+    
+    
 
     // CREDENTIAL METHODS
     public void createCredential(UserEntity user, String username, String password);
 
     
+    public Integer checkCredential(String username, String password);
+
+    
     public Boolean userExist(String user);
+
 
 }
