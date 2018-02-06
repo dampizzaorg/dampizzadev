@@ -85,4 +85,8 @@ public class DrawerManager {
     public NavigationDrawer getDrawer() {
         return drawer;
     }
+    
+    public void updateView(Item item){
+        drawer.setSelectedItem(item);
+    }
 }

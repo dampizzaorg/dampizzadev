@@ -165,6 +165,31 @@ public class UserManagerImp implements UserManagerInterface {
         }    
 
     }
+
+    @Override
+    public Boolean userExist(String user) {
+        Boolean exist=false;
+        /*Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx=null;
+        String hql = "from UserEntity where username = :username";
+        
+        
+        try{
+            tx=session.beginTransaction();
+            Query query = session.createQuery(hql);
+            query.setParameter("username", user);
+            UserEntity userResult = (UserEntity) query.uniqueResult();
+            
+            if(userResult!=null){
+                exist=true;
+            }
+            
+        }catch(HibernateException e){
+            e.printStackTrace();
+        }*/
+        return exist;
+    }
+
     
     
 
