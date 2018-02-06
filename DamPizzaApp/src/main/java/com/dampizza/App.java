@@ -59,7 +59,7 @@ public class App extends MobileApplication {
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
         
-        testHibernate();
+//        testHibernate();
         
     }
 

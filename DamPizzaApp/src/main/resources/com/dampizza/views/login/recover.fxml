@@ -23,7 +23,7 @@
                   <TextField fx:id="tfUserName" prefHeight="19.0" prefWidth="215.0" />
                </children>
             </HBox>
-            <Button fx:id="btnRegister" mnemonicParsing="false" text="REGISTER" />
+            <Button fx:id="btnRecover" onAction="#recoverPassword" mnemonicParsing="false" text="REGISTER" />
          </children>
          <padding>
             <Insets left="30.0" right="30.0" />

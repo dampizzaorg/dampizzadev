@@ -7,6 +7,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.UserManagerImp;
+import com.dampizza.util.EcrypterUtil;
 import com.gluonhq.charm.glisten.control.TextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -66,12 +67,16 @@ public class SignupPresenter {
     @FXML
     public void btnActionSignUp() {
         if(formValid()){
+            //pair the surnames on one string
             String surname = tfFirstSurName.getText() + " " + tfSecondSurName.getText();
-            
-            // TODO ENCRYPT PASSWORD
-            
+            //encrypt the password
+            String password= EcrypterUtil.encrypt(pfPassword.getText());
+            System.out.println(password);
+            //Create and upload the user into the DB with the specified data
             UserDTO user = new UserDTO(tfUserName.getText(),tfName.getText(),surname,tfEmail.getText(),tfAddress.getText());
-            new UserManagerImp().createUser(user, pfPassword.getText());
+            new UserManagerImp().createUser(user, password);
+            
+            
             
             // TODO SEND EMAIL AFTER REGISTRATION
         }

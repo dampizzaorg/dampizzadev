@@ -76,6 +76,10 @@ public class DrawerManager {
         }
     }
     
+    public void updateView(Item loginItem){
+        drawer.setSelectedItem(loginItem);
+    }
+    
     public NavigationDrawer getDrawer() {
         return drawer;
     }
