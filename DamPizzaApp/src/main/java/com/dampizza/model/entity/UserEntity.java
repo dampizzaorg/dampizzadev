@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.dampizza.model.entity;
 
 import com.dampizza.logic.dto.UserDTO;
@@ -18,8 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * User Entity
- *
+ * User Entity POJO
  * @author Carlos Santos
  */
 @Entity
@@ -27,7 +21,7 @@ import javax.persistence.Table;
 public class UserEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -69,6 +63,7 @@ public class UserEntity implements Serializable {
         this.name = name;
         this.surnames = surnames;
         this.address = address;
+        this.active=true;
     }
     
     /**
@@ -84,6 +79,7 @@ public class UserEntity implements Serializable {
         this.surnames = user.getSurnames();
         this.email = user.getEmail();
         this.address = user.getAddress();
+        this.active=true;
     }
 
     /**

@@ -54,6 +54,7 @@ Contributor(s):
         
         <mapping class="com.dampizza.model.entity.UserEntity"></mapping>
         <mapping class="com.dampizza.model.entity.CredentialEntity"></mapping>
+        <mapping class="com.dampizza.model.entity.IngredientEntity"></mapping>
         
         
     </session-factory>

@@ -1,6 +1,8 @@
 package com.dampizza;
 
+import com.dampizza.logic.dto.IngredientDTO;
 import com.dampizza.logic.dto.UserDTO;
+import com.dampizza.logic.imp.IngredientManagerImp;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.views.login.LoginView;
@@ -56,7 +58,7 @@ public class App extends MobileApplication {
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
         
-        //testHibernate();
+//        testHibernate();
         
     }
 
@@ -71,10 +73,11 @@ public class App extends MobileApplication {
     
     public void testHibernate(){
         // TEST CREATE USER
-        UserDTO user = new UserDTO("clsantos","carlos","santos","clsantos@dampizza.com","mi casa");
-        new UserManagerImp().createUser(user, "passwordtest");
-
-        System.out.println(user.getUsername());
+//        UserDTO user = new UserDTO("clsantos","carlos","santos","clsantos@dampizza.com","mi casa");
+//        new UserManagerImp().createUser(user, "passwordtest");
+//        
+//        UserDTO user2 = new UserDTO("testuser1","tes","tuser","testuser1@dampizza.com","mi casa");
+//        new UserManagerImp().createUser(user2, "passwordtest");
         
 //        // TEST UPDATE USER
 //        user.setName("UPDATE TEST");
@@ -86,5 +89,26 @@ public class App extends MobileApplication {
 //        
 //        // TEST DELETE USER
 //        new UserManagerImp().deleteUser(user);
+        
+        // TEST CREATE INGREDIENT
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Tomate",1.50));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Cebolla",1.50));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Pimiento rojo",1.50));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Pimiento verde",1.50));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Peperoni",2.00));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Jamon",1.50));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Queso",1.50));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Anchoas",2.00));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Salami",2.00));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Champiñones",1.50));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Pollo",2.5));
+//        new IngredientManagerImp().createIngredient(new IngredientDTO("Carne",2.5));
+
+        // TEST GET ALL INGREDIENTS
+        List<IngredientDTO> ingredientList = new IngredientManagerImp().getIngredients();
+        ingredientList.forEach(u -> System.out.println(u.toString()));
+
+
+
     }
 }
