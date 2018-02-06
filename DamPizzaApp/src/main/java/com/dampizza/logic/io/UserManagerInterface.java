@@ -32,7 +32,7 @@ public interface UserManagerInterface {
     public Integer updateUser(UserDTO user);
     public Integer deleteUser(UserDTO user);
     public List<UserDTO> getAllUsers();
-    public UserDTO getUserByLogin();
+    public UserDTO getUserByLogin(String username);
     
     
     

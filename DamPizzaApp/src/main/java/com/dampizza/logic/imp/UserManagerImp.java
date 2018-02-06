@@ -82,8 +82,27 @@ public class UserManagerImp implements UserManagerInterface {
     }
 
     @Override
-    public UserDTO getUserByLogin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UserDTO getUserByLogin(String username) {
+        UserDTO user = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx=null;
+        String hql = "from UserEntity where username = :username";
+
+        try{
+            tx=session.beginTransaction();
+            Query query = session.createQuery(hql);
+            query.setParameter("username", user);
+            UserEntity userResult = (UserEntity) query.uniqueResult();
+        tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return user;
     }
 
     @Override
@@ -233,9 +252,14 @@ public class UserManagerImp implements UserManagerInterface {
             if(userResult!=null){
                 exist=true;
             }
-            
-        }catch(HibernateException e){
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
             e.printStackTrace();
+        } finally {
+            session.close();
         }*/
         return exist;
     }
