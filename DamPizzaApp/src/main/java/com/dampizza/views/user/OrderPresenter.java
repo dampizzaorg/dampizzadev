@@ -6,20 +6,15 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
-import static com.dampizza.App.ORDER_VIEW;
-import static com.dampizza.App.RECOVER_VIEW;
-import com.dampizza.DrawerManager;
-import com.gluonhq.charm.glisten.application.ViewStackPolicy;
-import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 /**
- * Presenter for dealer.fxml
+ * Presenter for manager.fxml
  * 
  * @author Carlos Santos
  */
-public class DealerPresenter {
+public class OrderPresenter {
 
     @FXML
     private View primary;
@@ -37,19 +32,15 @@ public class DealerPresenter {
                 
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-                appBar.setTitleText("Dealer");
-                appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> 
-                        System.out.println("Search")));
-                
+                appBar.setTitleText("Manager");
+
             }
         });
     }
     
     @FXML
     void buttonClick() {
-        NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
-        DrawerManager drawer = new DrawerManager();
-        drawer.updateView(Item);
+        label.setText("ESKETIT!");
     }
     
 }

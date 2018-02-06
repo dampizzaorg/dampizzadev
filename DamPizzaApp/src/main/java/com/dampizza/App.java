@@ -22,7 +22,10 @@ import com.dampizza.views.login.RecoverView;
 import com.dampizza.views.login.SignupView;
 import com.dampizza.views.user.CustomerView;
 import com.dampizza.views.user.DealerView;
+import com.dampizza.views.user.HistoryView;
 import com.dampizza.views.user.ManagerView;
+import com.dampizza.views.user.ModifyPersonalInfoView;
+import com.dampizza.views.user.OrderView;
 import com.dampizza.views.user.ProfileView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
@@ -59,7 +62,9 @@ public class App extends MobileApplication {
     public static final String CUSTOMER_VIEW = "Customer Password view";
     public static final String MANAGER_VIEW = "Manager view";
     public static final String DEALER_VIEW = "Dealer Password view";
-    public static final String ORDER_VIEW = "ORder view";
+
+    public static final String ORDER_VIEW = "Order view";
+    public static final String HISTORY_VIEW = "History view";
 
     public static final String MENU_LAYER = "Side Menu";
 
@@ -73,12 +78,13 @@ public class App extends MobileApplication {
         addViewFactory(LOGIN_VIEW, () -> new LoginView(LOGIN_VIEW).getView());
         addViewFactory(SIGNUP_VIEW, () -> new SignupView(SIGNUP_VIEW).getView());
         addViewFactory(RECOVER_VIEW, () -> new RecoverView(RECOVER_VIEW).getView());
-        addViewFactory(PROFILE_VIEW, () -> new ProfileView(PROFILE_VIEW).getView());
+        addViewFactory(PROFILE_VIEW, () -> new ModifyPersonalInfoView(PROFILE_VIEW).getView());
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
-        addViewFactory(ORDER_VIEW, () -> new DealerView(ORDER_VIEW).getView());
-
+        addViewFactory(ORDER_VIEW, () -> new OrderView(ORDER_VIEW).getView());
+        addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
+        
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
 
         testHibernate();
