@@ -41,7 +41,4 @@ public class LoginView {
             return new View(name);
         }
     }
-    
-
- 
 }
