@@ -6,6 +6,7 @@ import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.IngredientManagerImp;
 import com.dampizza.logic.imp.ProductManagerImp;
 import com.dampizza.logic.imp.UserManagerImp;
+import com.dampizza.model.entity.CredentialEntity;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.views.login.LoginView;
 import com.dampizza.views.login.RecoverView;
@@ -39,6 +40,7 @@ public class App extends MobileApplication {
     
     public static Locale locale;
     public static ResourceBundle bundle;
+    public static CredentialEntity userLoggedIn = null;
     
     public static final String LOGIN_VIEW = HOME_VIEW;
     public static final String SIGNUP_VIEW = "SignUp view";
@@ -65,7 +67,7 @@ public class App extends MobileApplication {
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
-         addViewFactory(ORDER_VIEW, () -> new DealerView(ORDER_VIEW).getView());
+        addViewFactory(ORDER_VIEW, () -> new DealerView(ORDER_VIEW).getView());
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
         
