@@ -42,6 +42,7 @@ public interface UserManagerInterface {
     // CREDENTIAL METHODS
     public void createCredential(UserEntity user, String username, String password);
     public Integer checkCredential(String username, String password);
+    public Integer checkStatus(String username);
     public Boolean userExist(String user);
     public Integer resetPassword(String username, String password);
 
