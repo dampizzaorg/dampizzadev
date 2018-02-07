@@ -62,6 +62,14 @@ public interface UserManagerInterface {
     public UserDTO getUserByUsername(String username) throws UserQueryException;
     
     /**
+     * Get user entity by username
+     * @param username username
+     * @return User with matching id.
+     * @throws UserQueryException 
+     */
+    public UserEntity getUserEntityByUsername(String username) throws UserQueryException;
+    
+    /**
      * Check if user is already on the database.
      * @param username
      * @return 1 yes, 2 no, 0 error.

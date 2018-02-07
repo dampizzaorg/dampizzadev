@@ -10,6 +10,7 @@ import com.dampizza.exception.product.ProductCreateException;
 import com.dampizza.exception.product.ProductDeleteException;
 import com.dampizza.exception.product.ProductQueryException;
 import com.dampizza.exception.product.ProductUpdateException;
+import com.dampizza.logic.dto.IngredientDTO;
 import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.io.ProductManagerInterface;
 import com.dampizza.model.entity.IngredientEntity;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -38,16 +40,16 @@ public class ProductManagerImp implements ProductManagerInterface {
     public Integer createProduct(ProductDTO product) throws ProductCreateException, ProductQueryException{
         Integer res = 0;
 
-        // If user is not in the database already
+        // If product is not in the database already
         if (productExists(product.getName()) == 2) {
-            logger.log(Level.INFO, "Creating user <{0}>.", product.getName());
+            logger.log(Level.INFO, "Creating product <{0}>.", product.getName());
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = null;
 
             try {
                 tx = session.beginTransaction();
                 
-                // Creating user.
+                // Creating product
                 ProductEntity productEntity = new ProductEntity(product.getName(),
                         product.getDescription(), product.getPrice(), product.getCategory(),
                         imi.dtoToEntity(product.getIngredients()));
@@ -263,6 +265,69 @@ public class ProductManagerImp implements ProductManagerInterface {
             session.close();
         }
         return res;
+    }
+
+    @Override
+    public List<ProductEntity> getProductEntities() throws ProductQueryException {
+        logger.log(Level.INFO, "Getting all product entities");
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<ProductEntity> productEntities = new ArrayList();
+
+        try {
+            productEntities = session.createQuery("from ProductEntity").list();
+        } catch (HibernateException e) {
+            logger.log(Level.SEVERE, "An error has ocurred while getting product entities");
+            throw new ProductQueryException("Error on getProductEntities(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return productEntities;
+    }
+
+    @Override
+    public List<ProductEntity> dtoToEntity(List<ProductDTO> products) throws ProductQueryException {
+        logger.log(Level.INFO, "Getting ingredient entities from a list of ingredient dto.");
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<ProductEntity> filteredProducts = null;
+
+        if (products != null) {
+            List<Long> productIds = new ArrayList<Long>();
+            products.forEach(i -> productIds.add(i.getId()));
+
+            try {
+                List<ProductEntity> productEntities = session.createQuery("from ProductEntity").list();
+
+                /* Filtering all ingredients contained in the ingredients parameter
+             * Example:
+             * ingredientEntities tomate, queso, cebolla, pimientos.
+             * ingredientDTO(ingredients paramater) = tomate queso.
+             * filteredList = tomate, queso.
+                 */
+                filteredProducts = productEntities.stream().filter(i -> productIds.contains(i.getId())).collect(Collectors.toList());
+
+            } catch (HibernateException e) {
+                logger.log(Level.SEVERE, "An error has ocurred while getting product entities from dtos.");
+                throw new ProductQueryException("Error on dtoToEntity(): \n" + e.getMessage());
+            } finally {
+                session.close();
+            }
+        }
+
+        return filteredProducts;
+    }
+
+    @Override
+    public List<ProductDTO> EntityToDTO(List<ProductEntity> products) {
+        logger.log(Level.INFO, "Getting ingredient dtos from a list of ingredient entities.");
+        List<ProductDTO> productDtoList = new ArrayList<>();
+
+        if (products != null) {
+            products.forEach(p -> productDtoList.add(
+                    new ProductDTO(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getCategory(),
+                        imi.EntityToDTO(p.getIngredients()))));
+        }
+
+        return productDtoList;
     }
 
 }

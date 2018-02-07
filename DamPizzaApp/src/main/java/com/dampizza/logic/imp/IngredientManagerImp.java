@@ -288,8 +288,8 @@ public class IngredientManagerImp implements IngredientManagerInterface {
                 filteredIngredients = ingredientEntities.stream().filter(i -> ingredientIds.contains(i.getId())).collect(Collectors.toList());
 
             } catch (HibernateException e) {
-                logger.log(Level.SEVERE, "An error has ocurred while getting all ingredients");
-                throw new IngredientQueryException("Error on getIngredientById(): \n" + e.getMessage());
+                logger.log(Level.SEVERE, "An error has ocurred while getting ingredient entities from dtos");
+                throw new IngredientQueryException("Error on dtoToEntity(): \n" + e.getMessage());
             } finally {
                 session.close();
             }

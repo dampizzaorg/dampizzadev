@@ -1,20 +1,5 @@
 package com.dampizza;
 
-import com.dampizza.exception.ingredient.IngredientCreateException;
-import com.dampizza.exception.ingredient.IngredientDeleteException;
-import com.dampizza.exception.ingredient.IngredientQueryException;
-import com.dampizza.exception.ingredient.IngredientUpdateException;
-import com.dampizza.exception.user.UserCreateException;
-import com.dampizza.exception.user.UserDeleteException;
-import com.dampizza.exception.user.UserQueryException;
-import com.dampizza.exception.user.UserUpdateException;
-import com.dampizza.logic.dto.IngredientDTO;
-import com.dampizza.logic.dto.ProductDTO;
-import com.dampizza.logic.dto.UserDTO;
-import com.dampizza.logic.imp.IngredientManagerImp;
-import com.dampizza.logic.imp.ProductManagerImp;
-import com.dampizza.logic.imp.UserManagerImp;
-import com.dampizza.model.entity.CredentialEntity;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.TestUtil;
 import com.dampizza.views.login.LoginView;
@@ -28,15 +13,11 @@ import com.dampizza.views.user.manager.ManagerOrderView;
 import com.dampizza.views.user.manager.ManagerSelectDealerView;
 import com.dampizza.views.user.ModifyPersonalInfoView;
 import com.dampizza.views.user.OrderView;
-import com.dampizza.views.user.ProfileView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -52,9 +33,16 @@ import javafx.stage.Stage;
  */
 public class App extends MobileApplication {
 
+    private static final Logger logger = Logger.getLogger(App.class.getName());
     public static Locale locale;
     public static ResourceBundle bundle;
-    public static UserEntity userLoggedIn = null;
+
+    
+    /* TODO research about java session managament for mobile apps.
+     * Change implementation?
+    */
+    private static UserEntity userLoggedIn = null;
+
     private static TestUtil test = null;
 
     public static final String LOGIN_VIEW = HOME_VIEW;
@@ -66,10 +54,8 @@ public class App extends MobileApplication {
     public static final String MANAGER_ORDER_VIEW = "Manager order view";
     public static final String MANAGER_SELECT_DEALER_VIEW = "Manager select view";
     public static final String DEALER_VIEW = "Dealer Password view";
-
     public static final String ORDER_VIEW = "Order view";
     public static final String HISTORY_VIEW = "History view";
-
     public static final String MENU_LAYER = "Side Menu";
 
     @Override
@@ -78,6 +64,7 @@ public class App extends MobileApplication {
         //locale = new Locale("es");
         //bundle = ResourceBundle.getBundle("resources.properties.MessageString");
 
+        logger.info("Init App");
         /* ADD VIEWS TO VIEW FACTORY */
         addViewFactory(LOGIN_VIEW, () -> new LoginView(LOGIN_VIEW).getView());
         addViewFactory(SIGNUP_VIEW, () -> new SignupView(SIGNUP_VIEW).getView());
@@ -107,7 +94,7 @@ public class App extends MobileApplication {
     }
 
     public void testHibernate() {
-
+        logger.info("Testing database operations");
         test = new TestUtil();
 
         // TEST USER
@@ -127,5 +114,25 @@ public class App extends MobileApplication {
         test.testUpdateProducts();
         test.testDeleteProduct();
         test.testGetProducts();
+        
+        // TEST ORDER
+        test.testCreateOrder();
+        test.testGetOrders();
     }
+
+    /**
+     * @return the userLoggedIn
+     */
+    public static UserEntity getUserLoggedIn() {
+        return userLoggedIn;
+    }
+
+    /**
+     * @param aUserLoggedIn the userLoggedIn to set
+     */
+    public static void setUserLoggedIn(UserEntity aUserLoggedIn) {
+        userLoggedIn = aUserLoggedIn;
+    }
+    
+    
 }

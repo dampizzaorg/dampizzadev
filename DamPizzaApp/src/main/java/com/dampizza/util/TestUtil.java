@@ -10,6 +10,8 @@ import com.dampizza.exception.ingredient.IngredientCreateException;
 import com.dampizza.exception.ingredient.IngredientDeleteException;
 import com.dampizza.exception.ingredient.IngredientQueryException;
 import com.dampizza.exception.ingredient.IngredientUpdateException;
+import com.dampizza.exception.order.OrderCreateException;
+import com.dampizza.exception.order.OrderQueryException;
 import com.dampizza.exception.product.ProductCreateException;
 import com.dampizza.exception.product.ProductDeleteException;
 import com.dampizza.exception.product.ProductQueryException;
@@ -19,9 +21,11 @@ import com.dampizza.exception.user.UserDeleteException;
 import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.exception.user.UserUpdateException;
 import com.dampizza.logic.dto.IngredientDTO;
+import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.IngredientManagerImp;
+import com.dampizza.logic.imp.OrderManagerImp;
 import com.dampizza.logic.imp.ProductManagerImp;
 import com.dampizza.logic.imp.UserManagerImp;
 import java.util.ArrayList;
@@ -42,11 +46,13 @@ public class TestUtil {
     private UserManagerImp umi = null;
     private IngredientManagerImp imi = null;
     private ProductManagerImp pmi = null;
+    private OrderManagerImp omi = null;
 
     public TestUtil() {
         umi = new UserManagerImp();
         imi = new IngredientManagerImp();
         pmi = new ProductManagerImp();
+        omi = new OrderManagerImp();
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -202,7 +208,36 @@ public class TestUtil {
         }
     }
     
+    ////////////////////////////////////////////////////////////////////////////
+    //                                 ORDER                                  //
+    ////////////////////////////////////////////////////////////////////////////
     
+    public void testCreateOrder(){
+        try {
+            List<ProductDTO> products = new ArrayList<>();
+            products.add(pmi.getProductById(new Long(1)));
+            products.add(pmi.getProductById(new Long(4)));
+            
+            omi.createOrder(new OrderDTO(umi.getUserByUsername("username1"),
+                products, umi.getUserByUsername("username2")));
+        } catch (OrderCreateException ex) {
+            Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (OrderQueryException ex) {
+            Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UserQueryException ex) {
+            Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProductQueryException ex) {
+            Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void testGetOrders(){
+        try {
+            omi.getAllOrders().toString();
+        } catch (OrderQueryException ex) {
+            Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
     

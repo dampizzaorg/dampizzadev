@@ -7,6 +7,7 @@ package com.dampizza.util;
 
 import com.dampizza.model.entity.CredentialEntity;
 import com.dampizza.model.entity.IngredientEntity;
+import com.dampizza.model.entity.OrderEntity;
 import com.dampizza.model.entity.ProductEntity;
 import com.dampizza.model.entity.UserEntity;
 import org.hibernate.SessionFactory;
@@ -29,6 +30,7 @@ public class HibernateUtil {
                         config.addAnnotatedClass(CredentialEntity.class);
                         config.addAnnotatedClass(IngredientEntity.class);
                         config.addAnnotatedClass(ProductEntity.class);
+                        config.addAnnotatedClass(OrderEntity.class);
                                 
                         // load hibernate.cfg.xml from different directory
 			SessionFactory sessionFactory = config.configure(

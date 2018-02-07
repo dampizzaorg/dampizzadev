@@ -4,6 +4,7 @@ import com.dampizza.exception.product.ProductDeleteException;
 import com.dampizza.exception.product.ProductQueryException;
 import com.dampizza.exception.product.ProductUpdateException;
 import com.dampizza.logic.dto.ProductDTO;
+import com.dampizza.model.entity.ProductEntity;
 import java.util.List;
 
 /**
@@ -69,4 +70,26 @@ public interface ProductManagerInterface {
      * @throws ProductQueryException 
      */
     public Integer productExists(String name) throws ProductQueryException;
+    
+    /**
+     * Get all products in the database as entities
+     * @return List of ProductEntity
+     * @throws ProductQueryException
+     */
+    public List<ProductEntity> getProductEntities() throws ProductQueryException;
+    
+    /**
+     * Returns the corresponding entities from a dtos list.
+     * @param ingredients ProductDTO List
+     * @return ProductEntity List
+     * @throws ProductQueryException 
+     */
+    public List<ProductEntity> dtoToEntity(List<ProductDTO> products) throws ProductQueryException;
+    
+    /**
+     * Creates and return a list of product dtos from product entities.
+     * @param ingredients ProductEntity List
+     * @return ProductDTO List
+     */
+    public List<ProductDTO> EntityToDTO(List<ProductEntity> products);
 }
