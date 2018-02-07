@@ -1,5 +1,6 @@
 package com.dampizza.model.entity;
 
+import com.dampizza.cfg.AppConstants;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -63,7 +64,7 @@ public class CredentialEntity implements Serializable {
         this.password = password;
         this.lastAccess = new Date();
         this.lastPassChange = new Date();
-        this.credentialType = 8;
+        this.credentialType = AppConstants.USER_CUSTOMER;
         this.user = user;
     }
     
