@@ -22,6 +22,7 @@ import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
 import com.gluonhq.charm.glisten.control.TextArea;
 import com.gluonhq.charm.glisten.control.TextField;
+import java.io.EOFException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,7 +107,7 @@ public class SignupPresenter {
     public void btnActionSignUp() throws IOException {
         if (formValid()) {
             //pair the surnames on one string
-
+            
             try {
                 //Unify the two surnames and we put % symbol to split them when program present this user
                 String surname = tfFirstSurName.getText() + "%" + tfSecondSurName.getText();
@@ -123,13 +124,16 @@ public class SignupPresenter {
                 String message = "Welcome to DamPizza. You have been registered  sucesfully.You can now make orders of pizzas in the app. Have a nice day.\n"
                         + "Username: " + tfUserName.getText() + "\nPassword: " + pfPassword.getText();
                 MailUtil.sendEmail(tfEmail.getText(), "Regsitration completed", message);
+
             } catch (UserCreateException ex) {
                 Logger.getLogger(SignupPresenter.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UserQueryException ex) {
                 Logger.getLogger(SignupPresenter.class.getName()).log(Level.SEVERE, null, ex);
             }
+
             goLogin();
             clearAll();
+
         }
     }
 
