@@ -54,14 +54,14 @@ public class TestUtil {
     ////////////////////////////////////////////////////////////////////////////
     public void testCreateUsers() {
         try {
-            umi.createUser(new UserDTO("username1", "name1", "lastname1", "email1@dampizza.com", "address1"), "password1");
-            umi.createUser(new UserDTO("username2", "name2", "lastname2", "email2@dampizza.com", "address2"), "password2");
-            umi.createUser(new UserDTO("username3", "name3", "lastname3", "email3@dampizza.com", "address3"), "password3");
-            umi.createUser(new UserDTO("username4", "name4", "lastname4", "email4@dampizza.com", "address4"), "password4");
-            umi.createUser(new UserDTO("username5", "name5", "lastname5", "email5@dampizza.com", "address5"), "password5");
-            umi.createUser(new UserDTO("username6", "name6", "lastname6", "email6@dampizza.com", "address6"), "password6");
-            umi.createUser(new UserDTO("username7", "name7", "lastname7", "email7@dampizza.com", "address7"), "password7");
-            umi.createUser(new UserDTO("username8", "name8", "lastname8", "email8@dampizza.com", "address8"), "password8");
+            umi.createUser(new UserDTO("username1", "name1", "surname1", "email1@dampizza.com", "address1"), "password1");
+            umi.createUser(new UserDTO("username2", "name2", "surname2", "email2@dampizza.com", "address2"), "password2");
+            umi.createUser(new UserDTO("username3", "name3", "surname3", "email3@dampizza.com", "address3"), "password3");
+            umi.createUser(new UserDTO("username4", "name4", "surname4", "email4@dampizza.com", "address4"), "password4");
+            umi.createUser(new UserDTO("username5", "name5", "surname5", "email5@dampizza.com", "address5"), "password5");
+            umi.createUser(new UserDTO("username6", "name6", "surname6", "email6@dampizza.com", "address6"), "password6");
+            umi.createUser(new UserDTO("username7", "name7", "surname7", "email7@dampizza.com", "address7"), "password7");
+            umi.createUser(new UserDTO("username8", "name8", "surname8", "email8@dampizza.com", "address8"), "password8");
         } catch (UserCreateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UserQueryException ex) {

@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.PasswordField;
 
 /**
  * Presenter for login.fxml
@@ -42,7 +43,10 @@ public class LoginPresenter {
     private ImageView ivDampizza;
 
     @FXML
-    private TextField tfUsername, tfPassword;
+    private TextField tfUsername;
+            
+    @FXML
+    private PasswordField tfPassword;
 
     @FXML
     private Hyperlink hyRegistered, hyForgot;
@@ -128,7 +132,6 @@ public class LoginPresenter {
                 alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Has ocurred an error");
                 alert.showAndWait();
             }
-            
         }
         return correct;
     }
