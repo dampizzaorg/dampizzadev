@@ -20,6 +20,7 @@ import static com.dampizza.App.ORDER_VIEW;
 import static com.dampizza.App.PROFILE_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
 import static com.dampizza.App.SIGNUP_VIEW;
+import com.dampizza.cfg.AppConstants;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 
@@ -50,7 +51,6 @@ public class DrawerManager {
         final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
         final Item orderItem = new ViewItem("Make Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), ORDER_VIEW);
         final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
-
 
 
         /* REMEMBER TO ADD ITEMS TO THE DRAWER */
