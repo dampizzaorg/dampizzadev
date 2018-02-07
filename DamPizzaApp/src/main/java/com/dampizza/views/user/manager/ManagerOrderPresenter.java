@@ -50,7 +50,7 @@ public class ManagerOrderPresenter {
      
      public void editTextArea(){
          
-         taOrder.setText("sgshjfsghsfjhsgfsghfsghjfsghjsfghsfghsfhg");
+//         taOrder.setText("sgshjfsghsfjhsgfsghfsghjfsghjsfghsfghsfhg");
          
      }
      
