@@ -118,15 +118,15 @@ public class LoginPresenter {
 
         } else if (correct == 1) {
             correct = userManager.checkCredential(tfUsername.getText(), tfPassword.getText());
-            if (correct == 0) {
-                alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Has ocurred an error");
-                alert.showAndWait();
-            }else if (correct == 2) {
+            if (correct == 2) {
                 alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Some field values are not correct");
                 alert.showAndWait();
+            } else if (correct == 0) {
+                alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Has ocurred an error");
+                alert.showAndWait();
             }
+            
         }
-    return correct ;
-}
-
+        return correct;
+    }
 }

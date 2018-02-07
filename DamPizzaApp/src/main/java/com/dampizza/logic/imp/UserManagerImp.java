@@ -219,7 +219,7 @@ public class UserManagerImp implements UserManagerInterface {
     @Override
     public Boolean userExist(String user) {
         Boolean exist=false;
-        /*Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx=null;
         String hql = "from UserEntity where username = :username";
         
@@ -236,7 +236,7 @@ public class UserManagerImp implements UserManagerInterface {
             
         }catch(HibernateException e){
             e.printStackTrace();
-        }*/
+        }
         return exist;
     }
 
