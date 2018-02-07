@@ -90,6 +90,10 @@ public interface UserManagerInterface {
      * @return 1 yes, 2 no, 0 error. 
      */
     public Integer checkCredential(String username, String password);
+
+    public Integer checkStatus(String username);
+    public Boolean userExist(String user);
+
     
     /**
      * Change password
@@ -98,6 +102,7 @@ public interface UserManagerInterface {
      * @return 1 Success, 2 user not found, 0 error.
      */
     public Integer changePassword(String username, String password);
+
 
 
 }

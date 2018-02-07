@@ -80,10 +80,13 @@ public class LoginPresenter {
     @FXML
     void login() {
         Integer value = validateUser();
+        
         //If values is 1 then, the user is correct
         if (value == 1) {
+            Integer status=userManager.checkStatus(tfUsername.getText());
             ViewItem loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), CUSTOMER_VIEW, ViewStackPolicy.SKIP);
-            DrawerManager drawer = new DrawerManager();
+            DrawerManager drawer = new DrawerManager(status);
+             System.out.println("holaaeeeeeeeeeeee");
             drawer.updateView(loginItem);
             //If the value is 0 then the user is not correct
         }
@@ -118,15 +121,15 @@ public class LoginPresenter {
 
         } else if (correct == 1) {
             correct = userManager.checkCredential(tfUsername.getText(), tfPassword.getText());
-            if (correct == 0) {
-                alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Has ocurred an error");
-                alert.showAndWait();
-            }else if (correct == 2) {
+            if (correct == 2) {
                 alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Some field values are not correct");
                 alert.showAndWait();
+            } else if (correct == 0) {
+                alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Has ocurred an error");
+                alert.showAndWait();
             }
+            
         }
-    return correct ;
-}
-
+        return correct;
+    }
 }

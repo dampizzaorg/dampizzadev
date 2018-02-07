@@ -287,7 +287,6 @@ public class UserManagerImp implements UserManagerInterface {
         return res;
     }
 
-    @Override
     public Integer changePassword(String username, String password) {
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -321,5 +320,37 @@ public class UserManagerImp implements UserManagerInterface {
         }
         return res;
     }
+
+    @Override
+    public Integer checkStatus(String username) {
+        Integer res = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String hql = "from CredentialEntity where username = :username";
+
+        try {
+            tx = session.beginTransaction();
+
+            // Retrieve user to update
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            CredentialEntity credential = (CredentialEntity) query.uniqueResult();
+
+            res = credential.getCredentialType();
+            // Set user logged for the app
+            App.userLoggedIn = credential;
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return res;
+    }
+
 
 }
