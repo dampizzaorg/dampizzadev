@@ -67,7 +67,6 @@ public class LoginPresenter {
                 // -> System.out.println("Search")));
 
                 ivDampizza.setImage(new Image("/img/pizza_avatar_128.png"));
-
             }
         });
         userManager = new UserManagerImp();

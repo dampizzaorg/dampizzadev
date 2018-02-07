@@ -40,12 +40,12 @@
             <Insets top="30.0" />
          </padding>
          <children>
-            <Button fx:id="btnSelect" mnemonicParsing="false" prefHeight="32.0" prefWidth="231.0" text="SELECCIONAR DEALER">
+            <Button fx:id="btnSelect" onAction="select" mnemonicParsing="false" prefHeight="32.0" prefWidth="231.0" text="SELECCIONAR DEALER">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnConfirm" mnemonicParsing="false" prefHeight="32.0" prefWidth="158.0" text="CONFIRMAR DEALER">
+            <Button fx:id="btnConfirm" onAction="confirm" mnemonicParsing="false" prefHeight="32.0" prefWidth="158.0" text="CONFIRMAR DEALER">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
