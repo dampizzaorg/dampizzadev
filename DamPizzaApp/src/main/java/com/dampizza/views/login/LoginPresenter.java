@@ -10,6 +10,7 @@ import static com.dampizza.App.SIGNUP_VIEW;
 import com.dampizza.DrawerManager;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.logic.io.UserManagerInterface;
+import com.dampizza.util.EncrypterUtil;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.Alert;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
@@ -20,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.PasswordField;
 
 /**
  * Presenter for login.fxml
@@ -41,7 +43,10 @@ public class LoginPresenter {
     private ImageView ivDampizza;
 
     @FXML
-    private TextField tfUsername, tfPassword;
+    private TextField tfUsername;
+            
+    @FXML
+    private PasswordField tfPassword;
 
     @FXML
     private Hyperlink hyRegistered, hyForgot;
@@ -120,7 +125,7 @@ public class LoginPresenter {
             //Check username and password are correct 
 
         } else if (correct == 1) {
-            correct = userManager.checkCredential(tfUsername.getText(), tfPassword.getText());
+            correct = userManager.checkCredential(tfUsername.getText(), EncrypterUtil.encrypt(tfPassword.getText()));
             if (correct == 2) {
                 alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Some field values are not correct");
                 alert.showAndWait();
@@ -128,7 +133,6 @@ public class LoginPresenter {
                 alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Has ocurred an error");
                 alert.showAndWait();
             }
-            
         }
         return correct;
     }
