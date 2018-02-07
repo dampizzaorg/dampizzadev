@@ -5,9 +5,11 @@
  */
 package com.dampizza.model.entity;
 
+import com.dampizza.cfg.AppConstants;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +17,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -32,47 +39,48 @@ public class OrderEntity implements Serializable{
     private Long id;
     
     @Column(name = "date", nullable = false)
+    @Basic
+    @Temporal(TemporalType.DATE)
     private Date date;
     
     @Column(name = "address", nullable = false, length = 200)
     private String address;
     
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "item_id")
+    @ManyToMany(cascade=CascadeType.ALL)  
+    @JoinTable(name="order_product", joinColumns=@JoinColumn(name="order_id"), inverseJoinColumns=@JoinColumn(name="product_id")) 
     private List<ProductEntity> products;
-    
-    // Extra Ingredients
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinColumn(name = "ingredient_id")
-//    private List<IngredientEntity> ingredients;
-    
-    // Cancelled: 0, Preparing: 1, On delivery: 2, Delivered: 3
+     
     @Column(name = "status", nullable = false, length = 2)
     private Integer status;
     
-    @Column(name = "customer", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity customer;
     
-    @Column(name = "customer")
+    @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity dealer;
     
     public OrderEntity(){
         
     }
     
-    public OrderEntity(UserEntity customer, String address, List<ProductEntity> products){
+    public OrderEntity(UserEntity customer, String address, List<ProductEntity> products, UserEntity dealer){
+        this.date= new Date();
         this.customer=customer;
         this.address=address;
         this.products=products;
-        this.status=1;
+        this.dealer=dealer;
+        this.status=AppConstants.STATUS_PREPARING;
     }
     
-//    public OrderEntity(UserEntity customer, String address, List<ProductEntity> products, List<IngredientEntity> ingredients){
-//        this.address=address;
-//        this.products=products;
-//        this.customer=customer;
-//    }
-
+    public OrderEntity(UserEntity customer, List<ProductEntity> products, UserEntity dealer){
+        this.date= new Date();
+        this.customer=customer;
+        this.address=customer.getAddress();
+        this.products=products;
+        this.dealer=dealer;
+        this.status=AppConstants.STATUS_PREPARING;
+    }
+    
     /**
      * @return the id
      */

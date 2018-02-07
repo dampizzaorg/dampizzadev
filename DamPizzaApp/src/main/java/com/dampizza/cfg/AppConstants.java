@@ -20,6 +20,11 @@ public class AppConstants {
     public static final Integer USER_DEALER = 2;
     public static final Integer USER_CUSTOMER = 3;
     
+    // ORDER STATUS
+    public static final Integer STATUS_CANCELLED = 0;
+    public static final Integer STATUS_PREPARING = 1;
+    public static final Integer STATUS_ONDELIVER = 2;
+    public static final Integer STATUS_DELIVERED = 3;
     
     
 }

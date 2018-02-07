@@ -6,6 +6,9 @@
 package com.dampizza.views.user;
 
 import com.dampizza.App;
+import com.dampizza.exception.order.OrderQueryException;
+import com.dampizza.logic.dto.OrderDTO;
+import com.dampizza.logic.imp.OrderManagerImp;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.CharmListView;
@@ -13,6 +16,10 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -21,18 +28,24 @@ import javafx.fxml.Initializable;
  *
  * @author 2dam
  */
-public class HistoryViewController implements Initializable {
+public class HistoryPresenter implements Initializable {
 
+    private OrderManagerImp omi;
+    private ObservableList<OrderDTO> oblOrders;
+    
     @FXML
-    private CharmListView<?, ? extends Comparable> lvPedidos;
+    private CharmListView<OrderDTO, ? extends Comparable> lvOrders;
     @FXML
     private View primary;
+    
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
        primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
@@ -47,6 +60,13 @@ public class HistoryViewController implements Initializable {
                 
             }
         });
-    }  
-    
+       
+       omi = new OrderManagerImp();
+        try {
+            oblOrders = FXCollections.observableArrayList(omi.getAllOrders());
+        } catch (OrderQueryException ex) {
+            Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       lvOrders.setItems(oblOrders);
+    }     
 }

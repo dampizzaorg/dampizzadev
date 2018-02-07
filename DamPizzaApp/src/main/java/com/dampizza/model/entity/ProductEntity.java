@@ -37,11 +37,10 @@ public class ProductEntity implements Serializable{
     private Double price;
     
     @Column(name = "category")
-    // Pizza: 1, Drink:2, Ingredient: 3
     private Integer category;
     
-    @ManyToMany(cascade=CascadeType.ALL)  
-    @JoinTable(name="ingredient_product", joinColumns=@JoinColumn(name="product_id"), inverseJoinColumns=@JoinColumn(name="ingredient_id")) 
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="product_ingredient", joinColumns=@JoinColumn(name="product_id"), inverseJoinColumns=@JoinColumn(name="ingredient_id")) 
     private List<IngredientEntity> ingredients;
     
     public ProductEntity(){
