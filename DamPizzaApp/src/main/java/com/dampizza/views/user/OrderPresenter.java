@@ -6,33 +6,21 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
-import static com.dampizza.App.CUSTOMER_VIEW;
-import static com.dampizza.App.ORDER_VIEW;
-import com.dampizza.DrawerManager;
-import com.gluonhq.charm.glisten.application.ViewStackPolicy;
-import com.gluonhq.charm.glisten.control.NavigationDrawer;
-import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
-import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
- * Presenter for customer.fxml
+ * Presenter for manager.fxml
  * 
  * @author Carlos Santos
  */
-public class CustomerPresenter {
+public class OrderPresenter {
 
     @FXML
     private View primary;
 
     @FXML
     private Label label;
-    
-    @FXML
-    private ImageView image;
 
     public void initialize() {
         
@@ -44,22 +32,15 @@ public class CustomerPresenter {
                 
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-                appBar.setTitleText("DAMPIZZA 2018");
-                appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> 
-                        System.out.println("Search")));
-                
+                appBar.setTitleText("Manager");
+
             }
         });
     }
     
     @FXML
     void buttonClick() {
-         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
-        DrawerManager drawer = new DrawerManager();
-        drawer.updateView(Item);
-        
-      
-        
+        label.setText("ESKETIT!");
     }
     
 }

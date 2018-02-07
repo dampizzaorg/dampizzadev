@@ -2,6 +2,7 @@ package com.dampizza;
 
 import static com.dampizza.App.CUSTOMER_VIEW;
 import static com.dampizza.App.DEALER_VIEW;
+import static com.dampizza.App.HISTORY_VIEW;
 import com.gluonhq.charm.down.Platform;
 import com.gluonhq.charm.down.Services;
 import com.gluonhq.charm.down.plugins.LifecycleService;
@@ -15,6 +16,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import static com.dampizza.App.MENU_LAYER;
 import static com.dampizza.App.LOGIN_VIEW;
 import static com.dampizza.App.MANAGER_VIEW;
+import static com.dampizza.App.ORDER_VIEW;
 import static com.dampizza.App.PROFILE_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
 import static com.dampizza.App.SIGNUP_VIEW;
@@ -51,8 +53,10 @@ public class DrawerManager {
         if(usu==1){
         final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
         final Item customerItem = new ViewItem("Customer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
+          final Item orderItem = new ViewItem("Make Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), ORDER_VIEW);
+        final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
         /* REMEMBER TO ADD ITEMS TO THE DRAWER */
-        drawer.getItems().addAll(profileItem, customerItem);
+        drawer.getItems().addAll(profileItem, customerItem,orderItem,historyItem);
         }else if(usu==2){
         final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
         final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
@@ -61,11 +65,8 @@ public class DrawerManager {
         }else{
         final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
         final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
-        /* REMEMBER TO ADD ITEMS TO THE DRAWER */
         drawer.getItems().addAll(profileItem, dealerItem);
         }
-
-        
 
         if (Platform.isDesktop()) {
             final Item quitItem = new Item("Quit", MaterialDesignIcon.EXIT_TO_APP.graphic());

@@ -8,6 +8,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
 import static com.dampizza.App.LOGIN_VIEW;
 import com.dampizza.DrawerManager;
+import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.logic.io.UserManagerInterface;
@@ -98,7 +99,7 @@ public class SignupPresenter {
         }
     }
 
-    public boolean formValid() {
+    public boolean formValid() throws UserQueryException {
         boolean valid = true;
         String userName = tfUserName.getText();
         String name = tfName.getText();
@@ -119,7 +120,7 @@ public class SignupPresenter {
 
         //CHECK USER NAME ONLY IF ALL THE VALUES ARE NOT NULL
         if (valid) {
-            valid = userManager.userExist(userName);
+            valid = userManager.userExists(userName)==1;
             //IF USER EXIST
             if (valid) {
                 Alert alert = new Alert(AlertType.WARNING, "User name in use");

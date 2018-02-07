@@ -5,6 +5,7 @@
  */
 package com.dampizza.logic.dto;
 
+import com.dampizza.cfg.AppConstants;
 import java.util.Collection;
 import java.util.List;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -51,8 +52,16 @@ public class ProductDTO {
         this.description = new SimpleStringProperty(description);
         this.price = new SimpleDoubleProperty(price);
         this.category = new SimpleIntegerProperty(category);
-        this.ingredients = new SimpleObjectProperty(ingredients);
-        
+        this.ingredients = new SimpleObjectProperty(ingredients); 
+    }
+    
+    public ProductDTO(Long id, String name, String description, Double price) {
+        this.id = new SimpleLongProperty(id);
+        this.name = new SimpleStringProperty(name);
+        this.description = new SimpleStringProperty(description);
+        this.price = new SimpleDoubleProperty(price);
+        this.category = new SimpleIntegerProperty(AppConstants.PRODUCT_DRINK);
+        this.ingredients = new SimpleObjectProperty(null);
     }
 
     /**
@@ -142,7 +151,7 @@ public class ProductDTO {
     @Override
     public String toString(){
         return "id: "+this.getId()+", name: "+this.getName()+", description: "+this.getDescription()+
-                ", price: "+this.getPrice()+", category: "+this.getCategory();
+                ", price: "+this.getPrice()+", category: "+this.getCategory()+", ingredients: "+this.getIngredients().toString();
     }
 
     
