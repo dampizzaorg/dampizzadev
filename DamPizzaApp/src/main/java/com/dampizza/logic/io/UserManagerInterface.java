@@ -93,7 +93,9 @@ public interface UserManagerInterface {
 
     public Integer checkStatus(String username);
 
+
     //public Boolean userExist(String user);
+
 
     
     /**
