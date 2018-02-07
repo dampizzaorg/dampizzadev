@@ -270,6 +270,7 @@ public class UserManagerImp implements UserManagerInterface {
                 session.update(user.getCredential());
                 // Set user logged for the app
                 App.setUserLoggedIn(user);
+
                 res = 1;
             } else {
                 res = 2;
@@ -341,6 +342,7 @@ public class UserManagerImp implements UserManagerInterface {
             // Set user logged for the app
             //App.userLoggedIn = getUserByUsername(username);
 
+
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();
@@ -372,6 +374,7 @@ public class UserManagerImp implements UserManagerInterface {
         }
         return userResult;
     }
+
 
 
 }

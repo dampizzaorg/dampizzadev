@@ -100,6 +100,13 @@ public interface UserManagerInterface {
     public Integer checkCredential(String username, String password);
 
     public Integer checkStatus(String username);
+
+
+
+    //public Boolean userExist(String user);
+
+
+
     
     /**
      * Change password
