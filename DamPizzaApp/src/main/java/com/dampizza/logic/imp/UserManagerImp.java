@@ -253,7 +253,7 @@ public class UserManagerImp implements UserManagerInterface {
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        String hql = "from CredentialEntity where username = :username and password = :password";
+        String hql = "from UserEntity where credential.username = :username and credential.password = :password";
 
         try {
             tx = session.beginTransaction();
@@ -262,13 +262,14 @@ public class UserManagerImp implements UserManagerInterface {
             Query query = session.createQuery(hql);
             query.setParameter("username", username);
             query.setParameter("password", password);
-            CredentialEntity credential = (CredentialEntity) query.uniqueResult();
+            UserEntity user = (UserEntity) query.uniqueResult();
 
-            if (credential != null) {
-                credential.setLastAccess(new Date());
-                session.update(credential);
+            // If loging successfull set session user
+            if (user != null) {
+                user.getCredential().setLastAccess(new Date());
+                session.update(user.getCredential());
                 // Set user logged for the app
-                App.userLoggedIn = credential;
+                App.userLoggedIn = user;
                 res = 1;
             } else {
                 res = 2;
@@ -338,7 +339,7 @@ public class UserManagerImp implements UserManagerInterface {
 
             res = credential.getCredentialType();
             // Set user logged for the app
-            App.userLoggedIn = credential;
+            //App.userLoggedIn = credential;
 
         } catch (HibernateException e) {
             if (tx != null) {

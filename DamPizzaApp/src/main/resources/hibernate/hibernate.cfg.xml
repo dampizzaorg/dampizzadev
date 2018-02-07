@@ -43,10 +43,10 @@ Contributor(s):
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-<!--        LOCALHOST>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>
+<!--        LOCALHOST-->
+<!--        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">ubuntu</property-->
+        <property name="hibernate.connection.password">ubuntu</property>-->
         
 <!--        CLASSROOM SERVER-->
         <property name="hibernate.connection.url">jdbc:mysql://10.22.82.146:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>

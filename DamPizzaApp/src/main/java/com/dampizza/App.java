@@ -52,7 +52,7 @@ public class App extends MobileApplication {
 
     public static Locale locale;
     public static ResourceBundle bundle;
-    public static CredentialEntity userLoggedIn = null;
+    public static UserEntity userLoggedIn = null;
     private static TestUtil test = null;
 
     public static final String LOGIN_VIEW = HOME_VIEW;
