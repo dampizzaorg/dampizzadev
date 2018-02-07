@@ -6,6 +6,11 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
+import static com.dampizza.App.ORDER_VIEW;
+import static com.dampizza.App.RECOVER_VIEW;
+import com.dampizza.DrawerManager;
+import com.gluonhq.charm.glisten.application.ViewStackPolicy;
+import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -42,7 +47,9 @@ public class DealerPresenter {
     
     @FXML
     void buttonClick() {
-        label.setText("ESKETIT!");
+        NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
+        DrawerManager drawer = new DrawerManager();
+        drawer.updateView(Item);
     }
     
 }

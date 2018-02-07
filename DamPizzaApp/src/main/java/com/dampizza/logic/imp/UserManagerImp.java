@@ -6,6 +6,10 @@
 package com.dampizza.logic.imp;
 
 import com.dampizza.App;
+import com.dampizza.exception.user.UserCreateException;
+import com.dampizza.exception.user.UserDeleteException;
+import com.dampizza.exception.user.UserQueryException;
+import com.dampizza.exception.user.UserUpdateException;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.io.UserManagerInterface;
 import com.dampizza.model.entity.CredentialEntity;
@@ -15,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -28,70 +34,60 @@ import org.hibernate.transform.Transformers;
  */
 public class UserManagerImp implements UserManagerInterface {
 
+    private static final Logger logger = Logger.getLogger(UserManagerImp.class.getName());
+
     @Override
-    public Integer createUser(UserDTO user, String password) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
+    public Integer createUser(UserDTO user, String password) throws UserCreateException, UserQueryException {
         Integer res = 0;
-        UserEntity userCreated = null;
 
-        try {
-            tx = session.beginTransaction();
-            Long userId = (Long) session.save(new UserEntity(user));
-            userCreated = (UserEntity) session.get(UserEntity.class, userId);
-            tx.commit();
-            res = 1;
+        // If user is not in the database already
+        if (userExists(user.getUsername()) == 2) {
+            logger.log(Level.INFO, "Creating user <{0}>.", user.getUsername());
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = null;
 
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
+            UserEntity userCreated = null;
+
+            try {
+                tx = session.beginTransaction();
+                // Creating user.
+                Long userId = (Long) session.save(new UserEntity(user));
+                if (userId != null) {
+                    // Retrieving created user.
+                    userCreated = (UserEntity) session.get(UserEntity.class, userId);
+                    res = 1;
+                    logger.log(Level.INFO, "User {0} created.", user.getUsername());
+                }
+                tx.commit();
+            } catch (HibernateException e) {
+                if (tx != null) {
+                    tx.rollback();
+                }
+                logger.severe("An error has ocurred while creating user <" + user.getUsername() + ">:");
+                throw new UserCreateException("Error on createUser(): \n" + e.getMessage());
+            } finally {
+                session.close();
+                // Creating Credential
+                if (userCreated != null) {
+                    createCredential(userCreated, user.getUsername(), password);
+                }
+
             }
-            e.printStackTrace();
-        } finally {
-            session.close();
-            if (userCreated != null) {
-                createCredential(userCreated, user.getUsername(), password);
-            }
-
+        } else {
+            res = 2;
+            logger.log(Level.INFO, "User {0} already exists.", user.getUsername());
         }
+
         return res;
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        List<UserDTO> userList = new ArrayList();
-
-        try {
-            List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
-
-            userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
-                    u.getSurnames(), u.getEmail(), u.getAddress())));
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
-        return userList;
-    }
-
-    @Override
-    public UserDTO getUserByLogin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Integer updateUser(UserDTO user) {
+    public Integer updateUser(UserDTO user) throws UserUpdateException {
+        logger.log(Level.INFO, "Updating user <{0}>.", user.getUsername());
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         Integer res = 0;
-        String hql = "from UserEntity where username = :username";
+        String hql = "from UserEntity where credential.username = :username";
 
         try {
             tx = session.beginTransaction();
@@ -110,6 +106,9 @@ public class UserManagerImp implements UserManagerInterface {
 
                 // Update user in db
                 session.update(userToUpdate);
+                res = 1;
+            } else {
+                res = 2;
             }
 
             tx.commit();
@@ -117,7 +116,8 @@ public class UserManagerImp implements UserManagerInterface {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "An error has ocurred while updating user<{0}>:", user.getUsername());
+            throw new UserUpdateException("Error on updateUser(): \n" + e.getMessage());
         } finally {
             session.close();
         }
@@ -125,23 +125,28 @@ public class UserManagerImp implements UserManagerInterface {
     }
 
     @Override
-    public Integer deleteUser(UserDTO user) {
+    public Integer deleteUser(Long id) throws UserDeleteException {
+        logger.log(Level.INFO, "Deleting user <{0}>.", id);
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         Integer res = 0;
-        String hql = "from UserEntity where username = :username";
+        String hql = "from UserEntity where id = :id";
 
         try {
             tx = session.beginTransaction();
 
             // Retrieve user to update
             Query query = session.createQuery(hql);
-            query.setParameter("username", user.getUsername());
+            query.setParameter("id", id);
             UserEntity userToDelete = (UserEntity) query.uniqueResult();
 
             if (userToDelete != null) {
                 session.delete(userToDelete);
-                System.out.println(userToDelete.getCredential().getUsername() + " deleted.");
+                res = 1;
+                logger.log(Level.INFO, "User id<{0}>, name<{1}> deleted.", new Object[]{id, userToDelete.getName()});
+            } else {
+                res = 2;
+                logger.log(Level.INFO, "User id<{0}> not found.", id);
             }
 
             tx.commit();
@@ -149,7 +154,73 @@ public class UserManagerImp implements UserManagerInterface {
             if (tx != null) {
                 tx.rollback();
             }
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "An error has ocurred while deleting user id<{0}>: ", id);
+            throw new UserDeleteException("Error on deleteUser(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return res;
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers() throws UserQueryException {
+        logger.info("Getting list of all users.");
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<UserDTO> userList = new ArrayList();
+
+        try {
+            List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
+
+            userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
+                    u.getSurnames(), u.getEmail(), u.getAddress())));
+        } catch (HibernateException e) {
+            logger.severe("An error has ocurred while getting users:");
+            throw new UserQueryException("Error on getAllUsers(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return userList;
+    }
+
+    @Override
+    public UserDTO getUserByUsername(String username) throws UserQueryException {
+        logger.log(Level.INFO, "Getting ingredient by username<{0}>", username);
+        UserDTO user = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from UserEntity where credential.username = :username";
+
+        try {
+            Query query = session.createQuery(hql);
+            query.setParameter("username", user);
+            UserEntity userResult = (UserEntity) query.uniqueResult();
+        } catch (HibernateException e) {
+            logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", username);
+            throw new UserQueryException("Error on getUserByUsername(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return user;
+    }
+
+    @Override
+    public Integer userExists(String username) throws UserQueryException {
+        logger.log(Level.INFO, "Checking if user <{0}> already exists.", username);
+
+        Integer res = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from UserEntity where credential.username = :username";
+
+        try {
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            UserEntity userResult = (UserEntity) query.uniqueResult();
+
+            res = userResult != null ? 1 : 2;
+
+        } catch (HibernateException e) {
+            logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", username);
+            throw new UserQueryException("Error on userExists(): \n" + e.getMessage());
         } finally {
             session.close();
         }
@@ -183,7 +254,7 @@ public class UserManagerImp implements UserManagerInterface {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         String hql = "from CredentialEntity where username = :username and password = :password";
-        
+
         try {
             tx = session.beginTransaction();
 
@@ -197,10 +268,10 @@ public class UserManagerImp implements UserManagerInterface {
                 credential.setLastAccess(new Date());
                 session.update(credential);
                 // Set user logged for the app
-                App.userLoggedIn=credential;
+                App.userLoggedIn = credential;
                 res = 1;
-            }else{
-                res= 2;
+            } else {
+                res = 2;
             }
 
             tx.commit();
@@ -216,37 +287,12 @@ public class UserManagerImp implements UserManagerInterface {
         return res;
     }
 
-    @Override
-    public Boolean userExist(String user) {
-        Boolean exist=false;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx=null;
-        String hql = "from UserEntity where username = :username";
-        
-        
-        try{
-            tx=session.beginTransaction();
-            Query query = session.createQuery(hql);
-            query.setParameter("username", user);
-            UserEntity userResult = (UserEntity) query.uniqueResult();
-            
-            if(userResult!=null){
-                exist=true;
-            }
-            
-        }catch(HibernateException e){
-            e.printStackTrace();
-        }
-        return exist;
-    }
-
-    @Override
-    public Integer resetPassword(String username, String password) {
+    public Integer changePassword(String username, String password) {
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         String hql = "from CredentialEntity where username = :username";
-        
+
         try {
             tx = session.beginTransaction();
 
@@ -256,10 +302,11 @@ public class UserManagerImp implements UserManagerInterface {
 
             if (credential != null) {
                 credential.setPassword(password);
+                credential.setLastPassChange(new Date());
                 session.update(credential);
                 res = 1;
-            }else{
-                res= 2;
+            } else {
+                res = 2;
             }
 
             tx.commit();
@@ -271,6 +318,37 @@ public class UserManagerImp implements UserManagerInterface {
         } finally {
             session.close();
         }
+        return res;
+    }
+
+    @Override
+    public Integer checkStatus(String username) {
+        Integer res = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        String hql = "from CredentialEntity where username = :username";
+
+        try {
+            tx = session.beginTransaction();
+
+            // Retrieve user to update
+            Query query = session.createQuery(hql);
+            query.setParameter("username", username);
+            CredentialEntity credential = (CredentialEntity) query.uniqueResult();
+
+            res = credential.getCredentialType();
+            // Set user logged for the app
+            App.userLoggedIn = credential;
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
         return res;
     }
 
