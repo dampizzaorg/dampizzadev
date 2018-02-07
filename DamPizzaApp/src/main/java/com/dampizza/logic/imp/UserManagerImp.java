@@ -168,9 +168,11 @@ public class UserManagerImp implements UserManagerInterface {
 
         try {
             List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
-
-            userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
+            if(userEntities!=null){
+                userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
                     u.getSurnames(), u.getEmail(), u.getAddress())));
+            }
+                
         } catch (HibernateException e) {
             logger.severe("An error has ocurred while getting users:");
             throw new UserQueryException("Error on getAllUsers(): \n" + e.getMessage());
@@ -192,8 +194,11 @@ public class UserManagerImp implements UserManagerInterface {
             Query query = session.createQuery(hql);
             query.setParameter("username", username);
             UserEntity userResult = (UserEntity) query.uniqueResult();
-            user = new UserDTO(userResult.getCredential().getUsername(), userResult.getName(),
+            if(userResult!=null){
+                user = new UserDTO(userResult.getCredential().getUsername(), userResult.getName(),
                     userResult.getSurnames(), userResult.getEmail(), userResult.getAddress());
+            }
+            
         } catch (HibernateException e) {
             logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", username);
             throw new UserQueryException("Error on getUserByUsername(): \n" + e.getMessage());

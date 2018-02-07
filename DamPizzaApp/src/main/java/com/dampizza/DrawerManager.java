@@ -33,45 +33,43 @@ import javafx.scene.image.Image;
 public class DrawerManager {
 
     private final NavigationDrawer drawer;
-    private static Integer usu=1;
-    
-    public DrawerManager (Integer status){
+    private static Integer usu = 1;
+
+    public DrawerManager(Integer status) {
         this.drawer = new NavigationDrawer();
-        usu=status;
+        usu = status;
     }
 
     public DrawerManager() {
         this.drawer = new NavigationDrawer();
-           System.out.println("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
         NavigationDrawer.Header header = new NavigationDrawer.Header("DamPizza",
                 "Mobile App",
                 new Avatar(21, new Image(DrawerManager.class.getResourceAsStream("/img/pizza_avatar_128.png"))));
         drawer.setHeader(header);
 
         /* CREATE NEW DRAWER ITEMS HERE*/
-        
         /* CAMBIAR MENU DEPENDIENDO DEL USUARIO*/
-        
-        if(usu==1){
-        final Item customerItem = new ViewItem("Customer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
-          final Item orderItem = new ViewItem("Make Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), ORDER_VIEW);
-        final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
+        if (usu == AppConstants.USER_CUSTOMER) {
+            final Item customerItem = new ViewItem("Customer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
+            final Item orderItem = new ViewItem("Make Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), ORDER_VIEW);
+            final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
 
-        final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
+            final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
 
-        /* REMEMBER TO ADD ITEMS TO THE DRAWER */
-        drawer.getItems().addAll(customerItem,orderItem,historyItem,profileItem);
-        }else if(usu==2){
-        final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
-        final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);  
-         final Item registerItem = new ViewItem("Register a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
-         final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
-        /* REMEMBER TO ADD ITEMS TO THE DRAWER */
-        drawer.getItems().addAll(managerItem,managerOrderItem,registerItem,profileItem);
-        }else{
-        final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
-        final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
-        drawer.getItems().addAll(dealerItem,profileItem);
+            /* REMEMBER TO ADD ITEMS TO THE DRAWER */
+            drawer.getItems().addAll(customerItem, orderItem, historyItem, profileItem);
+        } else if (usu == AppConstants.USER_MANAGER) {
+            final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
+            final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);
+            final Item registerItem = new ViewItem("Register a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
+            final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
+
+            drawer.getItems().addAll(managerItem, managerOrderItem, registerItem, profileItem);
+        } else if (usu == AppConstants.USER_DEALER){
+            final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
+            final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
+            drawer.getItems().addAll(dealerItem, profileItem);
         }
 
         if (Platform.isDesktop()) {
@@ -93,7 +91,8 @@ public class DrawerManager {
 
     /**
      * Update item
-     * @param viewName 
+     *
+     * @param viewName
      */
     private void updateItem(String viewName) {
         for (Node item : drawer.getItems()) {
@@ -106,7 +105,8 @@ public class DrawerManager {
 
     /**
      * Update view
-     * @param Item 
+     *
+     * @param Item
      */
     public void updateView(Item Item) {
         drawer.setSelectedItem(Item);
@@ -115,6 +115,7 @@ public class DrawerManager {
 
     /**
      * Returns Drawer
+     *
      * @return NavigationDrawer object
      */
     public NavigationDrawer getDrawer() {

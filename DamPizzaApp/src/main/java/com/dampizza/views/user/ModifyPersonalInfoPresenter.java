@@ -36,7 +36,7 @@ import javafx.scene.control.PasswordField;
  *
  * @author 2dam
  */
-public class ModifyPersonalInfoController implements Initializable {
+public class ModifyPersonalInfoPresenter implements Initializable {
 
     @FXML
     private Label lbUserName;
@@ -75,7 +75,7 @@ public class ModifyPersonalInfoController implements Initializable {
     @FXML
     private View primary;
     
-    private static final Logger logger =Logger.getLogger(ModifyPersonalInfoController.class.getName());
+    private static final Logger logger =Logger.getLogger(ModifyPersonalInfoPresenter.class.getName());
 
     /**
      * Initializes the controller class.
@@ -97,13 +97,13 @@ public class ModifyPersonalInfoController implements Initializable {
                 tfRepeatPassword.setPromptText("Repeat here");
             
                 //Load the textField with the current user information.
-                tfUserName.setText(App.userLoggedIn.getCredential().getUsername());
-                tfName.setText(App.userLoggedIn.getName());
-                String[] surnames = App.userLoggedIn.getSurnames().split("%");
+                tfUserName.setText(App.getUserLoggedIn().getCredential().getUsername());
+                tfName.setText(App.getUserLoggedIn().getName());
+                String[] surnames = App.getUserLoggedIn().getSurnames().split("%");
                 tfFirstSurName.setText(surnames[0]);
                 tfSecondSurName.setText(surnames[1]);
-                tfDirection.setText(App.userLoggedIn.getAddress());
-                tfEmail.setText(App.userLoggedIn.getEmail());           
+                tfDirection.setText(App.getUserLoggedIn().getAddress());
+                tfEmail.setText(App.getUserLoggedIn().getEmail());           
             }    
      });
     }

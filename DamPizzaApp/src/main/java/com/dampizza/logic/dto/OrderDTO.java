@@ -41,7 +41,10 @@ public class OrderDTO {
     public OrderDTO(UserDTO customer, List<ProductDTO> products, UserDTO dealer) {
         this.id = new SimpleLongProperty();
         this.date = new SimpleObjectProperty<Date>();
-        this.address = new SimpleStringProperty(customer.getAddress());
+
+        this.address = customer != null ? new SimpleStringProperty(customer.getAddress()) 
+                : new SimpleStringProperty();
+        
         this.products = new SimpleObjectProperty<List<ProductDTO>>(products);
         this.customer = new SimpleObjectProperty<UserDTO>(customer);
         this.dealer = new SimpleObjectProperty<UserDTO>(dealer);

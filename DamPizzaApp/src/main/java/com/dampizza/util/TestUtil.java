@@ -59,15 +59,17 @@ public class TestUtil {
     //                                 USER                                   //
     ////////////////////////////////////////////////////////////////////////////
     public void testCreateUsers() {
+        EncrypterUtil.encrypt("password1");
         try {
-            umi.createUser(new UserDTO("username1", "name1", "surname1", "email1@dampizza.com", "address1"), "password1");
-            umi.createUser(new UserDTO("username2", "name2", "surname2", "email2@dampizza.com", "address2"), "password2");
-            umi.createUser(new UserDTO("username3", "name3", "surname3", "email3@dampizza.com", "address3"), "password3");
-            umi.createUser(new UserDTO("username4", "name4", "surname4", "email4@dampizza.com", "address4"), "password4");
-            umi.createUser(new UserDTO("username5", "name5", "surname5", "email5@dampizza.com", "address5"), "password5");
-            umi.createUser(new UserDTO("username6", "name6", "surname6", "email6@dampizza.com", "address6"), "password6");
-            umi.createUser(new UserDTO("username7", "name7", "surname7", "email7@dampizza.com", "address7"), "password7");
-            umi.createUser(new UserDTO("username8", "name8", "surname8", "email8@dampizza.com", "address8"), "password8");
+            umi.createUser(new UserDTO("manager", "name1", "surname1", "manager@dampizza.com", "address1"), EncrypterUtil.encrypt("manager"));
+            umi.createUser(new UserDTO("dealer1", "dealer1", "surname2", "dealer1@dampizza.com", "address2"), EncrypterUtil.encrypt("dealer1"));
+            umi.createUser(new UserDTO("dealer2", "dealer2", "surname3", "dealer2@dampizza.com", "address3"), EncrypterUtil.encrypt("dealer2"));
+            umi.createUser(new UserDTO("jonxa", "name4", "surname4", "email4@dampizza.com", "address4"), EncrypterUtil.encrypt("jonxa"));
+            umi.createUser(new UserDTO("isma", "name5", "surname5", "email5@dampizza.com", "address5"), EncrypterUtil.encrypt("isma"));
+            umi.createUser(new UserDTO("carlos", "carlos", "surname6", "carlos@dampizza.com", "address6"), EncrypterUtil.encrypt("carlos"));
+            umi.createUser(new UserDTO("clsan", "carlos", "santos", "clsan@dampizza.com", "address7"), EncrypterUtil.encrypt("clsan"));
+            umi.createUser(new UserDTO("username1", "name1", "surname1", "email1@dampizza.com", "address1"), EncrypterUtil.encrypt("password1"));
+            umi.createUser(new UserDTO("username8", "name8", "surname8", "email8@dampizza.com", "address8"), EncrypterUtil.encrypt("password1"));
         } catch (UserCreateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UserQueryException ex) {
@@ -219,7 +221,7 @@ public class TestUtil {
             products.add(pmi.getProductById(new Long(4)));
             
             omi.createOrder(new OrderDTO(umi.getUserByUsername("username1"),
-                products, umi.getUserByUsername("username2")));
+                products, umi.getUserByUsername("dealer1")));
         } catch (OrderCreateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         } catch (OrderQueryException ex) {

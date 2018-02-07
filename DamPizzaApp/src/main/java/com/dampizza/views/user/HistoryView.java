@@ -23,7 +23,7 @@ public class HistoryView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(HistoryView.class.getResource("/com/dampizza/views/user/historyView.fxml"));
+            View view = FXMLLoader.load(HistoryView.class.getResource("/com/dampizza/views/user/history.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {
