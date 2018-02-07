@@ -287,7 +287,6 @@ public class UserManagerImp implements UserManagerInterface {
         return res;
     }
 
-
     public Integer changePassword(String username, String password) {
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
