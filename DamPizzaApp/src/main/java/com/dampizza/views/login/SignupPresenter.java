@@ -8,18 +8,23 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
 import static com.dampizza.App.LOGIN_VIEW;
 import com.dampizza.DrawerManager;
+import com.dampizza.exception.user.UserCreateException;
 import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.logic.io.UserManagerInterface;
 import com.dampizza.util.EncrypterUtil;
 import com.dampizza.util.EmailValidator;
+import com.dampizza.util.MailUtil;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.Alert;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
 import com.gluonhq.charm.glisten.control.TextField;
+import java.io.EOFException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -83,19 +88,23 @@ public class SignupPresenter {
             //pair the surnames on one string
             String surname = tfFirstSurName.getText() + " " + tfSecondSurName.getText();
             //encrypt the password
-
             String password = EncrypterUtil.encrypt(pfPassword.getText());
-
             System.out.println(password);
             //Create and upload the user into the DB with the specified data
             UserDTO user = new UserDTO(tfUserName.getText(), tfName.getText(), surname, tfEmail.getText(), tfAddress.getText());
-            //upload the user
-            //new UserManagerImp().createUser(user, password);
-            //SEND A EMAIL AFTER REGISTRATION
-            /*String message = "Welcome to DamPizza. You have been registered  sucesfully.You can now make orders of pizzas in the app. Have a nice day.\n"
-                    + "Username: "+tfUserName.getText()+"\nPassword: "+pfPassword.getText();
-            MailUtil.sendEmail(tfEmail.getText(), "Regsitration completed", message);*/
-            goLogin();
+            try {
+                //            upload the user
+                new UserManagerImp().createUser(user, password);
+            } catch (UserCreateException ex) {
+                Logger.getLogger(SignupPresenter.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UserQueryException ex) {
+                Logger.getLogger(SignupPresenter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        //SEND A EMAIL AFTER REGISTRATION
+        String message = "Welcome to DamPizza. You have been registered  sucesfully.You can now make orders of pizzas in the app. Have a nice day.\n"
+                + "Username: "+tfUserName.getText()+"\nPassword: "+pfPassword.getText();
+        MailUtil.sendEmail(tfEmail.getText(), "Regsitration completed", message);
+                    goLogin();
         }
     }
 

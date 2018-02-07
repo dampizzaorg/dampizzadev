@@ -10,6 +10,7 @@ import static com.dampizza.App.SIGNUP_VIEW;
 import com.dampizza.DrawerManager;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.logic.io.UserManagerInterface;
+import com.dampizza.util.EncrypterUtil;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.Alert;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
@@ -120,7 +121,7 @@ public class LoginPresenter {
             //Check username and password are correct 
 
         } else if (correct == 1) {
-            correct = userManager.checkCredential(tfUsername.getText(), tfPassword.getText());
+            correct = userManager.checkCredential(tfUsername.getText(), EncrypterUtil.encrypt(tfPassword.getText()));
             if (correct == 2) {
                 alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Some field values are not correct");
                 alert.showAndWait();

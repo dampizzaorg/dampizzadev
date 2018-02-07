@@ -23,7 +23,8 @@ import com.dampizza.views.login.SignupView;
 import com.dampizza.views.user.CustomerView;
 import com.dampizza.views.user.DealerView;
 import com.dampizza.views.user.HistoryView;
-import com.dampizza.views.user.ManagerView;
+import com.dampizza.views.user.manager.ManagerView;
+import com.dampizza.views.user.manager.ManagerOrderView;
 import com.dampizza.views.user.ModifyPersonalInfoView;
 import com.dampizza.views.user.OrderView;
 import com.dampizza.views.user.ProfileView;
@@ -61,6 +62,7 @@ public class App extends MobileApplication {
     public static final String PROFILE_VIEW = "Profile view";
     public static final String CUSTOMER_VIEW = "Customer Password view";
     public static final String MANAGER_VIEW = "Manager view";
+    public static final String MANAGER_ORDER_VIEW = "Manager order view";
     public static final String DEALER_VIEW = "Dealer Password view";
 
     public static final String ORDER_VIEW = "Order view";
@@ -81,6 +83,7 @@ public class App extends MobileApplication {
         addViewFactory(PROFILE_VIEW, () -> new ModifyPersonalInfoView(PROFILE_VIEW).getView());
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
+        addViewFactory(MANAGER_ORDER_VIEW, () -> new ManagerOrderView(MANAGER_ORDER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
         addViewFactory(ORDER_VIEW, () -> new OrderView(ORDER_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());

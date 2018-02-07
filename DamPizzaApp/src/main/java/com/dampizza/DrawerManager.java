@@ -16,6 +16,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import static com.dampizza.App.MENU_LAYER;
 import static com.dampizza.App.LOGIN_VIEW;
 import static com.dampizza.App.MANAGER_VIEW;
+import static com.dampizza.App.MANAGER_ORDER_VIEW;
 import static com.dampizza.App.ORDER_VIEW;
 import static com.dampizza.App.PROFILE_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
@@ -51,21 +52,23 @@ public class DrawerManager {
         /* CAMBIAR MENU DEPENDIENDO DEL USUARIO*/
         
         if(usu==1){
-        final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
         final Item customerItem = new ViewItem("Customer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
           final Item orderItem = new ViewItem("Make Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), ORDER_VIEW);
         final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
-        /* REMEMBER TO ADD ITEMS TO THE DRAWER */
-        drawer.getItems().addAll(profileItem, customerItem,orderItem,historyItem);
-        }else if(usu==2){
         final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
-        final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
         /* REMEMBER TO ADD ITEMS TO THE DRAWER */
-        drawer.getItems().addAll(profileItem, managerItem);
+        drawer.getItems().addAll(customerItem,orderItem,historyItem,profileItem);
+        }else if(usu==2){
+        final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
+        final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);  
+         final Item registerItem = new ViewItem("Register a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
+         final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
+        /* REMEMBER TO ADD ITEMS TO THE DRAWER */
+        drawer.getItems().addAll(managerItem,managerOrderItem,registerItem,profileItem);
         }else{
         final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
         final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
-        drawer.getItems().addAll(profileItem, dealerItem);
+        drawer.getItems().addAll(dealerItem,profileItem);
         }
 
         if (Platform.isDesktop()) {
