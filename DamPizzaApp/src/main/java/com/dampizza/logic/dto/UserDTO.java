@@ -109,7 +109,7 @@ public class UserDTO {
     public String toString(){
         return "username: "+this.getUsername()+", name: "+this.getName()+
                 ", surnames: "+this.getSurnames()+", email: "+this.getEmail()+
-                ", address: "+this.getEmail();
-    }
+                ", address: "+this.getAddress();
+    }  
 
 }
