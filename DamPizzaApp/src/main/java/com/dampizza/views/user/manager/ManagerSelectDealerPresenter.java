@@ -6,8 +6,7 @@
 package com.dampizza.views.user.manager;
 
 import com.dampizza.App;
-import static com.dampizza.App.MANAGER_SELECT_DEALER_VIEW;
-import static com.dampizza.App.ORDER_VIEW;
+import static com.dampizza.App.MANAGER_ORDER_VIEW;
 import com.dampizza.DrawerManager;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
@@ -23,16 +22,12 @@ import javafx.scene.control.TextArea;
  *
  * @author 2dam
  */
-public class ManagerOrderPresenter {
+public class ManagerSelectDealerPresenter {
     
     @FXML
     private View primary;
     
-    @FXML
-    private TextArea taOrder;
-    
-    @FXML
-    private Button btnSelect,btnConfirm;
+   
     
      public void initialize() {
         
@@ -42,32 +37,21 @@ public class ManagerOrderPresenter {
                 
                 appBar.setVisible(true);
                 
-                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
-                        MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
+                appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e -> 
+                        navegacion()));
                 appBar.setTitleText("Manager order"); 
             }
         });
       
-      editTextArea();
-      
       
     }
      
-     public void editTextArea(){
-         
-         taOrder.setText("editado");
-         
-     }
-     
-     public void select(){
-         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_SELECT_DEALER_VIEW, ViewStackPolicy.SKIP);
+    public void navegacion(){
+          NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_ORDER_VIEW, ViewStackPolicy.SKIP);
         DrawerManager drawer = new DrawerManager();
         drawer.updateView(Item);
-     }
+      }
      
-     public void confirm(){
-         
-         
-         
-     }
+ 
 }
+
