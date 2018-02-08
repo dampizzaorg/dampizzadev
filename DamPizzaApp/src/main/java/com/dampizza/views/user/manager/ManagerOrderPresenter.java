@@ -56,7 +56,7 @@ public class ManagerOrderPresenter {
     }
      
      public void editTextArea(){
-         
+         taOrder.setEditable(false);
          taOrder.setText("");
          
      }
