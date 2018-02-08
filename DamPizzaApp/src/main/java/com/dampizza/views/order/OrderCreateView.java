@@ -1,5 +1,6 @@
-package com.dampizza.views.user;
+package com.dampizza.views.order;
 
+import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
@@ -9,11 +10,11 @@ import javafx.fxml.FXMLLoader;
  * Manager view provider (FXML Loader)
  * @author Carlos Santos
  */
-public class OrderView {
+public class OrderCreateView {
 
     private final String name;
 
-    public OrderView(String name) {
+    public OrderCreateView(String name) {
         this.name = name;
     }
     
@@ -23,7 +24,7 @@ public class OrderView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(OrderView.class.getResource("/com/dampizza/views/user/order.fxml"));
+            View view = FXMLLoader.load(OrderCreateView.class.getResource("/com/dampizza/views/order/order_create.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

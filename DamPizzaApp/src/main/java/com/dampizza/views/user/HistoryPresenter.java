@@ -32,9 +32,11 @@ public class HistoryPresenter implements Initializable {
 
     private OrderManagerImp omi;
     private ObservableList<OrderDTO> oblOrders;
+    private ObservableList<String> names;
+    
     
     @FXML
-    private CharmListView<OrderDTO, ? extends Comparable> lvOrders;
+    private CharmListView<String, ? extends Comparable> lvOrders;
     @FXML
     private View primary;
     
@@ -62,11 +64,14 @@ public class HistoryPresenter implements Initializable {
         });
        
        omi = new OrderManagerImp();
+       ObservableList<String> names = FXCollections.observableArrayList(
+          "Julia", "Ian", "Sue", "Matthew", "Hannah", "Stephan", "Denise");
+       
         try {
             oblOrders = FXCollections.observableArrayList(omi.getAllOrders());
         } catch (OrderQueryException ex) {
             Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
-       lvOrders.setItems(oblOrders);
+       lvOrders.setItems(names);
     }     
 }

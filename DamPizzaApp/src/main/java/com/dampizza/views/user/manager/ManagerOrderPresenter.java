@@ -7,7 +7,7 @@ package com.dampizza.views.user.manager;
 
 import com.dampizza.App;
 import static com.dampizza.App.MANAGER_SELECT_DEALER_VIEW;
-import static com.dampizza.App.ORDER_VIEW;
+import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
