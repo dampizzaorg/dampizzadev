@@ -18,6 +18,8 @@ repositories {
 
 mainClassName = 'com.dampizza.App'
 
+ext.GLUON_VERSION = "0.0.3"
+
 dependencies {
     compile 'com.gluonhq:charm:4.4.1'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
@@ -37,6 +39,10 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.activation/activation
     compile group: 'javax.activation', name: 'activation', version: '1.1.1'
     testCompile group: 'junit', name: 'junit', version: '4.+'
+    compile "com.gluonhq:charm:$GLUON_VERSION" 
+    androidRuntime "com.gluonhq:charm-android:$GLUON_VERSION"
+    iosRuntime "com.gluonhq:charm-ios:$GLUON_VERSION"
+    desktopRuntime "com.gluonhq:charm-desktop:$GLUON_VERSION"
 }
 
 jfxmobile {
