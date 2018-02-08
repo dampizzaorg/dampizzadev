@@ -6,7 +6,7 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
-import static com.dampizza.App.ORDER_VIEW;
+import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
@@ -42,8 +42,7 @@ public class CustomerPresenter {
     Integer i=1;
 
 
-    public void initialize() {41
-        //load arrayList with 3 pizza images to make it slide through time
+    public void initialize() {
         
         
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -73,7 +72,7 @@ public class CustomerPresenter {
     @FXML
 
     void handlerMakePedido() {
-         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
+         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_CREATE_VIEW, ViewStackPolicy.SKIP);
          DrawerManager drawer = new DrawerManager();
          drawer.updateView(Item);
 
