@@ -231,8 +231,11 @@ public class ProductManagerImp implements ProductManagerInterface {
             query.setParameter("category", category);
             List<ProductEntity> productEntities = (List<ProductEntity>) query.list();
 
-            productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
+            if(productEntities!= null){
+                productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
                     p.getDescription(), p.getPrice(), p.getCategory(), null)));
+            }
+            
 
         } catch (HibernateException e) {
             logger.log(Level.SEVERE, "An error has ocurred while getting products by category<{0}>", category);
