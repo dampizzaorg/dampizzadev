@@ -20,7 +20,7 @@
          <children>
             <ImageView fx:id="image" fitHeight="211.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="img/pizza_avatar_128.png" />
+                  <Image url="img/pizza_margarita.png" />
                </image>
             </ImageView>
          </children>
@@ -29,7 +29,7 @@
    <bottom>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
-            <Button id="btnOrder" fx:id="btnOrder" onAction="#buttonClick" mnemonicParsing="false" prefHeight="47.0" prefWidth="133.0" style="-fx-background-color: green;" text="HACER PEDIDO" />
+            <Button id="btnOrder" fx:id="btnOrder" onAction="#handlerMakePedido" mnemonicParsing="false" prefHeight="47.0" prefWidth="133.0" style="-fx-background-color: green;" text="HACER PEDIDO" />
          </children>
          <padding>
             <Insets top="30.0" />
