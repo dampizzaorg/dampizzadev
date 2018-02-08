@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
+
 /**
  *
  * @author 2dam
@@ -48,6 +49,7 @@ public class ManagerOrderPresenter {
             }
         });
       
+      
       editTextArea();
       
       
@@ -55,7 +57,7 @@ public class ManagerOrderPresenter {
      
      public void editTextArea(){
          
-         taOrder.setText("editado");
+         taOrder.setText("");
          
      }
      
@@ -63,10 +65,10 @@ public class ManagerOrderPresenter {
          NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_SELECT_DEALER_VIEW, ViewStackPolicy.SKIP);
         DrawerManager drawer = new DrawerManager();
         drawer.updateView(Item);
+        btnSelect.setText("");
      }
      
      public void confirm(){
-         
          
          
      }
