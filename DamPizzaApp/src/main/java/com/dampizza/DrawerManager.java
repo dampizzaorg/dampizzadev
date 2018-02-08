@@ -21,6 +21,7 @@ import static com.dampizza.App.ORDER_VIEW;
 import static com.dampizza.App.PROFILE_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
 import static com.dampizza.App.SIGNUP_VIEW;
+import static com.dampizza.App.MANAGER_SELECT_DEALER_VIEW;
 import com.dampizza.cfg.AppConstants;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -54,32 +55,35 @@ public class DrawerManager {
             final Item customerItem = new ViewItem("Customer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
             final Item orderItem = new ViewItem("Make Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), ORDER_VIEW);
             final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
-
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
+            final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
 
             /* REMEMBER TO ADD ITEMS TO THE DRAWER */
-            drawer.getItems().addAll(customerItem, orderItem, historyItem, profileItem);
+            drawer.getItems().addAll(customerItem, orderItem, historyItem, profileItem,logoutItem);
         } else if (usu == AppConstants.USER_MANAGER) {
             final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
             final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);
             final Item registerItem = new ViewItem("Register a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
+            final Item deleteItem = new ViewItem("Delete a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_SELECT_DEALER_VIEW);
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
+             final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
 
-            drawer.getItems().addAll(managerItem, managerOrderItem, registerItem, profileItem);
+            drawer.getItems().addAll(managerItem, managerOrderItem, registerItem, profileItem,logoutItem);
         } else if (usu == AppConstants.USER_DEALER){
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
             final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
-            drawer.getItems().addAll(dealerItem, profileItem);
+            final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
+            drawer.getItems().addAll(dealerItem, profileItem,logoutItem);
         }
 
         if (Platform.isDesktop()) {
-            final Item quitItem = new Item("Quit", MaterialDesignIcon.EXIT_TO_APP.graphic());
-            quitItem.selectedProperty().addListener((obs, ov, nv) -> {
-                if (nv) {
-                    Services.get(LifecycleService.class).ifPresent(LifecycleService::shutdown);
-                }
-            });
-            drawer.getItems().add(quitItem);
+//            final Item quitItem = new Item("Quit", MaterialDesignIcon.EXIT_TO_APP.graphic());
+//            quitItem.selectedProperty().addListener((obs, ov, nv) -> {
+//                if (nv) {
+//                    Services.get(LifecycleService.class).ifPresent(LifecycleService::shutdown);
+//                }
+//            });
+            //drawer.getItems().add(quitItem);
         }
 
         drawer.addEventHandler(NavigationDrawer.ITEM_SELECTED,

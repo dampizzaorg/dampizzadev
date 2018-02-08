@@ -32,7 +32,6 @@ public class HistoryPresenter implements Initializable {
 
     private OrderManagerImp omi;
     private ObservableList<OrderDTO> oblOrders;
-    
     @FXML
     private CharmListView<OrderDTO, ? extends Comparable> lvOrders;
     @FXML
@@ -54,7 +53,7 @@ public class HistoryPresenter implements Initializable {
                 
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-                appBar.setTitleText("Customer");
+                appBar.setTitleText("History");
                 appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> 
                         System.out.println("Search")));
                 
