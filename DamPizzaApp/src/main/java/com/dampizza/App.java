@@ -42,7 +42,7 @@ public class App extends MobileApplication {
      * Change implementation?
     */
     private static UserEntity userLoggedIn = null;
-
+    
     private static TestUtil test = null;
 
     public static final String LOGIN_VIEW = HOME_VIEW;

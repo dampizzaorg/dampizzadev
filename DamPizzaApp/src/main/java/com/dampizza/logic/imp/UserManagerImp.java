@@ -294,18 +294,19 @@ public class UserManagerImp implements UserManagerInterface {
         return res;
     }
 
-    public Integer changePassword(String username, String password) {
+    public Integer changePassword(String criteria, String password) {
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
-        String hql = "from CredentialEntity where username = :username";
+        String hql = "from UserEntity where credential.username = :criteria or email = :criteria";
 
         try {
             tx = session.beginTransaction();
 
             Query query = session.createQuery(hql);
-            query.setParameter("username", username);
-            CredentialEntity credential = (CredentialEntity) query.uniqueResult();
+            query.setParameter("criteria", criteria);
+            UserEntity user = (UserEntity) query.uniqueResult();
+            CredentialEntity credential = user.getCredential();
 
             if (credential != null) {
                 credential.setPassword(password);
@@ -378,6 +379,30 @@ public class UserManagerImp implements UserManagerInterface {
             session.close();
         }
         return userResult;
+    }
+
+    @Override
+    public Integer emailExist(String email) throws UserQueryException {
+       logger.log(Level.INFO, "Checking if email <{0}> already exists.", email);
+
+        Integer res = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from UserEntity where email = :email";
+
+        try {
+            Query query = session.createQuery(hql);
+            query.setParameter("email", email);
+            UserEntity userResult = (UserEntity) query.uniqueResult();
+
+            res = userResult != null ? 1 : 2;
+
+        } catch (HibernateException e) {
+            logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", email);
+            throw new UserQueryException("Error on emailExist(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return res;
     }
 
 

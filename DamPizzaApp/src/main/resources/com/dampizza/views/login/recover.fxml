@@ -19,8 +19,8 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="335.0" spacing="20.0">
                <children>
-                  <Label fx:id="lbUserName" prefHeight="27.0" prefWidth="58.0" text="EMAIL" />
-                  <TextField fx:id="tfUserName" prefHeight="19.0" prefWidth="215.0" />
+                  <Label fx:id="lbEmail" prefHeight="27.0" prefWidth="58.0" text="EMAIL" />
+                  <TextField fx:id="tfEmail" prefHeight="19.0" prefWidth="215.0" />
                </children>
             </HBox>
             <Button fx:id="btnRecover" onAction="#recoverPassword" mnemonicParsing="false" text="REGISTER" />
