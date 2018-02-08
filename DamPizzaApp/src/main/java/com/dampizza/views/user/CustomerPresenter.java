@@ -6,22 +6,25 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
-import static com.dampizza.App.CUSTOMER_VIEW;
-import static com.dampizza.App.ORDER_CREATE_VIEW;
+import static com.dampizza.App.ORDER_VIEW;
 import com.dampizza.DrawerManager;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
-import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
-import java.io.File;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+import javax.management.timer.Timer;
 
 /**
  * Presenter for customer.fxml
  * 
- * @author Carlos Santos
+ * @author Jon Xabier Gimenez
  */
 public class CustomerPresenter {
 
@@ -33,8 +36,15 @@ public class CustomerPresenter {
     
     @FXML
     private ImageView image;
+    
+    
+    String[] images = { "img/pizza_margarita.png", "img/pizza_queso_bacon.png", "img/pizza_pepperoni.png" };
+    Integer i=1;
 
-    public void initialize() {
+
+    public void initialize() {41
+        //load arrayList with 3 pizza images to make it slide through time
+        
         
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
@@ -45,20 +55,28 @@ public class CustomerPresenter {
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setTitleText("DAMPIZZA 2018");
-                appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> 
-                        System.out.println("Search")));
+                EventHandler<ActionEvent> eventHandler = e -> {
+                   image.setImage(new Image(images[i]));
+                   i++;
+                   if (i == 3)i=0;
+                 };
                 
+                Timeline animation = new Timeline(new KeyFrame(Duration.millis(5000), eventHandler));
+
+                animation.setCycleCount(Timeline.INDEFINITE);
+                animation.play();
+          
             }
         });
     }
     
     @FXML
-    void buttonClick() {
-         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_CREATE_VIEW, ViewStackPolicy.SKIP);
-        DrawerManager drawer = new DrawerManager();
-        drawer.updateView(Item);
-        
-      
+
+    void handlerMakePedido() {
+         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
+         DrawerManager drawer = new DrawerManager();
+         drawer.updateView(Item);
+
         
     }
     
