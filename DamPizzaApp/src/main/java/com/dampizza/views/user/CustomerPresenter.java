@@ -7,7 +7,7 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
 import static com.dampizza.App.CUSTOMER_VIEW;
-import static com.dampizza.App.ORDER_VIEW;
+import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
@@ -54,7 +54,7 @@ public class CustomerPresenter {
     
     @FXML
     void buttonClick() {
-         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
+         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_CREATE_VIEW, ViewStackPolicy.SKIP);
         DrawerManager drawer = new DrawerManager();
         drawer.updateView(Item);
         

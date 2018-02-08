@@ -12,7 +12,7 @@ import com.dampizza.views.user.manager.ManagerView;
 import com.dampizza.views.user.manager.ManagerOrderView;
 import com.dampizza.views.user.manager.ManagerSelectDealerView;
 import com.dampizza.views.user.ModifyPersonalInfoView;
-import com.dampizza.views.user.OrderView;
+import com.dampizza.views.order.OrderCreateView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
@@ -54,10 +54,19 @@ public class App extends MobileApplication {
     public static final String MANAGER_ORDER_VIEW = "Manager order view";
     public static final String MANAGER_SELECT_DEALER_VIEW = "Manager select view";
     public static final String DEALER_VIEW = "Dealer Password view";
-    public static final String ORDER_VIEW = "Order view";
     public static final String HISTORY_VIEW = "History view";
     public static final String MENU_LAYER = "Side Menu";
-
+    
+    /*
+     * ORDER OPERATIONS VIEWS (Create order, order detail)
+     * These views are common for all user types.
+     */
+    public static final String ORDER_CREATE_VIEW = "Create order view";
+    public static final String ORDER_DETAIL_VIEW = "Order details view";
+    
+    
+    
+    
     @Override
     public void init() {
         // Init ResourceBundle
@@ -75,7 +84,7 @@ public class App extends MobileApplication {
         addViewFactory(MANAGER_ORDER_VIEW, () -> new ManagerOrderView(MANAGER_ORDER_VIEW).getView());
         addViewFactory(MANAGER_SELECT_DEALER_VIEW, () -> new ManagerSelectDealerView(MANAGER_SELECT_DEALER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
-        addViewFactory(ORDER_VIEW, () -> new OrderView(ORDER_VIEW).getView());
+        addViewFactory(ORDER_CREATE_VIEW, () -> new OrderCreateView(ORDER_CREATE_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));

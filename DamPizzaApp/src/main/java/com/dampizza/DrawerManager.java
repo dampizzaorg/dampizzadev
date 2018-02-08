@@ -17,7 +17,7 @@ import static com.dampizza.App.MENU_LAYER;
 import static com.dampizza.App.LOGIN_VIEW;
 import static com.dampizza.App.MANAGER_VIEW;
 import static com.dampizza.App.MANAGER_ORDER_VIEW;
-import static com.dampizza.App.ORDER_VIEW;
+import static com.dampizza.App.ORDER_CREATE_VIEW;
 import static com.dampizza.App.PROFILE_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
 import static com.dampizza.App.SIGNUP_VIEW;
@@ -53,7 +53,7 @@ public class DrawerManager {
         /* CAMBIAR MENU DEPENDIENDO DEL USUARIO*/
         if (usu == AppConstants.USER_CUSTOMER) {
             final Item customerItem = new ViewItem("Customer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CUSTOMER_VIEW);
-            final Item orderItem = new ViewItem("Make Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), ORDER_VIEW);
+            final Item orderItem = new ViewItem("Create Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), ORDER_CREATE_VIEW);
             final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
             final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);

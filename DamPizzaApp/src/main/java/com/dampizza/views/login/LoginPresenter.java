@@ -1,5 +1,6 @@
 package com.dampizza.views.login;
 
+import com.dampizza.App;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -20,6 +21,7 @@ import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import com.gluonhq.charm.glisten.control.TextField;
+import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,6 +34,8 @@ import javafx.scene.control.PasswordField;
  * @author Carlos Santos
  */
 public class LoginPresenter {
+
+    private static final Logger logger = Logger.getLogger(LoginPresenter.class.getName());
 
     @FXML
     private View primary;
@@ -47,7 +51,7 @@ public class LoginPresenter {
 
     @FXML
     private TextField tfUsername;
-            
+
     @FXML
     private PasswordField tfPassword;
 
@@ -87,8 +91,7 @@ public class LoginPresenter {
 
     @FXML
     void login() {
-        Integer value = validateUser();
-        
+
         //If values is 1 then, the user is correct
         if (value == 1) {
             ViewItem loginItem=null;
@@ -104,7 +107,11 @@ public class LoginPresenter {
             tfUsername.setText("");
             tfPassword.setText("");
             drawer.updateView(loginItem);
+//            MobileApplication.getInstance().switchView("HOME_VIEW");
             //If the value is 0 then the user is not correct
+
+        } else {
+            logger.info("Login failed.");
         }
     }
 
