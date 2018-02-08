@@ -88,10 +88,11 @@ public class LoginPresenter {
     void buttonClick() {
 
     }
+    
 
     @FXML
     void login() {
-
+        Integer value= validateUser();
         //If values is 1 then, the user is correct
         if (value == 1) {
             ViewItem loginItem=null;
@@ -107,7 +108,7 @@ public class LoginPresenter {
             tfUsername.setText("");
             tfPassword.setText("");
             drawer.updateView(loginItem);
-//            MobileApplication.getInstance().switchView("HOME_VIEW");
+            //MobileApplication.getInstance().switchView("HOME_VIEW");
             //If the value is 0 then the user is not correct
 
         } else {

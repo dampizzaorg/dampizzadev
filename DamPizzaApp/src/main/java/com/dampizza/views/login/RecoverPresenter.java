@@ -24,6 +24,8 @@ import javafx.scene.control.Alert.AlertType;
 import static javafx.scene.control.ButtonBar.ButtonData.OK_DONE;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 /**
@@ -39,12 +41,15 @@ public class RecoverPresenter {
     private TextField tfEmail;
     @FXML
     private Label lbEmail;
-
+    @FXML
+    private ImageView imgBackground;
+    
     private UserManagerInterface userManager;
     private Alert alert;
 
     public void initialize() {
         userManager = new UserManagerImp();
+        imgBackground.setImage(new Image("/img/pizza_avatar_128.png"));
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
@@ -55,8 +60,8 @@ public class RecoverPresenter {
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
                         -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setTitleText("Recover");
-                appBar.getActionItems().add(MaterialDesignIcon.CASINO.button(e
-                        -> System.out.println("Search")));
+                /*appBar.getActionItems().add(MaterialDesignIcon.CASINO.button(e
+                        -> System.out.println("Search")));*/
 
             }
         });
