@@ -71,10 +71,12 @@ public class CustomerPresenter {
     }
     
     @FXML
+
     void handlerMakePedido() {
          NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), ORDER_VIEW, ViewStackPolicy.SKIP);
          DrawerManager drawer = new DrawerManager();
          drawer.updateView(Item);
+
         
     }
     

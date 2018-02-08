@@ -231,7 +231,7 @@ public class SignupPresenter {
         DrawerManager drawer = new DrawerManager();
         drawer.updateView(loginItem);
     }
-
+    
     private void checkViodFields() {
         String userName = tfUserName.getText();
         String name = tfName.getText();
@@ -242,7 +242,8 @@ public class SignupPresenter {
         String password = pfPassword.getText();
         String validationPassword = pfRepeatPassword.getText();
 
-        //Check void fields and change ths color to red if that field is empty
+        //Check if the fields are void or not, if are void, the labels will change to red color and black
+        //if they are not void
         if (userName.trim().equals("")) {
             lbUserName.setTextFill(Color.RED);
         } else {

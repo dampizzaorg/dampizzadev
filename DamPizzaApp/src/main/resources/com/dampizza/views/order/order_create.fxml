@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.CharmListView?>
+<?import com.gluonhq.charm.glisten.mvc.View?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.order.OrderCreatePresenter">
+   <top>
+      <VBox alignment="TOP_CENTER" prefHeight="651.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+         <children>
+            <TabPane prefHeight="647.0" prefWidth="350.0" style="-fx-tab-min-width: 60;" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab id="tabPizzas" text="PIZZAS CLASICAS">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ScrollPane>
+                                 <content>
+                                    <CharmListView id="lvClassic" fx:id="lvClassic" prefHeight="562.0" prefWidth="350.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </VBox>
+                     </content>
+                </Tab>
+                <Tab id="tabBebidas" text="BEBIDAS">
+                     <content>
+                        <ScrollPane>
+                           <content>
+                              <CharmListView id="lvDrinks" fx:id="lvDrinks" prefHeight="540.0" prefWidth="351.0" />
+                           </content>
+                        </ScrollPane>
+                     </content>
+                </Tab>
+                  <Tab id="tabMispizzas" text="MIS PIZZAS">
+                     <content>
+                        <ScrollPane>
+                           <content>
+                              <CharmListView id="lvCustom" fx:id="lvCustom" prefHeight="531.0" prefWidth="342.0" />
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </Tab>
+              </tabs>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </TabPane>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="298.0" prefWidth="458.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="15.0" right="15.0" top="20.0" />
+         </padding>
+      </VBox>
+   </center>
+   <bottom>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="30.0" />
+         </padding>
+      </VBox>
+   </bottom>
+</View>

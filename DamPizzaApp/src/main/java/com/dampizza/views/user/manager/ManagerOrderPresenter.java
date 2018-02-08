@@ -7,7 +7,7 @@ package com.dampizza.views.user.manager;
 
 import com.dampizza.App;
 import static com.dampizza.App.MANAGER_SELECT_DEALER_VIEW;
-import static com.dampizza.App.ORDER_VIEW;
+import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
@@ -18,6 +18,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+
 
 /**
  *
@@ -48,6 +49,7 @@ public class ManagerOrderPresenter {
             }
         });
       
+      
       editTextArea();
       
       
@@ -55,7 +57,7 @@ public class ManagerOrderPresenter {
      
      public void editTextArea(){
          
-         taOrder.setText("editado");
+         taOrder.setText("");
          
      }
      
@@ -63,10 +65,10 @@ public class ManagerOrderPresenter {
          NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_SELECT_DEALER_VIEW, ViewStackPolicy.SKIP);
         DrawerManager drawer = new DrawerManager();
         drawer.updateView(Item);
+        btnSelect.setText("");
      }
      
      public void confirm(){
-         
          
          
      }

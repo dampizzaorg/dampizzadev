@@ -100,21 +100,19 @@ public interface UserManagerInterface {
     public Integer checkCredential(String username, String password);
 
     public Integer checkStatus(String username);
-
-
-
     //public Boolean userExist(String user);
-
-
-
-    
     /**
      * Change password
-     * @param username
+     * @param criteria
      * @param password
      * @return 1 Success, 2 user not found, 0 error.
      */
-    public Integer changePassword(String username, String password);
+    public Integer changePassword(String criteria, String password);
+    /**
+     * Check email exist in the DB
+     * @return 1 Exist, 2 email not found, 0 error
+     */
+    public Integer emailExist(String email)throws UserQueryException;
 
 
 
