@@ -91,7 +91,7 @@ public class LoginPresenter {
 
     @FXML
     void login() {
-
+        Integer value=validateUser();
         //If values is 1 then, the user is correct
         if (value == 1) {
             ViewItem loginItem=null;
