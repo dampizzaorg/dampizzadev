@@ -5,6 +5,8 @@
  */
 package com.dampizza.cfg;
 
+import com.dampizza.logic.dto.OrderDTO;
+
 /**
  *
  * @author Carlos
@@ -25,6 +27,9 @@ public class AppConstants {
     public static final Integer STATUS_PREPARING = 1;
     public static final Integer STATUS_ONDELIVER = 2;
     public static final Integer STATUS_DELIVERED = 3;
+    
+    //ACTUAL ORDER
+    public static final OrderDTO CURRENT_ORDER = new OrderDTO();
     
     
 }

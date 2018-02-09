@@ -48,8 +48,8 @@ public class ManagerSelectDealerPresenter {
      
     public void navegacion(){
           NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_ORDER_VIEW, ViewStackPolicy.SKIP);
-        DrawerManager drawer = new DrawerManager();
-        drawer.updateView(Item);
+          DrawerManager drawer = new DrawerManager();
+          drawer.updateView(Item);
       }
      
  

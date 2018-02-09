@@ -6,12 +6,15 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
+import static com.dampizza.App.MANAGER_ORDER_VIEW;
+import com.dampizza.DrawerManager;
 import com.dampizza.exception.order.OrderQueryException;
 import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.imp.OrderManagerImp;
-import com.dampizza.views.order.pizzaList;
 import com.dampizza.views.user.HistoryPresenter;
+import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.CharmListView;
+import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -28,6 +31,7 @@ public class ManagerPresenter {
     
     private OrderManagerImp orderManager;
     private ObservableList<OrderDTO> oblProducts;
+     NavigationDrawer.ViewItem Item;
 
     @FXML
     private CharmListView<OrderDTO, ? extends Comparable> lbOrders;
@@ -68,17 +72,26 @@ public class ManagerPresenter {
             Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
         lbOrders.setItems(oblProducts);
+        lbOrders.setCellFactory(p -> new orderList());
         
-        
-         lbOrders.setCellFactory(p -> new orderList());
+        lbOrders.selectedItemProperty().addListener((obs,ov,nv) ->{
+            //Cargar la order en una constante
+            App.setCurrentOrder(lbOrders.getSelectedItem());
+            NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_ORDER_VIEW, ViewStackPolicy.SKIP);
+            DrawerManager drawer = new DrawerManager();
+            drawer.updateView(Item);
+            
+            
+            
+        });
+         
+         
     }
     
     @FXML
     void buttonClick() {
         label.setText("ESKETIT!");
     }
-    @FXML
-    void a(){
-        System.out.println("com.dampizza.views.user.manager.ManagerPresenter.a()");
-    }
+    
+    
 }
