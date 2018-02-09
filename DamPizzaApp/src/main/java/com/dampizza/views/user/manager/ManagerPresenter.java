@@ -6,6 +6,16 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
+import com.dampizza.exception.order.OrderQueryException;
+import com.dampizza.logic.dto.OrderDTO;
+import com.dampizza.logic.imp.OrderManagerImp;
+import com.dampizza.views.order.pizzaList;
+import com.dampizza.views.user.HistoryPresenter;
+import com.gluonhq.charm.glisten.control.CharmListView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -15,6 +25,12 @@ import javafx.scene.control.Label;
  * @author Carlos Santos
  */
 public class ManagerPresenter {
+    
+    private OrderManagerImp orderManager;
+    private ObservableList<OrderDTO> oblProducts;
+
+    @FXML
+    private CharmListView<OrderDTO, ? extends Comparable> lbOrders;
 
     @FXML
     private View primary;
@@ -36,12 +52,33 @@ public class ManagerPresenter {
                 appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> 
                         System.out.println("Search")));  
             }
+            orderManager = new OrderManagerImp();
+            initClassic();
         });
+    }
+    
+    public void initClassic() {
+
+
+        try {
+            oblProducts = FXCollections.observableArrayList(orderManager.getAllOrders());
+            oblProducts.forEach(p -> System.out.println(p.toString()));
+
+        } catch (OrderQueryException ex) {
+            Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        lbOrders.setItems(oblProducts);
+        
+        
+         lbOrders.setCellFactory(p -> new orderList());
     }
     
     @FXML
     void buttonClick() {
         label.setText("ESKETIT!");
     }
-    
+    @FXML
+    void a(){
+        System.out.println("com.dampizza.views.user.manager.ManagerPresenter.a()");
+    }
 }

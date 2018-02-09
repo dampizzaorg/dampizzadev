@@ -43,6 +43,9 @@ public class ProductEntity implements Serializable{
     @JoinTable(name="product_ingredient", joinColumns=@JoinColumn(name="product_id"), inverseJoinColumns=@JoinColumn(name="ingredient_id")) 
     private List<IngredientEntity> ingredients;
     
+    @Column(name = "user")
+    private UserEntity user;
+      
     public ProductEntity(){
         
     }
@@ -61,6 +64,7 @@ public class ProductEntity implements Serializable{
         this.price=price;
         this.category=category;
         this.ingredients=ingredients;
+        this.user=null;
     }
     
     /**
@@ -76,6 +80,7 @@ public class ProductEntity implements Serializable{
         this.price=price;
         this.category=category;
         this.ingredients=null;
+        this.user=null;
     }
     
     public ProductEntity(ProductDTO product, List<IngredientEntity> ingredientes){
@@ -84,6 +89,7 @@ public class ProductEntity implements Serializable{
         this.price=product.getPrice();
         this.category=product.getCategory();
         this.ingredients=ingredientes;
+        this.user=null;
     }
 
     /**
@@ -168,6 +174,20 @@ public class ProductEntity implements Serializable{
      */
     public void setIngredients(List<IngredientEntity> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    /**
+     * @return the user
+     */
+    public UserEntity getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
     
     
