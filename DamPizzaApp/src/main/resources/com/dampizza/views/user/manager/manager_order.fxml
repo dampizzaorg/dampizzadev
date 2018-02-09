@@ -44,8 +44,8 @@
             <Insets top="30.0" />
          </padding>
          <children>
-            <ComboBox prefHeight="28.0" prefWidth="307.0" promptText="Select Dealer" />
-            <Button fx:id="btnConfirm" mnemonicParsing="false" prefHeight="32.0" prefWidth="158.0" text="CONFIRMAR DEALER">
+            <ComboBox fx:id="cbDealer"  prefHeight="28.0" prefWidth="307.0" promptText="Select Dealer" />
+            <Button fx:id="btnConfirm" onAction="#confirm" mnemonicParsing="false" prefHeight="32.0" prefWidth="158.0" text="ASSIGN DELIVERY MAN">
                <VBox.margin>
                   <Insets />
                </VBox.margin>

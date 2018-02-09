@@ -11,7 +11,6 @@ import com.dampizza.views.user.DealerView;
 import com.dampizza.views.user.HistoryView;
 import com.dampizza.views.user.manager.ManagerView;
 import com.dampizza.views.user.manager.ManagerOrderView;
-import com.dampizza.views.user.manager.ManagerSelectDealerView;
 import com.dampizza.views.user.ModifyPersonalInfoView;
 import com.dampizza.views.order.OrderCreateView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
@@ -85,7 +84,6 @@ public class App extends MobileApplication {
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
         addViewFactory(MANAGER_ORDER_VIEW, () -> new ManagerOrderView(MANAGER_ORDER_VIEW).getView());
-        addViewFactory(MANAGER_SELECT_DEALER_VIEW, () -> new ManagerSelectDealerView(MANAGER_SELECT_DEALER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
         addViewFactory(ORDER_CREATE_VIEW, () -> new OrderCreateView(ORDER_CREATE_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
