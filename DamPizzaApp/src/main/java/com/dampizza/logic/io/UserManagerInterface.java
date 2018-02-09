@@ -33,6 +33,16 @@ public interface UserManagerInterface {
     public Integer createUser(UserDTO user, String password) throws UserCreateException, UserQueryException;
     
     /**
+     * Create user Creates user from userDTO object, password and type at the same
+     * time a new credential is created with the user data.
+     *
+     * @param user UserDTO Object
+     * @param password Password String
+     * @return Success: 1, Already Exists:2, Error:0
+     */
+    public Integer createUser(UserDTO user, String password, Integer type) throws UserCreateException, UserQueryException;
+    
+    /**
      * Update user
      * @param user UserDTO Object with modified data.
      * @return Success: 1, Doesn't Exists:2, Error:0
@@ -64,10 +74,18 @@ public interface UserManagerInterface {
     /**
      * Get user entity by username
      * @param username username
-     * @return User with matching id.
+     * @return User with matching username
      * @throws UserQueryException 
      */
     public UserEntity getUserEntityByUsername(String username) throws UserQueryException;
+    
+    /**
+     * Get user entity by id
+     * @param id user id
+     * @return user with matching id
+     * @throws UserQueryException 
+     */
+    public UserEntity getUserEntityById(Long id) throws UserQueryException;
     
     /**
      * Check if user is already on the database.
@@ -88,7 +106,7 @@ public interface UserManagerInterface {
      * @param username username
      * @param password password
      */
-    public void createCredential(UserEntity user, String username, String password);
+    public void createCredential(UserEntity user, String username, String password, Integer type);
     
     /**
      * Check credential.

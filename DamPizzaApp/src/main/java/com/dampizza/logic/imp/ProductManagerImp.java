@@ -10,6 +10,7 @@ import com.dampizza.exception.product.ProductCreateException;
 import com.dampizza.exception.product.ProductDeleteException;
 import com.dampizza.exception.product.ProductQueryException;
 import com.dampizza.exception.product.ProductUpdateException;
+import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.logic.dto.IngredientDTO;
 import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.io.ProductManagerInterface;
@@ -35,9 +36,10 @@ public class ProductManagerImp implements ProductManagerInterface {
 
     private static final Logger logger = Logger.getLogger(ProductManagerImp.class.getName());
     private IngredientManagerImp imi = new IngredientManagerImp();
+    private UserManagerImp umi = new UserManagerImp();
 
     @Override
-    public Integer createProduct(ProductDTO product) throws ProductCreateException, ProductQueryException{
+    public Integer createProduct(ProductDTO product) throws ProductCreateException, ProductQueryException {
         Integer res = 0;
 
         // If product is not in the database already
@@ -48,12 +50,19 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             try {
                 tx = session.beginTransaction();
-                
+
+                if (product.getId() == 7) {
+                    System.out.println("USER 7: " + umi.getUserEntityById(product.getUserId()).getId().toString());
+                }
+
                 // Creating product
                 ProductEntity productEntity = new ProductEntity(product.getName(),
                         product.getDescription(), product.getPrice(), product.getCategory(),
-                        imi.dtoToEntity(product.getIngredients()));
-                
+                        imi.dtoToEntity(product.getIngredients()), umi.getUserEntityById(product.getUserId()));
+
+//                ProductEntity productEntity = new ProductEntity(product.getName(),
+//                        product.getDescription(), product.getPrice(), product.getCategory(),
+//                        imi.dtoToEntity(product.getIngredients(), umi.getUserEntityById(product.getUserId())));
                 Long userId = (Long) session.save(productEntity);
                 if (userId != null) {
                     res = 1;
@@ -68,6 +77,8 @@ public class ProductManagerImp implements ProductManagerInterface {
                 throw new ProductCreateException("Error on createProduct(): \n" + e.getMessage());
             } catch (IngredientQueryException ex) {
                 Logger.getLogger(ProductManagerImp.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UserQueryException ex) {
+                Logger.getLogger(ProductManagerImp.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 session.close();
             }
@@ -80,7 +91,7 @@ public class ProductManagerImp implements ProductManagerInterface {
     }
 
     @Override
-    public Integer updateProduct(ProductDTO product) throws ProductUpdateException{
+    public Integer updateProduct(ProductDTO product) throws ProductUpdateException {
         logger.log(Level.INFO, "Updating product <{0}>.", product.getName());
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
@@ -101,11 +112,11 @@ public class ProductManagerImp implements ProductManagerInterface {
                 productToUpdate.setDescription(product.getDescription());
                 productToUpdate.setPrice(product.getPrice());
                 productToUpdate.setCategory(product.getCategory());
-                
+
                 List<IngredientEntity> ingredientEntities = new ArrayList<>();
-                
+
                 // Getting the respectives ingredients entities
-                if(product.getIngredients()!=null){
+                if (product.getIngredients() != null) {
                     try {
                         ingredientEntities = imi.dtoToEntity(product.getIngredients());
                     } catch (IngredientQueryException ex) {
@@ -135,7 +146,7 @@ public class ProductManagerImp implements ProductManagerInterface {
     }
 
     @Override
-    public Integer deleteProduct(Long id) throws ProductDeleteException{
+    public Integer deleteProduct(Long id) throws ProductDeleteException {
         logger.log(Level.INFO, "Deleting product <{0}>.", id);
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
@@ -179,12 +190,13 @@ public class ProductManagerImp implements ProductManagerInterface {
         List<ProductDTO> productList = new ArrayList<>();
 
         try {
-            List<ProductEntity> productEntities = session.createQuery("from ProductEntity").list();
-            
-            
-            
-            productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
-                    p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()))));
+            List<ProductEntity> productEntities = session.createQuery("from ProductEntity where user=null").list();
+
+            if (productEntities != null) {
+
+                productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
+            }
 
         } catch (HibernateException e) {
             logger.log(Level.SEVERE, "An error has ocurred while getting all products");
@@ -208,8 +220,21 @@ public class ProductManagerImp implements ProductManagerInterface {
             query.setParameter("id", id);
             ProductEntity productResult = (ProductEntity) query.uniqueResult();
 
-            product = productResult != null ? new ProductDTO(productResult.getId(), productResult.getName(),
-                    productResult.getDescription(), productResult.getPrice(), productResult.getCategory(), null) : null;
+            if (productResult != null) {
+                product = new ProductDTO();
+                product.setId(productResult.getId());
+                product.setName(productResult.getName());
+                product.setDescription(productResult.getDescription());
+                product.setPrice(productResult.getPrice());
+                product.setCategory(productResult.getCategory());
+                product.setIngredients(imi.EntityToDTO(productResult.getIngredients()));
+                product.setUserId(productResult.getUserId());
+            }
+
+//            product = productResult != null ? new ProductDTO(productResult.getId(), productResult.getName(),
+//                    productResult.getDescription(), productResult.getPrice(), productResult.getCategory(),
+//                    imi.EntityToDTO(productResult.getIngredients()), 
+//                    productResult.getUser().getId() != null ? productResult.getUser().getId() : new Long(0)) : null;
         } catch (HibernateException e) {
             logger.log(Level.SEVERE, "An error has ocurred while getting product id<{0}>:", id);
             throw new ProductQueryException("Error on getProductById(): \n" + e.getMessage());
@@ -223,19 +248,18 @@ public class ProductManagerImp implements ProductManagerInterface {
     public List<ProductDTO> getProductByCategory(Integer category) throws ProductQueryException {
         logger.log(Level.INFO, "Getting list of products by category<{0}>.", category);
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String hql = "from ProductEntity where category = :category";
-        List<ProductDTO> productList = null;
+        String hql = "from ProductEntity where category = :category and user=null";
+        List<ProductDTO> productList = new ArrayList<>();
 
         try {
             Query query = session.createQuery(hql);
             query.setParameter("category", category);
             List<ProductEntity> productEntities = (List<ProductEntity>) query.list();
 
-            if(productEntities!= null){
+            if (productEntities != null) {
                 productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
-                    p.getDescription(), p.getPrice(), p.getCategory(), null)));
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
             }
-            
 
         } catch (HibernateException e) {
             logger.log(Level.SEVERE, "An error has ocurred while getting products by category<{0}>", category);
@@ -291,7 +315,7 @@ public class ProductManagerImp implements ProductManagerInterface {
     public List<ProductEntity> dtoToEntity(List<ProductDTO> products) throws ProductQueryException {
         logger.log(Level.INFO, "Getting ingredient entities from a list of ingredient dto.");
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<ProductEntity> filteredProducts = null;
+        List<ProductEntity> filteredProducts = new ArrayList<>();
 
         if (products != null) {
             List<Long> productIds = new ArrayList<Long>();
@@ -327,10 +351,36 @@ public class ProductManagerImp implements ProductManagerInterface {
         if (products != null) {
             products.forEach(p -> productDtoList.add(
                     new ProductDTO(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getCategory(),
-                        imi.EntityToDTO(p.getIngredients()))));
+                            imi.EntityToDTO(p.getIngredients()), p.getUserId())));
         }
 
         return productDtoList;
+    }
+
+    @Override
+    public List<ProductDTO> getProductsByUserId(Long id) throws ProductQueryException {
+        logger.log(Level.INFO, "Getting list of products by user id<{0}>.", id);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from ProductEntity where user.id = :id";
+        List<ProductDTO> productList = new ArrayList<>();
+
+        try {
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            List<ProductEntity> productEntities = (List<ProductEntity>) query.list();
+
+            if (productEntities != null) {
+                productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
+            }
+
+        } catch (HibernateException e) {
+            logger.log(Level.SEVERE, "An error has ocurred while getting products by user id<{0}>", id);
+            throw new ProductQueryException("Error on getProductByCategory(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return productList;
     }
 
 }

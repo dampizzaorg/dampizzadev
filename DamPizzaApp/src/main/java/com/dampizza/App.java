@@ -71,7 +71,10 @@ public class App extends MobileApplication {
     public void init() {
         // Init ResourceBundle
         //locale = new Locale("es");
-        //bundle = ResourceBundle.getBundle("resources.properties.MessageString");
+        bundle = ResourceBundle.getBundle("properties.MessageString");
+        
+        // Implementation example
+        //App.bundle.getString("dampizza.views.login.btnlogin")
 
         logger.info("Init App");
         /* ADD VIEWS TO VIEW FACTORY */
@@ -89,7 +92,7 @@ public class App extends MobileApplication {
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
 
-        //testHibernate();
+        testHibernate();
 
     }
 
@@ -122,7 +125,7 @@ public class App extends MobileApplication {
         test.testCreateProducts();
         test.testUpdateProducts();
         test.testDeleteProduct();
-        test.testGetProducts();
+        //test.testGetProducts();
         
         // TEST ORDER
         test.testCreateOrder();

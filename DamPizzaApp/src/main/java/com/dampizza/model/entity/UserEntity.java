@@ -51,7 +51,7 @@ public class UserEntity implements Serializable {
     private List<ProductEntity> pizzas;
 
     public UserEntity() {
-
+        
     }
 
     /**

@@ -270,7 +270,7 @@ public class IngredientManagerImp implements IngredientManagerInterface {
     public List<IngredientEntity> dtoToEntity(List<IngredientDTO> ingredients) throws IngredientQueryException {
         logger.log(Level.INFO, "Getting ingredient entities from a list of ingredient dto.");
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<IngredientEntity> filteredIngredients = null;
+        List<IngredientEntity> filteredIngredients = new ArrayList<>();
 
         if (ingredients != null) {
             List<Long> ingredientIds = new ArrayList<Long>();
