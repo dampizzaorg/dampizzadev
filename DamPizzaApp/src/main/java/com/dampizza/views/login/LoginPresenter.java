@@ -15,8 +15,10 @@ import com.dampizza.cfg.AppConstants;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.logic.io.UserManagerInterface;
 import com.dampizza.util.EncrypterUtil;
+import com.dampizza.util.MailUtil;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.Alert;
+import com.gluonhq.charm.glisten.control.CharmListView;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.ViewItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -86,12 +88,13 @@ public class LoginPresenter {
 
     @FXML
     void buttonClick() {
-
+       
     }
     
 
     @FXML
     void login() {
+        
         Integer value= validateUser();
         //If values is 1 then, the user is correct
         if (value == 1) {
@@ -102,7 +105,7 @@ public class LoginPresenter {
             }else if (status==AppConstants.USER_MANAGER){
                 loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), MANAGER_VIEW, ViewStackPolicy.SKIP);
             }else if (status==AppConstants.USER_DEALER){
-                    loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), DEALER_VIEW, ViewStackPolicy.SKIP);
+                loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), DEALER_VIEW, ViewStackPolicy.SKIP);
             }
             DrawerManager drawer = new DrawerManager(status);
             tfUsername.setText("");
@@ -110,7 +113,6 @@ public class LoginPresenter {
             drawer.updateView(loginItem);
             //MobileApplication.getInstance().switchView("HOME_VIEW");
             //If the value is 0 then the user is not correct
-
         } else {
             logger.info("Login failed.");
         }

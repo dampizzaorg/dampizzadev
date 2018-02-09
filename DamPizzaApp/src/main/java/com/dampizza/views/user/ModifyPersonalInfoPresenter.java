@@ -163,8 +163,7 @@ public class ModifyPersonalInfoPresenter implements Initializable {
                         alert.showAndWait();
                     }else if(tfPassword.getText().equals("")&&tfRepeatPassword.getText().equals("")){
                         //In case the user just changed his/her information.
-                        alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "User updated");
-                        alert.showAndWait();
+                        MobileApplication.getInstance().showMessage("Data saved");
                     }
                     
                 }
