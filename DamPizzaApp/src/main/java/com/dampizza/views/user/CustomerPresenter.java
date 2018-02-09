@@ -43,9 +43,7 @@ public class CustomerPresenter {
 
 
     public void initialize() {
-        //load arrayList with 3 pizza images to make it slide through time
-        
-        
+
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
