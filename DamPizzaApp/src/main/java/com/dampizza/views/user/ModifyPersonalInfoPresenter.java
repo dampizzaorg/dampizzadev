@@ -6,7 +6,6 @@
 package com.dampizza.views.user;
 
 import com.dampizza.App;
-import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.exception.user.UserUpdateException;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.UserManagerImp;
@@ -17,16 +16,14 @@ import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.Alert;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.TextField;
-import com.gluonhq.charm.glisten.control.Toast;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import com.gluonhq.impl.charm.a.b.b.s;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -34,7 +31,11 @@ import javafx.scene.control.PasswordField;
 /**
  * FXML Controller class
  *
- * @author 2dam
+ * @author Jon Xabier Gimenez
+ * Class that controls the modifyPersonalInfo.fxml.
+ * This have the work on updating user information and credentials.
+ * Class 
+ * 
  */
 public class ModifyPersonalInfoPresenter implements Initializable {
 
@@ -109,7 +110,11 @@ public class ModifyPersonalInfoPresenter implements Initializable {
     }
     
   
-    
+    /**
+     * Method that handles Button (btnSave) #onAction.
+     * His work is to update the user information and credentials. Controlling 
+     * the exceptions than can happen during this process
+     */
     @FXML
     void handlerModifyProfile(){
         //Checks if any field is empty so it can show an alert to the user.
@@ -123,33 +128,45 @@ public class ModifyPersonalInfoPresenter implements Initializable {
             try {
                 //Checks if the email is correct
                 if(new EmailValidator().validate(tfEmail.getText())){
+                    Alert alert;
                     //load a UserDTO class with the current information in the fields
                     UserDTO user= new UserDTO(tfUserName.getText(),tfName.getText(),
                             tfFirstSurName.getText()+"%"+tfSecondSurName.getText(),
                             tfEmail.getText(), tfDirection.getText());
                     //Call to the DB to change the user information
                     new UserManagerImp().updateUser(user);
-                    logger.info(tfName.getText() + " user updated");
+                    logger.info(tfUserName.getText() + " user updated");
+                    //load password pattern
+                     String pattern = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
                     //Checks that the fields are not empty, have same value and matches with pattern,
                     if((!(tfPassword.getText().equals("")||tfRepeatPassword.getText().equals(""))) &&
-                            tfPassword.getText().equals(tfRepeatPassword.getText())/* &&
-                            PATRONCONTRASEÑAS*/){
+                            tfPassword.getText().equals(tfRepeatPassword.getText()) &&
+                            tfPassword.getText().matches(pattern)){
                         //Update user password
-                        new UserManagerImp().changePassword(tfName.getText(),EncrypterUtil.encrypt(tfPassword.getText()));
-                        logger.info(tfName.getText() + " password changed");
+                        new UserManagerImp().changePassword(tfUserName.getText(),EncrypterUtil.encrypt(tfPassword.getText()));
+                        System.out.println(tfPassword.getText());
+                        System.out.println(EncrypterUtil.encrypt(tfPassword.getText()));
+                        alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Credentials updated");
+                        alert.showAndWait();
+                        logger.info(tfUserName.getText() + " password changed");
                         //Send an email to the user saying that the password has been changed
                         MailUtil.sendEmail(tfEmail.getText(), "Password changed", "Your password have changed, if you didn´t do it"
                                 + " put in contact with our customer service.");
                     //Check that passwords got same value
                     }else if(!tfPassword.getText().equals(tfRepeatPassword.getText())){
-                          Alert alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Please write same password");
+                          alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Please write same password");
                           alert.showAndWait();
                     //Password are the same but dont match with pattern
-                    }/*else if (no coincide patron){
-                        Alert alert = new Alert(javafx.scene.control.Alert.AlertType.WARNING, "Pasword has to be valid, a valid pasword contains at least : 8 characters, one capital letter"
-                                + ", one small letter, one number  and one symbol");
+                    }else if (!tfPassword.getText().matches(pattern) && !(tfPassword.getText().equals("") && tfRepeatPassword.getText().equals(""))){
+                       alert = new Alert(AlertType.WARNING, "Pasword has to be valid. A valid pasword contains at least :\n-8 characters\n-one capital letter"
+                                    + "\n-one small letter\n-one number  and one symbol");
                         alert.showAndWait();
-                    }*/
+                    }else if(tfPassword.getText().equals("")&&tfRepeatPassword.getText().equals("")){
+                        //In case the user just changed his/her information.
+                        alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "User updated");
+                        alert.showAndWait();
+                    }
+                    
                 }
             } catch (UserUpdateException ex) {
                 //Put in the logger the information of the error

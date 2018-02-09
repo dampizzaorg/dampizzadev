@@ -6,9 +6,12 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import static com.dampizza.App.CUSTOMER_VIEW;
+import static com.dampizza.App.DEALER_VIEW;
+import static com.dampizza.App.MANAGER_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
 import static com.dampizza.App.SIGNUP_VIEW;
 import com.dampizza.DrawerManager;
+import com.dampizza.cfg.AppConstants;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.logic.io.UserManagerInterface;
 import com.dampizza.util.EncrypterUtil;
@@ -78,6 +81,7 @@ public class LoginPresenter {
             }
         });
         userManager = new UserManagerImp();
+        
     }
 
     @FXML
@@ -89,12 +93,19 @@ public class LoginPresenter {
     void login() {
 
         //If values is 1 then, the user is correct
-        if (validateUser() == 1) {
-            logger.info("Login successful.");
-
-            Integer type = App.getUserLoggedIn().getCredential().getCredentialType();
-            ViewItem loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), CUSTOMER_VIEW, ViewStackPolicy.SKIP);
-            DrawerManager drawer = new DrawerManager(type);
+        if (value == 1) {
+            ViewItem loginItem=null;
+            Integer status=userManager.checkStatus(tfUsername.getText());
+            if(status==AppConstants.USER_CUSTOMER){
+                loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), CUSTOMER_VIEW, ViewStackPolicy.SKIP);
+            }else if (status==AppConstants.USER_MANAGER){
+                loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), MANAGER_VIEW, ViewStackPolicy.SKIP);
+            }else if (status==AppConstants.USER_DEALER){
+                    loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), DEALER_VIEW, ViewStackPolicy.SKIP);
+            }
+            DrawerManager drawer = new DrawerManager(status);
+            tfUsername.setText("");
+            tfPassword.setText("");
             drawer.updateView(loginItem);
 //            MobileApplication.getInstance().switchView("HOME_VIEW");
             //If the value is 0 then the user is not correct
