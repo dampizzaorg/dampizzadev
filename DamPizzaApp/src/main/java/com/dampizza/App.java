@@ -13,6 +13,7 @@ import com.dampizza.views.user.manager.ManagerOrderView;
 import com.dampizza.views.user.manager.ManagerSelectDealerView;
 import com.dampizza.views.user.ModifyPersonalInfoView;
 import com.dampizza.views.order.OrderCreateView;
+import com.dampizza.views.user.manager.PizzaCreateView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
@@ -56,6 +57,7 @@ public class App extends MobileApplication {
     public static final String DEALER_VIEW = "Dealer Password view";
     public static final String HISTORY_VIEW = "History view";
     public static final String MENU_LAYER = "Side Menu";
+    public static final String PIZZA_CREATE_VIEW = "Create pizza view";
     
     /*
      * ORDER OPERATIONS VIEWS (Create order, order detail)
@@ -86,6 +88,7 @@ public class App extends MobileApplication {
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
         addViewFactory(ORDER_CREATE_VIEW, () -> new OrderCreateView(ORDER_CREATE_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
+        addViewFactory(PIZZA_CREATE_VIEW, () -> new PizzaCreateView(PIZZA_CREATE_VIEW).getView());
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
 
