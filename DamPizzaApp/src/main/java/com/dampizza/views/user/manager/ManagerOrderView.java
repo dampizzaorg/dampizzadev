@@ -27,7 +27,7 @@ public class ManagerOrderView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(ManagerView.class.getResource("/com/dampizza/views/user/manager_order.fxml"));
+            View view = FXMLLoader.load(ManagerView.class.getResource("manager_order.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {
