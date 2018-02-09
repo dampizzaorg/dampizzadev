@@ -58,29 +58,6 @@ public class OrderCreatePresenter {
 
     public void initClassic() {
 
-        lvClassic.setCellFactory(p -> new CharmListCell() {
-            
-            public void updateItem(ProductDTO item, boolean empty) {
-                
-                
-                super.updateItem(item, empty);
-
-                if (item != null && !empty) {
-                    ListTile tile = new ListTile();
-                    tile.textProperty().addAll(item.getName()
-                    );
-                    //final Image image = ProductDTO.getImage(item.getFlag());
-                    //if (image != null) {
-                    tile.setPrimaryGraphic(new ImageView());
-                    //}
-                    setText("Gucci gang");
-                    setGraphic(tile);
-                } else {
-                    setText(null);
-                    setGraphic(null);
-                }
-            }
-        });
 
         try {
             //oblProducts = FXCollections.observableArrayList(productManager.getProductByCategory(AppConstants.PRODUCT_PIZZA));
@@ -91,6 +68,9 @@ public class OrderCreatePresenter {
             Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
         lvClassic.setItems(oblProducts);
+        
+        
+         lvClassic.setCellFactory(p -> new pizzaList());
     }
 
     @FXML

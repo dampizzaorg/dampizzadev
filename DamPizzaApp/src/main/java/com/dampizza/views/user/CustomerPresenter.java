@@ -43,8 +43,7 @@ public class CustomerPresenter {
 
 
     public void initialize() {
-        
-        
+
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
