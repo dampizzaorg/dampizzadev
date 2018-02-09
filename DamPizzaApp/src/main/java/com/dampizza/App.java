@@ -1,5 +1,6 @@
 package com.dampizza;
 
+import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.TestUtil;
 import com.dampizza.views.login.LoginView;
@@ -42,7 +43,9 @@ public class App extends MobileApplication {
      * Change implementation?
     */
     private static UserEntity userLoggedIn = null;
-    
+    private static OrderDTO currentOrder = null;
+
+   
     private static TestUtil test = null;
 
     public static final String LOGIN_VIEW = HOME_VIEW;
@@ -142,6 +145,15 @@ public class App extends MobileApplication {
     public static void setUserLoggedIn(UserEntity aUserLoggedIn) {
         userLoggedIn = aUserLoggedIn;
     }
+    
+     public static OrderDTO getCurrentOrder() {
+        return currentOrder;
+    }
+
+    public static void setCurrentOrder(OrderDTO currentOrder) {
+        App.currentOrder = currentOrder;
+    }
+    
     
     
 }

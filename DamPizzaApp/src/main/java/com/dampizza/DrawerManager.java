@@ -62,13 +62,13 @@ public class DrawerManager {
             drawer.getItems().addAll(customerItem, orderItem, historyItem, profileItem,logoutItem);
         } else if (usu == AppConstants.USER_MANAGER) {
             final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
-            final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);
+            //final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);
             final Item registerItem = new ViewItem("Register a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
             final Item deleteItem = new ViewItem("Delete a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_SELECT_DEALER_VIEW);
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
-             final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
+            final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
 
-            drawer.getItems().addAll(managerItem, managerOrderItem, registerItem, profileItem,logoutItem);
+            drawer.getItems().addAll(managerItem, /*managerOrderItem,*/ registerItem, profileItem,logoutItem);
         } else if (usu == AppConstants.USER_DEALER){
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
             final Item dealerItem = new ViewItem("Dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), DEALER_VIEW);
