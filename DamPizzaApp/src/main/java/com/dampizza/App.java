@@ -1,5 +1,6 @@
 package com.dampizza;
 
+import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.TestUtil;
 import com.dampizza.views.login.LoginView;
@@ -10,7 +11,6 @@ import com.dampizza.views.user.DealerView;
 import com.dampizza.views.user.HistoryView;
 import com.dampizza.views.user.manager.ManagerView;
 import com.dampizza.views.user.manager.ManagerOrderView;
-import com.dampizza.views.user.manager.ManagerSelectDealerView;
 import com.dampizza.views.user.ModifyPersonalInfoView;
 import com.dampizza.views.order.OrderCreateView;
 import com.dampizza.views.user.manager.PizzaCreateView;
@@ -43,7 +43,9 @@ public class App extends MobileApplication {
      * Change implementation?
     */
     private static UserEntity userLoggedIn = null;
-    
+    private static OrderDTO currentOrder = null;
+
+   
     private static TestUtil test = null;
 
     public static final String LOGIN_VIEW = HOME_VIEW;
@@ -84,7 +86,6 @@ public class App extends MobileApplication {
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
         addViewFactory(MANAGER_ORDER_VIEW, () -> new ManagerOrderView(MANAGER_ORDER_VIEW).getView());
-        addViewFactory(MANAGER_SELECT_DEALER_VIEW, () -> new ManagerSelectDealerView(MANAGER_SELECT_DEALER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
         addViewFactory(ORDER_CREATE_VIEW, () -> new OrderCreateView(ORDER_CREATE_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
@@ -145,6 +146,15 @@ public class App extends MobileApplication {
     public static void setUserLoggedIn(UserEntity aUserLoggedIn) {
         userLoggedIn = aUserLoggedIn;
     }
+    
+     public static OrderDTO getCurrentOrder() {
+        return currentOrder;
+    }
+
+    public static void setCurrentOrder(OrderDTO currentOrder) {
+        App.currentOrder = currentOrder;
+    }
+    
     
     
 }
