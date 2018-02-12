@@ -55,7 +55,7 @@ public class PizzaCreatePresenter implements Initializable {
     @FXML
     private Button btOk;
     @FXML
-    private ComboBox <String> cbInredients;
+    private ComboBox<String> cbInredients;
     @FXML
     private Label lbIngredients;
     @FXML
@@ -68,9 +68,10 @@ public class PizzaCreatePresenter implements Initializable {
     private TextArea taIngredients;
     //</editor-fold>
     private ProductDTO pizza;
-    private List<IngredientDTO> ingredients;
+    private List<IngredientDTO> pizzaIngredients;
     private Alert alert;
     private IngredientManagerInterface ingredientManager;
+    private ObservableList<IngredientDTO> availeableIngredients;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,16 +85,12 @@ public class PizzaCreatePresenter implements Initializable {
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
                         -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setTitleText("Make pizza");
-                
+                //Charege the window with some values
                 chargeData();
-                tfPizzaName.setPromptText("Pizza Name");
-                pizza = new ProductDTO();
-                ingredients = new ArrayList<>();
-                ingredientManager = new IngredientManagerImp();
             }
-            
+
         });
-        
+
     }
 
     /**
@@ -120,7 +117,8 @@ public class PizzaCreatePresenter implements Initializable {
     private void addIngredient() {
         //if selected is not null
         if (cbInredients.getSelectionModel().getSelectedIndex() != -1) {
-            IngredientDTO selectedIngredient = (IngredientDTO) cbInredients.getSelectionModel().getSelectedItem();
+            Integer selectedIndex = cbInredients.getSelectionModel().getSelectedIndex();
+            IngredientDTO selectedIngredient = availeableIngredients.get(selectedIndex);
             //Check if the ingredient is already on the pizza ingredient list
             Boolean isSelected = ingredientIsSelected(selectedIngredient);
             if (isSelected) {
@@ -129,7 +127,7 @@ public class PizzaCreatePresenter implements Initializable {
                 alert.showAndWait();
             } else {
                 //if is not selected add the ingredient to the list and write the name on the ingredients text area 
-                ingredients.add(selectedIngredient);
+                pizzaIngredients.add(selectedIngredient);
                 taIngredients.appendText("-" + selectedIngredient.getName() + "\n");
             }
             //if selected is  null            
@@ -146,7 +144,7 @@ public class PizzaCreatePresenter implements Initializable {
      */
     private Boolean ingredientIsSelected(IngredientDTO selectedIngredent) {
         Boolean isSelected = false;
-        for (IngredientDTO ingredient : ingredients) {
+        for (IngredientDTO ingredient : pizzaIngredients) {
             //check if the selected ingredient is on the pizza ingredient list
             if (ingredient.getId().equals(selectedIngredent.getId())) {
                 isSelected = true;
@@ -164,7 +162,7 @@ public class PizzaCreatePresenter implements Initializable {
         pizza.setName(tfPizzaName.getText());
         pizza.setPrice(Double.NaN);
         //pizza.setDescription(description);
-        pizza.setIngredients(ingredients);
+        pizza.setIngredients(pizzaIngredients);
 
     }
 
@@ -175,7 +173,8 @@ public class PizzaCreatePresenter implements Initializable {
     private void deleteIngredient() {
         //if selected is not null
         if (cbInredients.getSelectionModel().getSelectedIndex() != -1) {
-            IngredientDTO selectedIngredient = (IngredientDTO) cbInredients.getSelectionModel().getSelectedItem();
+            Integer selectedIndex = cbInredients.getSelectionModel().getSelectedIndex();
+            IngredientDTO selectedIngredient = availeableIngredients.get(selectedIndex);
             //Check if the ingredient is already on the pizza ingredient list
             Boolean isSelected = ingredientIsSelected(selectedIngredient);
             if (isSelected) {
@@ -184,8 +183,8 @@ public class PizzaCreatePresenter implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 //if he accept, delete the ingredient
                 if (result.get() == ButtonType.OK) {
-                    ingredients.remove(selectedIngredient);
-                    printList(ingredients);
+                    pizzaIngredients.remove(selectedIngredient);
+                    printList(pizzaIngredients);
                 }
             } else {
                 //if is not selected notify user
@@ -204,13 +203,23 @@ public class PizzaCreatePresenter implements Initializable {
      */
     private void chargeData() {
         try {
-            ObservableList<String> allIngredients;
-            allIngredients = FXCollections.observableList(ingredientManager.getAllIngredients());
+            tfPizzaName.setPromptText("Pizza Name");
+            //Created pizza
+            pizza = new ProductDTO();
+            //ingredients of the created pizza
+            pizzaIngredients = new ArrayList<>();
+            //ingredient manager
+            ingredientManager = new IngredientManagerImp();
+            //Adding to the list all availeable ingredients
+            availeableIngredients = FXCollections.observableList(ingredientManager.getAllIngredients());
+            //Add the String of each ingredient to the list
+            ObservableList<String> allIngredients = FXCollections.observableList(ingredientManager.getAllIngredientsToString());
             //Adding all ingredients to the comboBox
             cbInredients.setItems(allIngredients);
         } catch (IngredientQueryException ex) {
             Logger.getLogger(PizzaCreatePresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
@@ -226,8 +235,8 @@ public class PizzaCreatePresenter implements Initializable {
             taIngredients.appendText("-" + ingredient.getName() + "\n");
         }
     }
-    
-    public String toString(){
+
+    public String toString() {
         return String.valueOf("");
     }
 
