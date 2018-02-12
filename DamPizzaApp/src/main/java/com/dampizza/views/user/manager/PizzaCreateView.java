@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user;
+package com.dampizza.views.user.manager;
 
+import com.dampizza.views.user.HistoryView;
 import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -13,11 +14,11 @@ import javafx.fxml.FXMLLoader;
  *
  * @author 2dam
  */
-public class MakePizzaView {
+public class PizzaCreateView {
     
     private final String name;
     
-    public MakePizzaView(String name) {
+    public PizzaCreateView(String name) {
         this.name = name;
     }
     
@@ -27,7 +28,7 @@ public class MakePizzaView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(HistoryView.class.getResource("/com/dampizza/views/user/make_pizza.fxml"));
+            View view = FXMLLoader.load(PizzaCreateView.class.getResource("pizza_create.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

@@ -309,5 +309,21 @@ public class IngredientManagerImp implements IngredientManagerInterface {
 
         return ingredientDtoList;
     }
+    
+    @Override
+    public List <String> getAllIngredientsToString(){
+        List <String> ingredientstoString= new ArrayList<>();
+        List <IngredientDTO> ingredients= new ArrayList<>();
+        try {
+            //From each entity take the string
+            ingredients=this.getAllIngredients();
+            for (IngredientDTO ingredient : ingredients) {
+                ingredientstoString.add(ingredient.toString());
+            }
+        } catch (IngredientQueryException ex) {
+            logger.log(Level.SEVERE, "An error has ocurred while getting ingredients to String");
+        }
+        return  ingredientstoString;
+    }
 
 }

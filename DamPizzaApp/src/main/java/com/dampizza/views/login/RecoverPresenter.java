@@ -34,7 +34,7 @@ import javafx.scene.paint.Color;
  * @author Carlos Santos
  */
 public class RecoverPresenter {
-
+    // <editor-fold defaultstate="collapsed" desc="@FXML NODES">
     @FXML
     private View primary;
     @FXML
@@ -43,7 +43,7 @@ public class RecoverPresenter {
     private Label lbEmail;
     @FXML
     private ImageView imgBackground;
-    
+    //</editor-fold>
     private UserManagerInterface userManager;
     private Alert alert;
 
@@ -68,7 +68,7 @@ public class RecoverPresenter {
     }
 
     /**
-     * Metoth to change change the password if the user forget it
+     * Method to change change the password if the user forget it
      */
     @FXML
     void recoverPassword() {
@@ -107,7 +107,7 @@ public class RecoverPresenter {
         }
     }
     /**
-     * Metoth to check if the email exist on the DB
+     * Method to check if the email exist on the DB
      * @return 1 if the email exist, 2 if the email does not exist
      * @throws UserQueryException 
      */
@@ -125,7 +125,7 @@ public class RecoverPresenter {
         }
     }
     /**
-     * Metoth to go to the login
+     * Method to go to the login
      */
     private void goLogin() {
         NavigationDrawer.ViewItem loginItem = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), LOGIN_VIEW, ViewStackPolicy.SKIP);

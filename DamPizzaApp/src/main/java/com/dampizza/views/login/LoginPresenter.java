@@ -8,6 +8,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import static com.dampizza.App.CUSTOMER_VIEW;
 import static com.dampizza.App.DEALER_VIEW;
 import static com.dampizza.App.MANAGER_VIEW;
+import static com.dampizza.App.PIZZA_CREATE_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
 import static com.dampizza.App.SIGNUP_VIEW;
 import com.dampizza.DrawerManager;
@@ -107,7 +108,8 @@ public class LoginPresenter {
             if(status==AppConstants.USER_CUSTOMER){
                 loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), CUSTOMER_VIEW, ViewStackPolicy.SKIP);
             }else if (status==AppConstants.USER_MANAGER){
-                loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), MANAGER_VIEW, ViewStackPolicy.SKIP);
+                loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(),PIZZA_CREATE_VIEW, ViewStackPolicy.SKIP);
+                //loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(),CREATE, ViewStackPolicy.SKIP);PIZZA_CREATE_VIEW
             }else if (status==AppConstants.USER_DEALER){
                 loginItem = new ViewItem("Login", MaterialDesignIcon.HOME.graphic(), DEALER_VIEW, ViewStackPolicy.SKIP);
             }

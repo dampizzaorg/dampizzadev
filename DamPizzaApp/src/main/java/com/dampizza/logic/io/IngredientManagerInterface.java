@@ -103,4 +103,6 @@ public interface IngredientManagerInterface {
      * @return IngredientDTO List
      */
     public List<IngredientDTO> EntityToDTO(List<IngredientEntity> ingredients);
+    
+    public List <String> getAllIngredientsToString();
 }
