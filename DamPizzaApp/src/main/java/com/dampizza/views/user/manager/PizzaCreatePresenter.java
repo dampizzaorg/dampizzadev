@@ -160,7 +160,7 @@ public class PizzaCreatePresenter implements Initializable {
     @FXML
     private void addPizza() {
         pizza.setName(tfPizzaName.getText());
-        pizza.setPrice(Double.NaN);
+        pizza.setPrice(priceCalculation());
         //pizza.setDescription(description);
         pizza.setIngredients(pizzaIngredients);
 
@@ -235,9 +235,22 @@ public class PizzaCreatePresenter implements Initializable {
             taIngredients.appendText("-" + ingredient.getName() + "\n");
         }
     }
-
-    public String toString() {
-        return String.valueOf("");
+    /**
+     * Method to calculate the price of the created pizza
+     * @return 
+     */
+    private Double priceCalculation() {
+        //by default all pizzas has the price of 15 Euros
+        Double price = 15.00;
+        //If the pizza has more than 5 ingredients
+        if (pizzaIngredients.size() > 5) {
+            //start adding the price of the ingredients, starting on the 6th ingredient
+            for (int i = 5; i < pizzaIngredients.size(); i++) {
+                price=price+pizzaIngredients.get(i).getPrice();
+            }
+        }
+        return price;
+        
     }
 
 }
