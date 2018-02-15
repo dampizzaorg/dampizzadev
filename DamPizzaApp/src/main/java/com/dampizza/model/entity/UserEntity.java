@@ -47,7 +47,11 @@ public class UserEntity implements Serializable {
     @Column(name = "active")
     private Boolean active;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(
+        mappedBy = "user", 
+        cascade = CascadeType.ALL, 
+        orphanRemoval = true
+    )
     private List<ProductEntity> pizzas;
 
     public UserEntity() {

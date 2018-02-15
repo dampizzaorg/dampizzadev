@@ -24,20 +24,20 @@ public class LogicFactory {
     
     private static final ProductManagerImp PRODUCT_MANAGER = new ProductManagerImp();
     
-    public UserManagerImp getUserManager(){
+    public static UserManagerImp getUserManager(){
             return USER_MANAGER;
     }
     
-    public OrderManagerImp getOrderManager(){
+    public static OrderManagerImp getOrderManager(){
             return ORDER_MANAGER;
         
     }
 
-    public IngredientManagerImp getIngredientManager(){
+    public static IngredientManagerImp getIngredientManager(){
             return INGREDIENT_MANAGER;
     }
     
-    public ProductManagerImp getProductManager(){
+    public static ProductManagerImp getProductManager(){
             return PRODUCT_MANAGER;
     }
     

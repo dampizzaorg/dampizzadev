@@ -50,17 +50,16 @@ public class TestUtil {
     private OrderManagerImp omi;
 
     public TestUtil() {
-        umi = new UserManagerImp();
-        imi = new IngredientManagerImp();
-        pmi = new ProductManagerImp();
-        omi = new OrderManagerImp();
+        umi = LogicFactory.getUserManager();
+        imi = LogicFactory.getIngredientManager();
+        pmi = LogicFactory.getProductManager();
+        omi = LogicFactory.getOrderManager();
     }
 
     ////////////////////////////////////////////////////////////////////////////
     //                                 USER                                   //
     ////////////////////////////////////////////////////////////////////////////
     public void testCreateUsers() {
-        EncrypterUtil.encrypt("password1");
         try {
             umi.createUser(new UserDTO("manager", "name1", "surn%ame1", "manager@dampizza.com", "address1"), EncrypterUtil.encrypt("manager"), 1);
             umi.createUser(new UserDTO("dealer1", "dealer1", "sur%name2", "dealer1@dampizza.com", "address2"), EncrypterUtil.encrypt("dealer1"), 2);
@@ -162,7 +161,7 @@ public class TestUtil {
             
             ingredientProduct.add(new IngredientDTO(new Long(1), "Tomate", 1.50));
             ingredientProduct.add(new IngredientDTO(new Long(7), "Queso", 1.50));
-            pmi.createProduct(new ProductDTO("Margarita", "", 6.00, ingredientProduct));
+//            pmi.createProduct(new ProductDTO("Margarita", "", 6.00, ingredientProduct, new Long(7)));
             
             ingredientProduct.add(new IngredientDTO(new Long(4), "Pimiento verde", 1.50));
             ingredientProduct.add(new IngredientDTO(new Long(10), "Champiñones", 1.50));
@@ -176,8 +175,8 @@ public class TestUtil {
             ingredientProduct.add(new IngredientDTO(new Long(2), "Cebolla", 1.50));
             pmi.createProduct(new ProductDTO("CustomCS", "", 6.00, ingredientProduct, new Long(7)));
             
-//            pmi.createProduct(new ProductDTO("Vegetal", "", 6.00, null));
-//            pmi.createProduct(new ProductDTO("Cesar", "", 6.00, null));
+            pmi.createProduct(new ProductDTO("Vegetal", "", 6.00, null));
+            pmi.createProduct(new ProductDTO("Cesar", "", 6.00, null));
             
             pmi.createProduct(new ProductDTO("Agua", "", 1.00));
             pmi.createProduct(new ProductDTO("Coca Cola", "", 2.00));

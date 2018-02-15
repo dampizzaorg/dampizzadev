@@ -6,17 +6,19 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
  * Product Entity POJO
- * @author Carlos
+ * @author Carlos Santos
  */
 @Entity
 @Table(name="product", schema="dampizzadb")
@@ -43,7 +45,8 @@ public class ProductEntity implements Serializable{
     @JoinTable(name="product_ingredient", joinColumns=@JoinColumn(name="product_id"), inverseJoinColumns=@JoinColumn(name="ingredient_id")) 
     private List<IngredientEntity> ingredients;
     
-    @Column(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
       
     public ProductEntity(){
@@ -59,6 +62,7 @@ public class ProductEntity implements Serializable{
      * @param ingredients 
      */
     public ProductEntity(String name, String description, Double price, Integer category, List<IngredientEntity> ingredients, UserEntity user){
+              
         this.name=name;
         this.description=description;
         this.price=price;

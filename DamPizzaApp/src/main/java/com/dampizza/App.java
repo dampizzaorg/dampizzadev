@@ -1,6 +1,7 @@
 package com.dampizza;
 
 import com.dampizza.model.entity.UserEntity;
+import com.dampizza.util.LogicFactory;
 import com.dampizza.util.TestUtil;
 import com.dampizza.views.login.LoginView;
 import com.dampizza.views.login.RecoverView;
@@ -32,7 +33,8 @@ import javafx.stage.Stage;
  * @author Carlos Santos
  */
 public class App extends MobileApplication {
-
+    
+    
     private static final Logger logger = Logger.getLogger(App.class.getName());
     public static Locale locale;
     public static ResourceBundle bundle;
@@ -41,6 +43,7 @@ public class App extends MobileApplication {
     /* TODO research about java session managament for mobile apps.
      * Change implementation?
     */
+    // Remove after changing to hashmap session
     private static UserEntity userLoggedIn = null;
     
     private static TestUtil test = null;
@@ -98,7 +101,7 @@ public class App extends MobileApplication {
 
     @Override
     public void postInit(Scene scene) {
-        Swatch.BLUE.assignTo(scene);
+        Swatch.INDIGO.assignTo(scene);
 
         scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
         //((Stage) scene.getWindow()).getIcons().add(new Image(App.class.getResourceAsStream("/icon.png")));
@@ -109,27 +112,29 @@ public class App extends MobileApplication {
         logger.info("Testing database operations");
         test = new TestUtil();
 
-        // TEST USER
-        test.testCreateUsers();
-        test.testUpdateUsers();
-        test.testDeleteUser();
+//        // TEST USER
+//        test.testCreateUsers();
+//        test.testUpdateUsers();
+//        test.testDeleteUser();
         test.testGetUsers();
 
         // TEST INGREDIENT
-        test.testCreateIngredients();
-        test.testUpdateIngredients();
-        test.testDeleteIngredient();
+//        test.testCreateIngredients();
+//        test.testUpdateIngredients();
+//        test.testDeleteIngredient();
         test.testGetIngredients();
 
         // TEST PRODUCT
-        test.testCreateProducts();
-        test.testUpdateProducts();
-        test.testDeleteProduct();
-        //test.testGetProducts();
+//        test.testCreateProducts();
+//        test.testUpdateProducts();
+//        test.testDeleteProduct();
+        test.testGetProducts();
         
         // TEST ORDER
         test.testCreateOrder();
         test.testGetOrders();
+        
+        
     }
 
     /**

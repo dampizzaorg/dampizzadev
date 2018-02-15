@@ -30,7 +30,7 @@ import org.hibernate.Transaction;
 /**
  * Product Manager Implementation
  *
- * @author Carlos
+ * @author Carlos Santos
  */
 public class ProductManagerImp implements ProductManagerInterface {
 
@@ -50,37 +50,40 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             try {
                 tx = session.beginTransaction();
-
-                if (product.getId() == 7) {
-                    System.out.println("USER 7: " + umi.getUserEntityById(product.getUserId()).getId().toString());
-                }
-
+                System.out.println("User_id:"+String.valueOf(product.getUserId()));
+                ProductEntity productEntity = null;
+                
                 // Creating product
-                ProductEntity productEntity = new ProductEntity(product.getName(),
+                if(product.getUserId()!=0){
+                    productEntity = new ProductEntity(product.getName(),
                         product.getDescription(), product.getPrice(), product.getCategory(),
                         imi.dtoToEntity(product.getIngredients()), umi.getUserEntityById(product.getUserId()));
-
-//                ProductEntity productEntity = new ProductEntity(product.getName(),
-//                        product.getDescription(), product.getPrice(), product.getCategory(),
-//                        imi.dtoToEntity(product.getIngredients(), umi.getUserEntityById(product.getUserId())));
-                Long userId = (Long) session.save(productEntity);
-                if (userId != null) {
+                }else{
+                        productEntity = new ProductEntity(product, imi.dtoToEntity(product.getIngredients()));     
+                }
+                
+                
+                Long productId = (Long) session.save(productEntity);
+                
+                tx.commit();
+                if (productId != null) {
                     res = 1;
                     logger.log(Level.INFO, "Product {0} created.", product.getName());
                 }
-                tx.commit();
             } catch (HibernateException e) {
-                if (tx != null) {
-                    tx.rollback();
-                }
+//                if (tx != null) {
+//                    tx.rollback();
+//                }
                 logger.severe("An error has ocurred while creating product <" + product.getName() + ">:");
                 throw new ProductCreateException("Error on createProduct(): \n" + e.getMessage());
             } catch (IngredientQueryException ex) {
-                Logger.getLogger(ProductManagerImp.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductManagerImp.class.getName()).log(Level.SEVERE, "An error ocurred while retrieving ingredients list.", ex);
             } catch (UserQueryException ex) {
-                Logger.getLogger(ProductManagerImp.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductManagerImp.class.getName()).log(Level.SEVERE, "An error ocurred while retrieving associated user.", ex);
             } finally {
-                session.close();
+                if(session!=null){
+                    session.close();
+                }  
             }
         } else {
             res = 2;
@@ -272,17 +275,17 @@ public class ProductManagerImp implements ProductManagerInterface {
 
     @Override
     public Integer productExists(String name) throws ProductQueryException {
-        logger.log(Level.INFO, "Checking if product id<{0}> already exists.", name);
-
+        logger.log(Level.INFO, "Checking if product name<{0}> already exists.", name);
+        
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = "from ProductEntity where name = :name";
-
+        System.out.println(name);
+        
         try {
             Query query = session.createQuery(hql);
             query.setParameter("name", name);
             ProductEntity productResult = (ProductEntity) query.uniqueResult();
-
             res = productResult != null ? 1 : 2;
 
         } catch (HibernateException e) {
