@@ -88,6 +88,14 @@ public interface UserManagerInterface {
     public UserEntity getUserEntityById(Long id) throws UserQueryException;
     
     /**
+     * Get user entity by username
+     * @param type
+     * @return UserDTO List
+     * @throws UserQueryException
+     */
+    public List<UserDTO> getUsersByType(Integer type) throws UserQueryException;
+    
+    /**
      * Check if user is already on the database.
      * @param username
      * @return 1 yes, 2 no, 0 error.

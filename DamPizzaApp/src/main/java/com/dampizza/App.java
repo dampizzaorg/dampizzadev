@@ -120,23 +120,24 @@ public class App extends MobileApplication {
 //        test.testCreateUsers();
 //        test.testUpdateUsers();
 //        test.testDeleteUser();
-        test.testGetUsers();
+//        test.testGetUsers();
+          test.testGetUsersByType();
 
         // TEST INGREDIENT
 //        test.testCreateIngredients();
 //        test.testUpdateIngredients();
 //        test.testDeleteIngredient();
-        test.testGetIngredients();
+//        test.testGetIngredients();
 
         // TEST PRODUCT
 //        test.testCreateProducts();
 //        test.testUpdateProducts();
 //        test.testDeleteProduct();
-        test.testGetProducts();
+//        test.testGetProducts();
         
         // TEST ORDER
-        test.testCreateOrder();
-        test.testGetOrders();
+//        test.testCreateOrder();
+//        test.testGetOrders();
         
         
     }

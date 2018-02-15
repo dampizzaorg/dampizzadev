@@ -330,9 +330,8 @@ public class UserManagerImp implements UserManagerInterface {
                 SESSION.put("email", user.getEmail());
                 SESSION.put("type", user.getCredential().getCredentialType());
                 SESSION.put("cart", null);
-                
-                //System.out.println("Session username: "+LogicFactory.getUserManager().getSESSION().get("username").toString());
 
+                //System.out.println("Session username: "+LogicFactory.getUserManager().getSESSION().get("username").toString());
                 res = 1;
             } else {
                 res = 2;
@@ -488,6 +487,33 @@ public class UserManagerImp implements UserManagerInterface {
      */
     public static HashMap getSESSION() {
         return SESSION;
+    }
+
+    @Override
+    public List<UserDTO> getUsersByType(Integer type) throws UserQueryException {
+        logger.info("Getting list of users by type.");
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<UserDTO> userList = new ArrayList();
+        String hql = "from UserEntity where credential.credentialType = :type";
+
+        try {
+
+            Query query = session.createQuery("from UserEntity where credential.credentialType = :type");
+            query.setParameter("type", type);
+            List<UserEntity> userEntities = query.list();
+            if (userEntities != null) {
+                userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
+                        u.getSurnames(), u.getEmail(), u.getAddress())));
+            }
+
+        } catch (HibernateException e) {
+            logger.severe("An error has ocurred while getting users by type:");
+            throw new UserQueryException("Error on getUsersByType(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return userList;
     }
 
 }
