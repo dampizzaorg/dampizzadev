@@ -1,5 +1,6 @@
 package com.dampizza.views.order;
 
+import com.dampizza.views.custom.PizzaCLV;
 import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.application.MobileApplication;
@@ -70,7 +71,7 @@ public class OrderCreatePresenter {
         lvClassic.setItems(oblProducts);
         
         
-         lvClassic.setCellFactory(p -> new pizzaList());
+         lvClassic.setCellFactory(p -> new PizzaCLV());
     }
 
     @FXML

@@ -102,6 +102,15 @@ public class TestUtil {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void testGetUsersByType(){
+        logger.info("List of Users by type:");
+        try {
+            umi.getUsersByType(AppConstants.USER_DEALER).forEach(u -> System.out.println(u.getName()));
+        } catch (UserQueryException ex) {
+            Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     //                              INGREDIENT                                //

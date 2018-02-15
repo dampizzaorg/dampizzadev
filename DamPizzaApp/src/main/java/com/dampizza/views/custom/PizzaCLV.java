@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.order;
+package com.dampizza.views.custom;
 
 import com.gluonhq.charm.glisten.control.CharmListCell;
 import com.gluonhq.charm.glisten.control.ListTile;
@@ -12,12 +12,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class pizzaList extends CharmListCell<ProductDTO> {
+public class PizzaCLV extends CharmListCell<ProductDTO> {
 
     private final ListTile tile;
     private final ImageView imageView;
 
-    public pizzaList() {
+    public PizzaCLV() {
         this.tile = new ListTile();
         imageView = new ImageView();
         tile.setPrimaryGraphic(imageView);
