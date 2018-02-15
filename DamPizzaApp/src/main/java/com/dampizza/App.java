@@ -2,6 +2,7 @@ package com.dampizza;
 
 import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.model.entity.UserEntity;
+import com.dampizza.util.LogicFactory;
 import com.dampizza.util.TestUtil;
 import com.dampizza.views.login.LoginView;
 import com.dampizza.views.login.RecoverView;
@@ -33,7 +34,8 @@ import javafx.stage.Stage;
  * @author Carlos Santos
  */
 public class App extends MobileApplication {
-
+    
+    
     private static final Logger logger = Logger.getLogger(App.class.getName());
     public static Locale locale;
     public static ResourceBundle bundle;
@@ -42,6 +44,7 @@ public class App extends MobileApplication {
     /* TODO research about java session managament for mobile apps.
      * Change implementation?
     */
+    // Remove after changing to hashmap session
     private static UserEntity userLoggedIn = null;
     private static OrderDTO currentOrder = null;
 
@@ -75,7 +78,10 @@ public class App extends MobileApplication {
     public void init() {
         // Init ResourceBundle
         //locale = new Locale("es");
-        //bundle = ResourceBundle.getBundle("resources.properties.MessageString");
+        bundle = ResourceBundle.getBundle("properties.MessageString");
+        
+        // Implementation example
+        //App.bundle.getString("dampizza.views.login.btnlogin")
 
         logger.info("Init App");
         /* ADD VIEWS TO VIEW FACTORY */
@@ -93,13 +99,13 @@ public class App extends MobileApplication {
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
 
-        //testHibernate();
+        testHibernate();
 
     }
 
     @Override
     public void postInit(Scene scene) {
-        Swatch.BLUE.assignTo(scene);
+        Swatch.INDIGO.assignTo(scene);
 
         scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
         //((Stage) scene.getWindow()).getIcons().add(new Image(App.class.getResourceAsStream("/icon.png")));
@@ -110,27 +116,29 @@ public class App extends MobileApplication {
         logger.info("Testing database operations");
         test = new TestUtil();
 
-        // TEST USER
-        test.testCreateUsers();
-        test.testUpdateUsers();
-        test.testDeleteUser();
+//        // TEST USER
+//        test.testCreateUsers();
+//        test.testUpdateUsers();
+//        test.testDeleteUser();
         test.testGetUsers();
 
         // TEST INGREDIENT
-        test.testCreateIngredients();
-        test.testUpdateIngredients();
-        test.testDeleteIngredient();
+//        test.testCreateIngredients();
+//        test.testUpdateIngredients();
+//        test.testDeleteIngredient();
         test.testGetIngredients();
 
         // TEST PRODUCT
-        test.testCreateProducts();
-        test.testUpdateProducts();
-        test.testDeleteProduct();
+//        test.testCreateProducts();
+//        test.testUpdateProducts();
+//        test.testDeleteProduct();
         test.testGetProducts();
         
         // TEST ORDER
         test.testCreateOrder();
         test.testGetOrders();
+        
+        
     }
 
     /**

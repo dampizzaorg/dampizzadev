@@ -6,6 +6,7 @@
 package com.dampizza.logic.imp;
 
 import com.dampizza.App;
+import com.dampizza.cfg.AppConstants;
 import com.dampizza.exception.user.UserCreateException;
 import com.dampizza.exception.user.UserDeleteException;
 import com.dampizza.exception.user.UserQueryException;
@@ -15,8 +16,10 @@ import com.dampizza.logic.io.UserManagerInterface;
 import com.dampizza.model.entity.CredentialEntity;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.HibernateUtil;
+import com.dampizza.util.LogicFactory;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +36,7 @@ import org.hibernate.Transaction;
 public class UserManagerImp implements UserManagerInterface {
 
     private static final Logger logger = Logger.getLogger(UserManagerImp.class.getName());
+    private static HashMap SESSION = new HashMap();
 
     @Override
     public Integer createUser(UserDTO user, String password) throws UserCreateException, UserQueryException {
@@ -67,7 +71,52 @@ public class UserManagerImp implements UserManagerInterface {
                 session.close();
                 // Creating Credential
                 if (userCreated != null) {
-                    createCredential(userCreated, user.getUsername(), password);
+                    createCredential(userCreated, user.getUsername(), password, AppConstants.USER_CUSTOMER);
+                }
+
+            }
+        } else {
+            res = 2;
+            logger.log(Level.INFO, "User {0} already exists.", user.getUsername());
+        }
+
+        return res;
+    }
+
+    @Override
+    public Integer createUser(UserDTO user, String password, Integer type) throws UserCreateException, UserQueryException {
+        Integer res = 0;
+
+        // If user is not in the database already
+        if (userExists(user.getUsername()) == 2) {
+            logger.log(Level.INFO, "Creating user <{0}>.", user.getUsername());
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = null;
+
+            UserEntity userCreated = null;
+
+            try {
+                tx = session.beginTransaction();
+                // Creating user.
+                Long userId = (Long) session.save(new UserEntity(user));
+                if (userId != null) {
+                    // Retrieving created user.
+                    userCreated = (UserEntity) session.get(UserEntity.class, userId);
+                    res = 1;
+                    logger.log(Level.INFO, "User {0} created.", user.getUsername());
+                }
+                tx.commit();
+            } catch (HibernateException e) {
+                if (tx != null) {
+                    tx.rollback();
+                }
+                logger.severe("An error has ocurred while creating user <" + user.getUsername() + ">:");
+                throw new UserCreateException("Error on createUser(): \n" + e.getMessage());
+            } finally {
+                session.close();
+                // Creating Credential
+                if (userCreated != null) {
+                    createCredential(userCreated, user.getUsername(), password, type);
                 }
 
             }
@@ -168,11 +217,11 @@ public class UserManagerImp implements UserManagerInterface {
 
         try {
             List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
-            if(userEntities!=null){
+            if (userEntities != null) {
                 userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
-                    u.getSurnames(), u.getEmail(), u.getAddress())));
+                        u.getSurnames(), u.getEmail(), u.getAddress())));
             }
-                
+
         } catch (HibernateException e) {
             logger.severe("An error has ocurred while getting users:");
             throw new UserQueryException("Error on getAllUsers(): \n" + e.getMessage());
@@ -194,11 +243,11 @@ public class UserManagerImp implements UserManagerInterface {
             Query query = session.createQuery(hql);
             query.setParameter("username", username);
             UserEntity userResult = (UserEntity) query.uniqueResult();
-            if(userResult!=null){
+            if (userResult != null) {
                 user = new UserDTO(userResult.getCredential().getUsername(), userResult.getName(),
-                    userResult.getSurnames(), userResult.getEmail(), userResult.getAddress());
+                        userResult.getSurnames(), userResult.getEmail(), userResult.getAddress());
             }
-            
+
         } catch (HibernateException e) {
             logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", username);
             throw new UserQueryException("Error on getUserByUsername(): \n" + e.getMessage());
@@ -233,14 +282,14 @@ public class UserManagerImp implements UserManagerInterface {
     }
 
     @Override
-    public void createCredential(UserEntity user, String username, String password) {
+    public void createCredential(UserEntity user, String username, String password, Integer type) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
 
         try {
             tx = session.beginTransaction();
 
-            session.save(new CredentialEntity(user, username, password));
+            session.save(new CredentialEntity(user, username, password, type));
 
             tx.commit();
         } catch (HibernateException e) {
@@ -274,13 +323,21 @@ public class UserManagerImp implements UserManagerInterface {
                 user.getCredential().setLastAccess(new Date());
                 session.update(user.getCredential());
                 // Set user logged for the app
-                App.setUserLoggedIn(user);
+                SESSION.put("id", user.getId());
+                SESSION.put("username", user.getCredential().getUsername());
+                SESSION.put("name", user.getName());
+                SESSION.put("surnames", user.getSurnames());
+                SESSION.put("email", user.getEmail());
+                SESSION.put("type", user.getCredential().getCredentialType());
+                SESSION.put("cart", null);
+                
+                //System.out.println("Session username: "+LogicFactory.getUserManager().getSESSION().get("username").toString());
 
                 res = 1;
             } else {
                 res = 2;
             }
-            
+
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -345,9 +402,6 @@ public class UserManagerImp implements UserManagerInterface {
             CredentialEntity credential = (CredentialEntity) query.uniqueResult();
 
             res = credential.getCredentialType();
-            // Set user logged for the app
-            //App.userLoggedIn = getUserByUsername(username);
-
 
         } catch (HibernateException e) {
             if (tx != null) {
@@ -383,7 +437,7 @@ public class UserManagerImp implements UserManagerInterface {
 
     @Override
     public Integer emailExist(String email) throws UserQueryException {
-       logger.log(Level.INFO, "Checking if email <{0}> already exists.", email);
+        logger.log(Level.INFO, "Checking if email <{0}> already exists.", email);
 
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -405,6 +459,35 @@ public class UserManagerImp implements UserManagerInterface {
         return res;
     }
 
+    @Override
+    public UserEntity getUserEntityById(Long id) throws UserQueryException {
+        logger.log(Level.INFO, "Getting user entity by username<{0}>", String.valueOf(id));
 
+        UserEntity userResult = null;
+
+        if (id != 0) {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "from UserEntity where id = :id";
+
+            try {
+                Query query = session.createQuery(hql);
+                query.setParameter("id", id);
+                userResult = (UserEntity) query.uniqueResult();
+            } catch (HibernateException e) {
+                logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", String.valueOf(id));
+                throw new UserQueryException("Error on getUserEntityByUsername(): \n" + e.getMessage());
+            } finally {
+                session.close();
+            }
+        }
+        return userResult;
+    }
+
+    /**
+     * @return the SESSION
+     */
+    public static HashMap getSESSION() {
+        return SESSION;
+    }
 
 }

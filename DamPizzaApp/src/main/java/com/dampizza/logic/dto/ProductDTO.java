@@ -17,7 +17,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
- * @author Carlos
+ * @author Carlos Santos
  */
 public class ProductDTO {
 
@@ -27,6 +27,7 @@ public class ProductDTO {
     private SimpleDoubleProperty price;
     private SimpleIntegerProperty category;
     private SimpleObjectProperty<List<IngredientDTO>> ingredients;
+    private SimpleLongProperty userId;
 
     public ProductDTO() {
         this.id = new SimpleLongProperty();
@@ -35,33 +36,81 @@ public class ProductDTO {
         this.price = new SimpleDoubleProperty();
         this.category = new SimpleIntegerProperty();
         this.ingredients = new SimpleObjectProperty();
+        this.userId = new SimpleLongProperty();
     }
 
-    public ProductDTO(Long id, String name, String description, Double price, Integer category, List<IngredientDTO> ingredients) {
+    /**
+     * Constructor for product retrieved from database (with id)
+     *
+     * @param id
+     * @param name
+     * @param description
+     * @param price
+     * @param category
+     * @param ingredients
+     * @param userid
+     */
+    public ProductDTO(Long id, String name, String description, Double price, Integer category, List<IngredientDTO> ingredients, Long userid) {
         this.id = new SimpleLongProperty(id);
         this.name = new SimpleStringProperty(name);
         this.description = new SimpleStringProperty(description);
         this.price = new SimpleDoubleProperty(price);
         this.category = new SimpleIntegerProperty(category);
         this.ingredients = new SimpleObjectProperty(ingredients);
+        this.userId = userid != null ? new SimpleLongProperty(userid) : new SimpleLongProperty();
     }
-    
-    public ProductDTO(String name, String description, Double price, Integer category, List<IngredientDTO> ingredients) {
+
+    /**
+     * Default constructor for menu pizza
+     *
+     * @param name
+     * @param description
+     * @param price
+     * @param ingredients
+     */
+    public ProductDTO(String name, String description, Double price, List<IngredientDTO> ingredients) {
         this.id = new SimpleLongProperty();
         this.name = new SimpleStringProperty(name);
         this.description = new SimpleStringProperty(description);
         this.price = new SimpleDoubleProperty(price);
-        this.category = new SimpleIntegerProperty(category);
-        this.ingredients = new SimpleObjectProperty(ingredients); 
+        this.category = new SimpleIntegerProperty(AppConstants.PRODUCT_PIZZA);
+        this.ingredients = new SimpleObjectProperty(ingredients);
+        this.userId = new SimpleLongProperty();
     }
-    
-    public ProductDTO(Long id, String name, String description, Double price) {
-        this.id = new SimpleLongProperty(id);
+
+    /**
+     * Default constructor for custom pizza
+     *
+     * @param name
+     * @param description
+     * @param price
+     * @param ingredients
+     */
+    public ProductDTO(String name, String description, Double price, List<IngredientDTO> ingredients, Long userid) {
+        this.id = new SimpleLongProperty();
+        this.name = new SimpleStringProperty(name);
+        this.description = new SimpleStringProperty(description);
+        this.price = new SimpleDoubleProperty(price);
+        this.category = new SimpleIntegerProperty(AppConstants.PRODUCT_PIZZA);
+        this.ingredients = new SimpleObjectProperty(ingredients);
+        this.userId = userid != null ? new SimpleLongProperty(userid) : new SimpleLongProperty();
+    }
+
+    /**
+     * Default constructor for drink
+     *
+     * @param name
+     * @param description
+     * @param price
+     */
+    public ProductDTO(String name, String description, Double price) {
+        this.id = new SimpleLongProperty();
         this.name = new SimpleStringProperty(name);
         this.description = new SimpleStringProperty(description);
         this.price = new SimpleDoubleProperty(price);
         this.category = new SimpleIntegerProperty(AppConstants.PRODUCT_DRINK);
         this.ingredients = new SimpleObjectProperty(null);
+        this.userId = new SimpleLongProperty();
     }
 
     /**
@@ -71,13 +120,12 @@ public class ProductDTO {
         return id.get();
     }
 
-//    /**
-//     * @param id the id to set
-//     */
-//    public void setId(Integer id) {
-//        this.id.set(id);
-//    }
-
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id.set(id);
+    }
     /**
      * @return the name
      */
@@ -147,12 +195,28 @@ public class ProductDTO {
     public void setIngredients(List<IngredientDTO> ingredients) {
         this.ingredients.set(ingredients);
     }
-    
-    @Override
-    public String toString(){
-        return "id: "+this.getId()+", name: "+this.getName()+", description: "+this.getDescription()+
-                ", price: "+this.getPrice()+", category: "+this.getCategory()+", ingredients: "+this.getIngredients().toString();
+
+    /**
+     * @return the userId
+     */
+    public Long getUserId() {
+        return userId.get();
+    }
+
+    /**
+     * @param userId the userId to set
+     */
+    public void setUserId(Long userId) {
+        this.userId.set(userId);
     }
 
     
+    @Override
+    public String toString() {
+        return "id: " + this.getId() + ", name: " + this.getName() + ", description: " + this.getDescription()
+                + ", price: " + this.getPrice() + ", category: " + this.getCategory() + ", ingredients: " + this.getIngredients().toString();
+    }
+
+    
+
 }

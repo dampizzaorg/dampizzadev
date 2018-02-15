@@ -28,6 +28,7 @@ import com.dampizza.logic.imp.IngredientManagerImp;
 import com.dampizza.logic.imp.OrderManagerImp;
 import com.dampizza.logic.imp.ProductManagerImp;
 import com.dampizza.logic.imp.UserManagerImp;
+import com.dampizza.util.LogicFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -43,33 +44,32 @@ public class TestUtil {
 
     private static final Logger logger = Logger.getLogger(TestUtil.class.getName());
 
-    private UserManagerImp umi = null;
-    private IngredientManagerImp imi = null;
-    private ProductManagerImp pmi = null;
-    private OrderManagerImp omi = null;
+    private UserManagerImp umi;
+    private IngredientManagerImp imi;
+    private ProductManagerImp pmi;
+    private OrderManagerImp omi;
 
     public TestUtil() {
-        umi = new UserManagerImp();
-        imi = new IngredientManagerImp();
-        pmi = new ProductManagerImp();
-        omi = new OrderManagerImp();
+        umi = LogicFactory.getUserManager();
+        imi = LogicFactory.getIngredientManager();
+        pmi = LogicFactory.getProductManager();
+        omi = LogicFactory.getOrderManager();
     }
 
     ////////////////////////////////////////////////////////////////////////////
     //                                 USER                                   //
     ////////////////////////////////////////////////////////////////////////////
     public void testCreateUsers() {
-        EncrypterUtil.encrypt("password1");
         try {
-            umi.createUser(new UserDTO("manager", "name1", "surname1", "manager@dampizza.com", "address1"), EncrypterUtil.encrypt("manager"));
-            umi.createUser(new UserDTO("dealer1", "dealer1", "surname2", "dealer1@dampizza.com", "address2"), EncrypterUtil.encrypt("dealer1"));
-            umi.createUser(new UserDTO("dealer2", "dealer2", "surname3", "dealer2@dampizza.com", "address3"), EncrypterUtil.encrypt("dealer2"));
-            umi.createUser(new UserDTO("jonxa", "name4", "surname4", "email4@dampizza.com", "address4"), EncrypterUtil.encrypt("jonxa"));
-            umi.createUser(new UserDTO("isma", "name5", "surname5", "email5@dampizza.com", "address5"), EncrypterUtil.encrypt("isma"));
-            umi.createUser(new UserDTO("carlos", "carlos", "surname6", "carlos@dampizza.com", "address6"), EncrypterUtil.encrypt("carlos"));
-            umi.createUser(new UserDTO("clsan", "carlos", "santos", "clsan@dampizza.com", "address7"), EncrypterUtil.encrypt("clsan"));
-            umi.createUser(new UserDTO("username1", "name1", "surname1", "email1@dampizza.com", "address1"), EncrypterUtil.encrypt("password1"));
-            umi.createUser(new UserDTO("username8", "name8", "surname8", "email8@dampizza.com", "address8"), EncrypterUtil.encrypt("password1"));
+            umi.createUser(new UserDTO("manager", "name1", "surn%ame1", "manager@dampizza.com", "address1"), EncrypterUtil.encrypt("manager"), 1);
+            umi.createUser(new UserDTO("dealer1", "dealer1", "sur%name2", "dealer1@dampizza.com", "address2"), EncrypterUtil.encrypt("dealer1"), 2);
+            umi.createUser(new UserDTO("dealer2", "dealer2", "sur%name3", "dealer2@dampizza.com", "address3"), EncrypterUtil.encrypt("dealer2"), 2);
+            umi.createUser(new UserDTO("jonxa", "name4", "sur%name4", "email4@dampizza.com", "address4"), EncrypterUtil.encrypt("jonxa"));
+            umi.createUser(new UserDTO("isma", "name5", "surnam%e5", "email5@dampizza.com", "address5"), EncrypterUtil.encrypt("isma"));
+            umi.createUser(new UserDTO("carlos", "carlos", "sur%name6", "carlos@dampizza.com", "address6"), EncrypterUtil.encrypt("carlos"));
+            umi.createUser(new UserDTO("clsan", "carlos", "san%tos", "clsan@dampizza.com", "address7"), EncrypterUtil.encrypt("clsan"));
+            umi.createUser(new UserDTO("username1", "name1", "surn%ame1", "email1@dampizza.com", "address1"), EncrypterUtil.encrypt("password1"));
+            umi.createUser(new UserDTO("username8", "name8", "surn%ame8", "email8@dampizza.com", "address8"), EncrypterUtil.encrypt("password1"));
         } catch (UserCreateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UserQueryException ex) {
@@ -161,24 +161,28 @@ public class TestUtil {
             
             ingredientProduct.add(new IngredientDTO(new Long(1), "Tomate", 1.50));
             ingredientProduct.add(new IngredientDTO(new Long(7), "Queso", 1.50));
-            pmi.createProduct(new ProductDTO("Margarita", "", 6.00, AppConstants.PRODUCT_PIZZA, ingredientProduct));
+//            pmi.createProduct(new ProductDTO("Margarita", "", 6.00, ingredientProduct, new Long(7)));
             
             ingredientProduct.add(new IngredientDTO(new Long(4), "Pimiento verde", 1.50));
             ingredientProduct.add(new IngredientDTO(new Long(10), "Champiñones", 1.50));
-            pmi.createProduct(new ProductDTO("Pepperoni", "", 6.00, AppConstants.PRODUCT_PIZZA, ingredientProduct));
+            pmi.createProduct(new ProductDTO("Pepperoni", "", 6.00, ingredientProduct));
             
             ingredientProduct.add(new IngredientDTO(new Long(5), "Peperoni", 2.00));
             ingredientProduct.add(new IngredientDTO(new Long(2), "Cebolla", 1.50));
-            pmi.createProduct(new ProductDTO("Manhattan", "", 6.00, AppConstants.PRODUCT_PIZZA, ingredientProduct));
+            pmi.createProduct(new ProductDTO("Manhattan", "", 6.00, ingredientProduct));
             
-//            pmi.createProduct(new ProductDTO("Vegetal", "", 6.00, AppConstants.PRODUCT_PIZZA, null));
-//            pmi.createProduct(new ProductDTO("Cesar", "", 6.00, AppConstants.PRODUCT_PIZZA, null));
+            ingredientProduct.add(new IngredientDTO(new Long(5), "Peperoni", 2.00));
+            ingredientProduct.add(new IngredientDTO(new Long(2), "Cebolla", 1.50));
+            pmi.createProduct(new ProductDTO("CustomCS", "", 6.00, ingredientProduct, new Long(7)));
             
-            pmi.createProduct(new ProductDTO("Agua", "", 1.00, AppConstants.PRODUCT_DRINK, null));
-            pmi.createProduct(new ProductDTO("Coca Cola", "", 2.00, AppConstants.PRODUCT_DRINK, null));
-            pmi.createProduct(new ProductDTO("7up", "", 2.00, AppConstants.PRODUCT_DRINK, null));
-            pmi.createProduct(new ProductDTO("Fanta Naranja", "", 2.00, AppConstants.PRODUCT_DRINK, null));
-            pmi.createProduct(new ProductDTO("Heineken", "", 3.00, AppConstants.PRODUCT_DRINK, null));
+            pmi.createProduct(new ProductDTO("Vegetal", "", 6.00, null));
+            pmi.createProduct(new ProductDTO("Cesar", "", 6.00, null));
+            
+            pmi.createProduct(new ProductDTO("Agua", "", 1.00));
+            pmi.createProduct(new ProductDTO("Coca Cola", "", 2.00));
+            pmi.createProduct(new ProductDTO("7up", "", 2.00));
+            pmi.createProduct(new ProductDTO("Fanta Naranja", "", 2.00));
+            pmi.createProduct(new ProductDTO("Heineken", "", 3.00));
         } catch (ProductCreateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProductQueryException ex) {
@@ -188,7 +192,7 @@ public class TestUtil {
     
     public void testUpdateProducts(){
         try {
-            pmi.updateProduct(new ProductDTO(new Long(7),"Fanta UPDATED", "", 2.00, AppConstants.PRODUCT_DRINK, null));
+            pmi.updateProduct(new ProductDTO(new Long(7),"Fanta UPDATED", "", 2.00, AppConstants.PRODUCT_DRINK, null, null));
         } catch (ProductUpdateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -218,7 +222,9 @@ public class TestUtil {
         try {
             List<ProductDTO> products = new ArrayList<>();
             products.add(pmi.getProductById(new Long(1)));
-            products.add(pmi.getProductById(new Long(4)));
+            products.add(pmi.getProductById(new Long(2)));
+            
+            products.forEach(p -> System.out.println(p.getName()));
             
             omi.createOrder(new OrderDTO(umi.getUserByUsername("username1"),
                 products, umi.getUserByUsername("dealer1")));

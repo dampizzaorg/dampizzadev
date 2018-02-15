@@ -39,7 +39,7 @@ public class OrderManagerImp implements OrderManagerInterface {
         Integer res = 0;
 
         // If user is not in the database already
-        logger.log(Level.INFO, "Creating order at {0} for customer {1}", new Object[]{order.getDate(), order.getCustomer().getUsername()});
+      //  logger.log(Level.INFO, "Creating order at {0} for customer {1}", new Object[]{order.getDate(), order.getCustomer().getUsername()});
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
 

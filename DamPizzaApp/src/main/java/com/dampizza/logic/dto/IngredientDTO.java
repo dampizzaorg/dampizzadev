@@ -10,8 +10,8 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- *
- * @author Carlos
+ * Ingredient Data Transfer Object 
+ * @author Carlos Santos
  */
 public class IngredientDTO {
     private SimpleLongProperty id;

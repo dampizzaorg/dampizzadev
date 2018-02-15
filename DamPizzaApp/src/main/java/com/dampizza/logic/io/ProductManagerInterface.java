@@ -64,6 +64,14 @@ public interface ProductManagerInterface {
     public ProductDTO getProductById(Long id) throws ProductQueryException;
     
     /**
+     * Get custom products asociated to an user.
+     * @param id userid
+     * @return list of products asociated to the user.
+     * @throws ProductQueryException 
+     */
+    public List<ProductDTO> getProductsByUserId(Long id) throws ProductQueryException;
+    
+    /**
      * Check if product already exists in the database.
      * @param name product name
      * @return 1 yes, 2 no, 0 error
