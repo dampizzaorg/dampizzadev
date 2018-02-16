@@ -1,12 +1,13 @@
-package com.dampizza.views.user;
+package com.dampizza.views.user.dealer;
 
+import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 
 /**
- * Dealer view provider (FXML Loader)
+ * Customer view provider (FXML Loader)
  * @author Carlos Santos
  */
 public class DealerView {
@@ -23,7 +24,7 @@ public class DealerView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(DealerView.class.getResource("/com/dampizza/views/user/dealer.fxml"));
+            View view = FXMLLoader.load(DealerView.class.getResource("dealer_main.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {
