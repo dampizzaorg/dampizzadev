@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<View maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.user.manager.RegisterDealerPresenter">
    <top>
       <AppBar titleText="Dealer info" BorderPane.alignment="CENTER">
          <navIcon>
@@ -53,7 +53,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="335.0" spacing="20.0">
                <children>
-                  <TextField fx:id="tfDirection" prefHeight="37.0" prefWidth="468.0" />
+                  <TextField fx:id="tfAddress" prefHeight="37.0" prefWidth="468.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="335.0" spacing="20.0">
@@ -91,7 +91,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="125.0" prefWidth="335.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnSave" mnemonicParsing="false" text="SAVE" />
+            <Button fx:id="btnSave" onAction="#handlerActionSignUp" mnemonicParsing="false" text="SAVE" />
          </children>
       </HBox>
    </bottom>

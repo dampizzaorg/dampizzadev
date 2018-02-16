@@ -31,7 +31,7 @@ public class ManagerPresenter {
     
     private OrderManagerImp orderManager;
     private ObservableList<OrderDTO> oblProducts;
-     NavigationDrawer.ViewItem Item;
+    NavigationDrawer.ViewItem Item;
 
     @FXML
     private CharmListView<OrderDTO, ? extends Comparable> lbOrders;
