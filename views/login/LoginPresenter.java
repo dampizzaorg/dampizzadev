@@ -62,6 +62,8 @@ public class LoginPresenter {
     private Hyperlink hyRegistered, hyForgot;
 
     private UserManagerInterface userManager;
+    
+   
 
     private Alert alert;
 
@@ -84,7 +86,7 @@ public class LoginPresenter {
             }
         });
         userManager = new UserManagerImp();
-        
+       
     }
 
     @FXML

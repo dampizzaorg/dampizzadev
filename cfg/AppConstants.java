@@ -16,6 +16,7 @@ public class AppConstants {
     // PRODUCT TYPES
     public static final Integer PRODUCT_PIZZA = 1;
     public static final Integer PRODUCT_DRINK = 2;
+    public static final Integer PRODUCT_CUSTOM= 3;
     
     // USER TYPES
     public static final Integer USER_MANAGER = 1;

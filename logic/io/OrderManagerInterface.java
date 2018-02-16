@@ -57,4 +57,6 @@ public interface OrderManagerInterface {
      * @throws OrderQueryException 
      */
     public OrderDTO getOrderById(Long id) throws OrderQueryException;
+
+	List<OrderDTO> getAllOrdersByUser() throws OrderQueryException;
 }

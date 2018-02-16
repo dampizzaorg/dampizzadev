@@ -36,6 +36,7 @@ public class DrawerManager {
 
     private final NavigationDrawer drawer;
     private static Integer usu = 1;
+    
 
     public DrawerManager(Integer status) {
         this.drawer = new NavigationDrawer();
@@ -130,4 +131,6 @@ public class DrawerManager {
     public NavigationDrawer getDrawer() {
         return drawer;
     }
+    
+
 }
