@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.CharmListView?>
+<?import com.gluonhq.charm.glisten.mvc.View?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" stylesheets="@Users/2dam/dampizza/DamPizzaApp/src/main/resources/com/dampizza/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.user.dealer.DealerOrderPresenter">
+   <top>
+      <VBox alignment="TOP_CENTER" prefHeight="178.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="600.0" prefWidth="350.0">
+               <children>
+                  <TextArea fx:id="taDatos" prefHeight="175.0" prefWidth="350.0" text="&#10;">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                     </VBox.margin>
+                  </TextArea>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="280.0" prefWidth="350.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="5.0" right="5.0" top="10.0" />
+         </padding>
+         <children>
+            <ScrollPane>
+               <content>
+                  <CharmListView fx:id="lvOrder" prefHeight="289.0" prefWidth="320.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <VBox alignment="TOP_CENTER" prefHeight="143.0" prefWidth="350.0" spacing="25.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="30.0" />
+         </padding>
+         <children>
+            <Button fx:id="btEntregado" onAction="#handlerMarkAsDone" mnemonicParsing="false" prefHeight="32.0" prefWidth="231.0" text="PEDIDO ENTREGADO">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </bottom>
+</View>
