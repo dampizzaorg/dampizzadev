@@ -68,16 +68,18 @@ public class HistoryPresenter implements Initializable {
                         System.out.println("Search")));
                 
             }
+            System.out.println("shjgshjgshjgsj");
             
         });
        
        omi = new OrderManagerImp();
-       
+     
         try {
-            oblOrders = FXCollections.observableArrayList(omi.getAllOrders());
+            oblOrders = FXCollections.observableArrayList(omi.getAllOrdersByUser());
         } catch (OrderQueryException ex) {
             Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
+       if(oblOrders!=null){
        lvOrders.setItems(oblOrders);
        lvOrders.setCellFactory(p -> new historyList());
        lvOrders.selectedItemProperty().addListener((obs,ov,nv) ->{
@@ -87,5 +89,6 @@ public class HistoryPresenter implements Initializable {
            DrawerManager drawer = new DrawerManager();
            drawer.updateView(Item);
        });
+        }
     }     
 }

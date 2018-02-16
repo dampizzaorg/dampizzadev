@@ -41,7 +41,7 @@ public class UserManagerImp implements UserManagerInterface {
     @Override
     public Integer createUser(UserDTO user, String password) throws UserCreateException, UserQueryException {
         Integer res = 0;
-
+        	
         // If user is not in the database already
         if (userExists(user.getUsername()) == 2) {
             logger.log(Level.INFO, "Creating user <{0}>.", user.getUsername());
