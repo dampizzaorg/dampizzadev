@@ -31,7 +31,7 @@ public class ManagerPresenter {
     
     private OrderManagerImp orderManager;
     private ObservableList<OrderDTO> oblProducts;
-     NavigationDrawer.ViewItem Item;
+    NavigationDrawer.ViewItem Item;
 
     @FXML
     private CharmListView<OrderDTO, ? extends Comparable> lbOrders;
@@ -79,10 +79,7 @@ public class ManagerPresenter {
 //            App.setCurrentOrder(lbOrders.getSelectedItem());
             NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_ORDER_VIEW, ViewStackPolicy.SKIP);
             DrawerManager drawer = new DrawerManager();
-            drawer.updateView(Item);
-            
-            
-            
+            drawer.updateView(Item);          
         });
          
          

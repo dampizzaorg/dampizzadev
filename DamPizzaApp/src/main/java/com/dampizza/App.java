@@ -9,10 +9,13 @@ import com.dampizza.views.login.RecoverView;
 import com.dampizza.views.login.SignupView;
 import com.dampizza.views.order.CartView;
 import com.dampizza.views.user.CustomerView;
-import com.dampizza.views.user.DealerView;
+import com.dampizza.views.user.manager.dealer.DealerView;
+import com.dampizza.views.user.manager.dealer.DealerOrderView;
 import com.dampizza.views.user.HistoryView;
 import com.dampizza.views.user.manager.ManagerView;
 import com.dampizza.views.user.manager.ManagerOrderView;
+import com.dampizza.views.user.manager.ManagerDealerView;
+import com.dampizza.views.user.manager.RegisterDealerView;
 import com.dampizza.views.user.ModifyPersonalInfoView;
 import com.dampizza.views.order.OrderCreateView;
 import com.dampizza.views.user.manager.PizzaCreateView;
@@ -59,8 +62,10 @@ public class App extends MobileApplication {
     public static final String CUSTOMER_VIEW = "Customer Password view";
     public static final String MANAGER_VIEW = "Manager view";
     public static final String MANAGER_ORDER_VIEW = "Manager order view";
-    public static final String MANAGER_SELECT_DEALER_VIEW = "Manager select view";
-    public static final String DEALER_VIEW = "Dealer Password view";
+    public static final String MANAGER_DEALER_VIEW = "Manager Dealer view";
+    public static final String MANAGER_ADD_DEALER_VIEW = "Manager Add Dealer view";
+    public static final String DEALER_VIEW = "Dealer  view";
+    public static final String DEALER_ORDER_VIEW = "Dealer order view";
     public static final String HISTORY_VIEW = "History view";
     public static final String MENU_LAYER = "Side Menu";
     public static final String PIZZA_CREATE_VIEW = "Create pizza view";
@@ -94,7 +99,10 @@ public class App extends MobileApplication {
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
         addViewFactory(MANAGER_ORDER_VIEW, () -> new ManagerOrderView(MANAGER_ORDER_VIEW).getView());
+        addViewFactory(MANAGER_DEALER_VIEW, () -> new ManagerDealerView(MANAGER_DEALER_VIEW).getView());
+        addViewFactory(MANAGER_ADD_DEALER_VIEW, () -> new RegisterDealerView(MANAGER_ADD_DEALER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
+        addViewFactory(DEALER_ORDER_VIEW, () -> new DealerOrderView(DEALER_ORDER_VIEW).getView());
         addViewFactory(ORDER_CREATE_VIEW, () -> new OrderCreateView(ORDER_CREATE_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
         addViewFactory(PIZZA_CREATE_VIEW, () -> new PizzaCreateView(PIZZA_CREATE_VIEW).getView());
@@ -120,11 +128,13 @@ public class App extends MobileApplication {
         test = new TestUtil();
 
 //        // TEST USER
-        test.testCreateUsers();
-        test.testUpdateUsers();
-        test.testDeleteUser();
-        test.testGetUsers();
-          test.testGetUsersByType();
+
+//        test.testCreateUsers();
+//        test.testUpdateUsers();
+//        test.testDeleteUser();
+//        test.testGetUsers();
+          //test.testGetUsersByType();
+
 
         // TEST INGREDIENT
         test.testCreateIngredients();

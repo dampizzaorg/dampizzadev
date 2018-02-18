@@ -22,7 +22,7 @@ import static com.dampizza.App.ORDER_CREATE_VIEW;
 import static com.dampizza.App.PROFILE_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
 import static com.dampizza.App.SIGNUP_VIEW;
-import static com.dampizza.App.MANAGER_SELECT_DEALER_VIEW;
+import static com.dampizza.App.MANAGER_DEALER_VIEW;
 import static com.dampizza.App.PIZZA_CREATE_VIEW;
 import com.dampizza.cfg.AppConstants;
 import javafx.scene.Node;
@@ -67,13 +67,13 @@ public class DrawerManager {
             final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
             final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);
             final Item registerItem = new ViewItem("Register a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
-            final Item deleteItem = new ViewItem("Delete a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_SELECT_DEALER_VIEW);
+            final Item managerDealerItem = new ViewItem("Delete a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_DEALER_VIEW);
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
             final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
 
             final Item pizzaCreateItem= new ViewItem("Create Pizza", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PIZZA_CREATE_VIEW);
  
-            drawer.getItems().addAll(managerItem, managerOrderItem,pizzaCreateItem ,registerItem, profileItem,logoutItem);
+            drawer.getItems().addAll(managerItem, managerOrderItem,pizzaCreateItem ,registerItem, profileItem,managerDealerItem,logoutItem);
 
         } else if (usu == AppConstants.USER_DEALER){
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
