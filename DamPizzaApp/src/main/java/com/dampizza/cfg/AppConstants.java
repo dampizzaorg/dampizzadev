@@ -31,5 +31,8 @@ public class AppConstants {
     //ACTUAL ORDER
     public static final OrderDTO CURRENT_ORDER = new OrderDTO();
     
+    // PRODUCT IMG URL
+    public static final String DEFAULT_PRODUCT_IMG = "img/pizza_margarita.png";
+    
     
 }

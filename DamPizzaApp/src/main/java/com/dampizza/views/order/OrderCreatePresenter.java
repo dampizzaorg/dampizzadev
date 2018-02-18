@@ -10,17 +10,22 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
 import com.dampizza.cfg.AppConstants;
 import com.dampizza.exception.product.ProductQueryException;
+import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.imp.ProductManagerImp;
+import com.dampizza.util.LogicFactory;
 import com.gluonhq.charm.glisten.control.CharmListCell;
 import com.gluonhq.charm.glisten.control.CharmListView;
 import com.gluonhq.charm.glisten.control.ListTile;
+import com.gluonhq.charm.glisten.control.Toast;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.image.ImageView;
 
 /**
@@ -31,10 +36,27 @@ import javafx.scene.image.ImageView;
 public class OrderCreatePresenter {
 
     private ProductManagerImp productManager;
-    private ObservableList<ProductDTO> oblProducts;
+    private OrderDTO cart;
+    private ObservableList<ProductDTO> oblClassicPizzas;
+    private ObservableList<ProductDTO> oblDrinks;
+    private ObservableList<ProductDTO> oblCustomPizzas;
 
     @FXML
     private CharmListView<ProductDTO, ? extends Comparable> lvClassic;
+    @FXML
+    private CharmListView<ProductDTO, ? extends Comparable> lvDrinks;
+    @FXML
+    private CharmListView<ProductDTO, ? extends Comparable> lvCustom;
+    @FXML
+    private Button btnAdd;
+    @FXML
+    private Button btnDetails;
+    @FXML
+    private Tab tabClassic;
+    @FXML
+    private Tab tabDrinks;
+    @FXML
+    private Tab tabCustom;
 
     @FXML
     private View primary;
@@ -51,32 +73,112 @@ public class OrderCreatePresenter {
                         -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setTitleText("Create order");
 
-                productManager = new ProductManagerImp();
-                initClassic();
+                productManager = LogicFactory.getProductManager();
+                cart = (OrderDTO) LogicFactory.getUserManager().getSession().get("cart");
+                loadClassicPizzas();
+                addListeners();
             }
         });
-    }
-
-    public void initClassic() {
-
-
-        try {
-            //oblProducts = FXCollections.observableArrayList(productManager.getProductByCategory(AppConstants.PRODUCT_PIZZA));
-            oblProducts = FXCollections.observableArrayList(productManager.getAllProducts());
-            oblProducts.forEach(p -> System.out.println(p.toString()));
-
-        } catch (ProductQueryException ex) {
-            Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        lvClassic.setItems(oblProducts);
-        
-        
-         lvClassic.setCellFactory(p -> new PizzaCLV());
     }
 
     @FXML
     void buttonClick() {
 
+    }
+
+    @FXML
+    public void loadClassicPizzas() {
+        try {
+            oblClassicPizzas = FXCollections.observableArrayList(productManager.getProductByCategory(AppConstants.PRODUCT_PIZZA));
+
+        } catch (ProductQueryException ex) {
+            Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        lvClassic.setCellFactory(p -> new PizzaCLV());
+        lvClassic.setItems(oblClassicPizzas);
+    }
+
+    @FXML
+    public void loadDrinks() {
+        try {
+            oblDrinks = FXCollections.observableArrayList(productManager.getProductByCategory(AppConstants.PRODUCT_DRINK));
+
+        } catch (ProductQueryException ex) {
+            Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        lvDrinks.setCellFactory(p -> new PizzaCLV());
+        lvDrinks.setItems(oblDrinks);
+    }
+
+    @FXML
+    public void loadCustomPizzas() {
+        try {
+            Long userid = (Long) LogicFactory.getUserManager().getSession().get("id");
+            System.out.println(String.valueOf(userid));
+            if (userid > 0) {
+                oblCustomPizzas = FXCollections.observableArrayList(productManager.getProductsByUserId(userid));
+            }
+        } catch (ProductQueryException ex) {
+            Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        lvCustom.setCellFactory(p -> new PizzaCLV());
+        lvCustom.setItems(oblCustomPizzas);
+    }
+
+    public void addListeners() {
+        lvClassic.selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                btnAdd.setDisable(false);
+                btnDetails.setDisable(false);
+            }else{
+                btnAdd.setDisable(true);
+                btnDetails.setDisable(true);
+            }
+        });
+        lvDrinks.selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                btnAdd.setDisable(false);
+                btnDetails.setDisable(false);
+            }else{
+                btnAdd.setDisable(true);
+                btnDetails.setDisable(true);
+            }
+        });
+        lvCustom.selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                btnAdd.setDisable(false);
+                btnDetails.setDisable(false);
+            }else{
+                btnAdd.setDisable(true);
+                btnDetails.setDisable(true);
+            }
+        });
+    }
+    
+    @FXML
+    public void btnAddAction(){
+        ProductDTO selectedProduct = null;
+        if(tabClassic.isSelected()){
+            selectedProduct = lvClassic.getSelectedItem();
+        }else if(tabDrinks.isSelected()){
+            selectedProduct = lvDrinks.getSelectedItem();
+        }else if(tabCustom.isSelected()){
+            selectedProduct = lvCustom.getSelectedItem();
+        }
+        
+        if(selectedProduct != null){
+            cart.getProducts().add(selectedProduct);
+            cart.setTotal(cart.getTotal()+selectedProduct.getPrice());
+            //LogicFactory.getUserManager().getSession().replace("cart", cart);
+            new Toast("Producto: "+selectedProduct.getName()+" añadido.").show();     
+        }else{
+            new Toast("Debes seleccionar un producto primero.").show();
+        }
+    }
+    
+    @FXML
+    public void btnDetailsAction(){
+        new Toast("Mostrar detalles del producto.").show();
     }
 
 }

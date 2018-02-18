@@ -28,11 +28,12 @@ public class PizzaCLV extends CharmListCell<ProductDTO> {
     public void updateItem(ProductDTO item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null && !empty) {
-            tile.textProperty().setAll(item.getName(),item.getDescription(),item.getCategory().toString()+item.getIngredients().get(0).getName());
-            final Image image = new Image("img/pizza_margarita.png",50,50,false,false);
+            tile.textProperty().setAll(
+                    item.getName(),
+                    item.getDescription());
+            final Image image = new Image(item.getUrl(),50,50,false,false);
             if (image != null) {
-               imageView.setImage(image);
-               
+               imageView.setImage(image);  
             }
             setGraphic(tile);
         } else {

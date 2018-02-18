@@ -45,21 +45,20 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             try {
                 tx = session.beginTransaction();
-                System.out.println("User_id:"+String.valueOf(product.getUserId()));
+                System.out.println("User_id:" + String.valueOf(product.getUserId()));
                 ProductEntity productEntity = null;
-                
+
                 // Creating product
-                if(product.getUserId()!=0){
+                if (product.getUserId() != 0) {
                     productEntity = new ProductEntity(product.getName(),
-                        product.getDescription(), product.getPrice(), product.getCategory(),
-                        imi.dtoToEntity(product.getIngredients()), umi.getUserEntityById(product.getUserId()));
-                }else{
-                        productEntity = new ProductEntity(product, imi.dtoToEntity(product.getIngredients()));     
+                            product.getDescription(), product.getPrice(), product.getCategory(),
+                            imi.dtoToEntity(product.getIngredients()), umi.getUserEntityById(product.getUserId()), product.getUrl());
+                } else {
+                    productEntity = new ProductEntity(product, imi.dtoToEntity(product.getIngredients()));
                 }
-                
-                
+
                 Long productId = (Long) session.save(productEntity);
-                
+
                 tx.commit();
                 if (productId != null) {
                     res = 1;
@@ -76,9 +75,9 @@ public class ProductManagerImp implements ProductManagerInterface {
             } catch (UserQueryException ex) {
                 Logger.getLogger(ProductManagerImp.class.getName()).log(Level.SEVERE, "An error ocurred while retrieving associated user.", ex);
             } finally {
-                if(session!=null){
+                if (session != null) {
                     session.close();
-                }  
+                }
             }
         } else {
             res = 2;
@@ -193,7 +192,7 @@ public class ProductManagerImp implements ProductManagerInterface {
             if (productEntities != null) {
 
                 productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
-                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
             }
 
         } catch (HibernateException e) {
@@ -256,7 +255,7 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             if (productEntities != null) {
                 productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
-                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
             }
 
         } catch (HibernateException e) {
@@ -271,12 +270,12 @@ public class ProductManagerImp implements ProductManagerInterface {
     @Override
     public Integer productExists(String name) throws ProductQueryException {
         logger.log(Level.INFO, "Checking if product name<{0}> already exists.", name);
-        
+
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = "from ProductEntity where name = :name";
         System.out.println(name);
-        
+
         try {
             Query query = session.createQuery(hql);
             query.setParameter("name", name);
@@ -349,7 +348,7 @@ public class ProductManagerImp implements ProductManagerInterface {
         if (products != null) {
             products.forEach(p -> productDtoList.add(
                     new ProductDTO(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getCategory(),
-                            imi.EntityToDTO(p.getIngredients()), p.getUserId())));
+                            imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
         }
 
         return productDtoList;
@@ -369,7 +368,7 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             if (productEntities != null) {
                 productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
-                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
             }
 
         } catch (HibernateException e) {
