@@ -48,7 +48,7 @@ public class OrderManagerImp implements OrderManagerInterface {
 
             // Creating order
             OrderEntity orderEntity = new OrderEntity(umi.getUserEntityByUsername(order.getCustomer().getUsername()),
-                    pmi.dtoToEntity(order.getProducts()), umi.getUserEntityByUsername(order.getDealer().getUsername()));
+                    pmi.dtoToEntity(order.getProducts()), umi.getUserEntityByUsername(order.getDealer().getUsername()), order.getTotal());
 
             Long userId = (Long) session.save(orderEntity);
             if (userId != null) {

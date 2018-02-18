@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.CharmListView?>
+<?import com.gluonhq.charm.glisten.mvc.View?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.order.CartPresenter">
+   <top>
+      <VBox alignment="TOP_CENTER" prefHeight="651.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane hbarPolicy="NEVER" maxHeight="480.0" minHeight="480.0" prefHeight="480.0" prefWidth="350.0">
+               <content>
+                  <CharmListView fx:id="lvCart" maxHeight="540.0" maxWidth="340.0" minWidth="340.0" prefHeight="540.0" prefWidth="340.0" />
+               </content>
+            </ScrollPane>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox alignment="TOP_RIGHT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label text="%dampizza.views.order.cart.total">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="lblTotal" text="0 €" />
+                     </children>
+                     <padding>
+                        <Insets right="12.0" top="4.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="350.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#btnConfirmAction" text="%dampizza.views.order.cart.confirm" />
+                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#btnDeleteAction" text="%dampizza.views.order.cart.delete" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="298.0" prefWidth="458.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="15.0" right="15.0" top="20.0" />
+         </padding>
+      </VBox>
+   </center>
+   <bottom>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="30.0" />
+         </padding>
+      </VBox>
+   </bottom>
+</View>

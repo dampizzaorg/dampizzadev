@@ -11,6 +11,7 @@ import com.dampizza.exception.user.UserCreateException;
 import com.dampizza.exception.user.UserDeleteException;
 import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.exception.user.UserUpdateException;
+import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.io.UserManagerInterface;
 import com.dampizza.model.entity.CredentialEntity;
@@ -154,6 +155,13 @@ public class UserManagerImp implements UserManagerInterface {
                 // Update user in db
                 session.update(userToUpdate);
                 res = 1;
+                
+                // Update session
+                SESSION.replace("name", user.getName());
+                SESSION.replace("surnames", user.getSurnames());
+                SESSION.replace("address", user.getAddress());
+                SESSION.replace("email", user.getEmail());
+                
             } else {
                 res = 2;
             }
@@ -327,11 +335,12 @@ public class UserManagerImp implements UserManagerInterface {
                 SESSION.put("username", user.getCredential().getUsername());
                 SESSION.put("name", user.getName());
                 SESSION.put("surnames", user.getSurnames());
+                SESSION.put("address", user.getAddress());
                 SESSION.put("email", user.getEmail());
                 SESSION.put("type", user.getCredential().getCredentialType());
-                SESSION.put("cart", null);
+                SESSION.put("cart", new OrderDTO(getUserByUsername(user.getCredential().getUsername())));
 
-                //System.out.println("Session username: "+LogicFactory.getUserManager().getSESSION().get("username").toString());
+                //System.out.println("Session username: "+LogicFactory.getUserManager().getSession().get("username").toString());
                 res = 1;
             } else {
                 res = 2;
@@ -343,6 +352,8 @@ public class UserManagerImp implements UserManagerInterface {
                 tx.rollback();
             }
             e.printStackTrace();
+        } catch (UserQueryException ex) {
+            Logger.getLogger(UserManagerImp.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             session.close();
         }
@@ -482,10 +493,8 @@ public class UserManagerImp implements UserManagerInterface {
         return userResult;
     }
 
-    /**
-     * @return the SESSION
-     */
-    public static HashMap getSESSION() {
+    @Override
+    public HashMap getSession() {
         return SESSION;
     }
 
@@ -514,6 +523,12 @@ public class UserManagerImp implements UserManagerInterface {
         }
 
         return userList;
+    }
+
+    @Override
+    public void resetCart() throws UserQueryException{
+        SESSION.remove("cart");
+        SESSION.put("cart", new OrderDTO(getUserByUsername((String)SESSION.get("username"))));
     }
 
 }

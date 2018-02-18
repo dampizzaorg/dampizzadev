@@ -9,23 +9,25 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * Manager view provider (FXML Loader)
+ *
  * @author Carlos Santos
  */
-public class OrderCreateView {
+public class CartView {
 
     private final String name;
 
-    public OrderCreateView(String name) {
+    public CartView(String name) {
         this.name = name;
     }
-    
+
     /**
      * Load and returns fxml view.
+     *
      * @return view object
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(OrderCreateView.class.getResource("/com/dampizza/views/order/order_create.fxml"), App.getBundle());
+            View view = FXMLLoader.load(CartView.class.getResource("/com/dampizza/views/order/cart.fxml"), App.getBundle());
             view.setName(name);
             return view;
         } catch (IOException e) {

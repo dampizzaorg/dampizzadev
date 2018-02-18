@@ -11,6 +11,7 @@ import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.util.EmailValidator;
 import com.dampizza.util.EncrypterUtil;
+import com.dampizza.util.LogicFactory;
 import com.dampizza.util.MailUtil;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.Alert;
@@ -39,6 +40,8 @@ import javafx.scene.control.PasswordField;
  */
 public class ModifyPersonalInfoPresenter implements Initializable {
 
+    private UserManagerImp userManager;
+    
     @FXML
     private Label lbUserName;
     @FXML
@@ -92,19 +95,21 @@ public class ModifyPersonalInfoPresenter implements Initializable {
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
                         MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setTitleText("Customer");
+                
+                userManager = LogicFactory.getUserManager();
                
                 //Puts a prompt text on password fields
                 tfPassword.setPromptText("Password here");
                 tfRepeatPassword.setPromptText("Repeat here");
             
                 //Load the textField with the current user information.
-                tfUserName.setText(App.getUserLoggedIn().getCredential().getUsername());
-                tfName.setText(App.getUserLoggedIn().getName());
-                String[] surnames = App.getUserLoggedIn().getSurnames().split("%");
+                tfUserName.setText((String )userManager.getSession().get("username"));
+                tfName.setText((String )userManager.getSession().get("name"));
+                String[] surnames = ((String )userManager.getSession().get("surnames")).split("%");
                 tfFirstSurName.setText(surnames[0]);
                 tfSecondSurName.setText(surnames[1]);
-                tfDirection.setText(App.getUserLoggedIn().getAddress());
-                tfEmail.setText(App.getUserLoggedIn().getEmail());           
+                tfDirection.setText((String )userManager.getSession().get("address"));
+                tfEmail.setText((String )userManager.getSession().get("email"));           
             }    
      });
     }
@@ -134,7 +139,7 @@ public class ModifyPersonalInfoPresenter implements Initializable {
                             tfFirstSurName.getText()+"%"+tfSecondSurName.getText(),
                             tfEmail.getText(), tfDirection.getText());
                     //Call to the DB to change the user information
-                    new UserManagerImp().updateUser(user);
+                    userManager.updateUser(user);
                     logger.info(tfUserName.getText() + " user updated");
                     //load password pattern
                      String pattern = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
@@ -143,7 +148,7 @@ public class ModifyPersonalInfoPresenter implements Initializable {
                             tfPassword.getText().equals(tfRepeatPassword.getText()) &&
                             tfPassword.getText().matches(pattern)){
                         //Update user password
-                        new UserManagerImp().changePassword(tfUserName.getText(),EncrypterUtil.encrypt(tfPassword.getText()));
+                        userManager.changePassword(tfUserName.getText(),EncrypterUtil.encrypt(tfPassword.getText()));
                         System.out.println(tfPassword.getText());
                         System.out.println(EncrypterUtil.encrypt(tfPassword.getText()));
                         alert = new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Credentials updated");

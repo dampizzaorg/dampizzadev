@@ -7,6 +7,7 @@ import com.dampizza.util.TestUtil;
 import com.dampizza.views.login.LoginView;
 import com.dampizza.views.login.RecoverView;
 import com.dampizza.views.login.SignupView;
+import com.dampizza.views.order.CartView;
 import com.dampizza.views.user.CustomerView;
 import com.dampizza.views.user.manager.dealer.DealerView;
 import com.dampizza.views.user.manager.dealer.DealerOrderView;
@@ -41,7 +42,7 @@ public class App extends MobileApplication {
     
     private static final Logger logger = Logger.getLogger(App.class.getName());
     public static Locale locale;
-    public static ResourceBundle bundle;
+    private static ResourceBundle bundle;
 
     
     /* TODO research about java session managament for mobile apps.
@@ -75,6 +76,7 @@ public class App extends MobileApplication {
      */
     public static final String ORDER_CREATE_VIEW = "Create order view";
     public static final String ORDER_DETAIL_VIEW = "Order details view";
+    public static final String CART_VIEW = "Shopping cart view";
     
     
     
@@ -104,6 +106,7 @@ public class App extends MobileApplication {
         addViewFactory(ORDER_CREATE_VIEW, () -> new OrderCreateView(ORDER_CREATE_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
         addViewFactory(PIZZA_CREATE_VIEW, () -> new PizzaCreateView(PIZZA_CREATE_VIEW).getView());
+        addViewFactory(CART_VIEW, () -> new CartView(CART_VIEW).getView());
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
 
@@ -125,52 +128,40 @@ public class App extends MobileApplication {
         test = new TestUtil();
 
 //        // TEST USER
+
 //        test.testCreateUsers();
 //        test.testUpdateUsers();
 //        test.testDeleteUser();
 //        test.testGetUsers();
           //test.testGetUsersByType();
 
+
         // TEST INGREDIENT
-//        test.testCreateIngredients();
-//        test.testUpdateIngredients();
-//        test.testDeleteIngredient();
-//        test.testGetIngredients();
+        test.testCreateIngredients();
+        test.testUpdateIngredients();
+        test.testDeleteIngredient();
+        test.testGetIngredients();
 
         // TEST PRODUCT
-//        test.testCreateProducts();
-//        test.testUpdateProducts();
-//        test.testDeleteProduct();
-//        test.testGetProducts();
+        test.testCreateProducts();
+        test.testUpdateProducts();
+        test.testDeleteProduct();
+        test.testGetProducts();
         
         // TEST ORDER
-//        test.testCreateOrder();
-//        test.testGetOrders();
+        test.testCreateOrder();
+        test.testGetOrders();
         
         
     }
 
     /**
-     * @return the userLoggedIn
+     * @return the bundle
      */
-    public static UserEntity getUserLoggedIn() {
-        return userLoggedIn;
+    public static ResourceBundle getBundle() {
+        return bundle;
     }
 
-    /**
-     * @param aUserLoggedIn the userLoggedIn to set
-     */
-    public static void setUserLoggedIn(UserEntity aUserLoggedIn) {
-        userLoggedIn = aUserLoggedIn;
-    }
-    
-     public static OrderDTO getCurrentOrder() {
-        return currentOrder;
-    }
-
-    public static void setCurrentOrder(OrderDTO currentOrder) {
-        App.currentOrder = currentOrder;
-    }
     
     
     

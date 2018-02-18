@@ -53,6 +53,9 @@ public class OrderEntity implements Serializable{
     @Column(name = "status", nullable = false, length = 2)
     private Integer status;
     
+    @Column(name = "total", nullable = false, length = 6)
+    private Double total;
+    
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity customer;
     
@@ -63,22 +66,24 @@ public class OrderEntity implements Serializable{
         
     }
     
-    public OrderEntity(UserEntity customer, String address, List<ProductEntity> products, UserEntity dealer){
+    public OrderEntity(UserEntity customer, String address, List<ProductEntity> products, UserEntity dealer, Double total){
         this.date= new Date();
         this.customer=customer;
         this.address=address;
         this.products=products;
         this.dealer=dealer;
         this.status=AppConstants.STATUS_PREPARING;
+        this.total=total;
     }
     
-    public OrderEntity(UserEntity customer, List<ProductEntity> products, UserEntity dealer){
+    public OrderEntity(UserEntity customer, List<ProductEntity> products, UserEntity dealer, Double total){
         this.date= new Date();
         this.customer=customer;
         this.address=customer.getAddress();
         this.products=products;
         this.dealer=dealer;
         this.status=AppConstants.STATUS_PREPARING;
+        this.total=total;
     }
     
     /**

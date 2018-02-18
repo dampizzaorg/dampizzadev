@@ -12,6 +12,7 @@ import com.dampizza.exception.user.UserUpdateException;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.model.entity.UserEntity;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -140,6 +141,16 @@ public interface UserManagerInterface {
      */
     public Integer emailExist(String email)throws UserQueryException;
 
+    /**
+     * Returns session
+     * @return 
+     */
+    public HashMap getSession();
 
+    /**
+     * Reset shopping cart
+     */
+    public void resetCart() throws UserQueryException;
+    
 
 }

@@ -1,5 +1,6 @@
 package com.dampizza;
 
+import static com.dampizza.App.CART_VIEW;
 import static com.dampizza.App.CUSTOMER_VIEW;
 import static com.dampizza.App.DEALER_VIEW;
 import static com.dampizza.App.HISTORY_VIEW;
@@ -58,9 +59,10 @@ public class DrawerManager {
             final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
             final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
+            final Item cartItem = new ViewItem("Carrito", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CART_VIEW);
 
             /* REMEMBER TO ADD ITEMS TO THE DRAWER */
-            drawer.getItems().addAll(customerItem, orderItem, historyItem, profileItem,logoutItem);
+            drawer.getItems().addAll(customerItem, orderItem, historyItem, profileItem, cartItem, logoutItem);
         } else if (usu == AppConstants.USER_MANAGER) {
             final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
             final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);
