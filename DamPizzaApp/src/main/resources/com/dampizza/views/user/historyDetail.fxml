@@ -26,7 +26,7 @@
    <bottom>
       <VBox prefHeight="117.0" prefWidth="335.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnRepeat" onAction="#repeat" mnemonicParsing="false" prefHeight="33.0" prefWidth="135.0" text="Repetir pedido">
+            <Button fx:id="btnRepeat" mnemonicParsing="false" onAction="#repeat" prefHeight="33.0" prefWidth="135.0" text="Añadir al carrito">
                <VBox.margin>
                   <Insets bottom="15.0" left="100.0" right="100.0" top="20.0" />
                </VBox.margin>

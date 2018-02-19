@@ -24,6 +24,9 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 
 import static com.dampizza.App.MANAGER_ORDER_VIEW;
 import static com.dampizza.App.HISTORY_VIEW;
+import static com.dampizza.App.CUSTOMER_VIEW;
+import com.dampizza.util.LogicFactory;
+import com.gluonhq.charm.glisten.control.Alert;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,6 +46,7 @@ import javafx.scene.control.Button;
 public class HistoryPresenterDetail implements Initializable {
 
     private OrderManagerImp omi;
+    private OrderDTO cart;
     private ObservableList<ProductDTO> oblOrders;
     private ObservableList<String> names;
 
@@ -71,7 +75,10 @@ public class HistoryPresenterDetail implements Initializable {
                 appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e -> 
                 back()));
                 
+                cart = (OrderDTO) LogicFactory.getUserManager().getSession().get("cart");
+                
             }
+          
             
         });
        
@@ -79,6 +86,7 @@ public class HistoryPresenterDetail implements Initializable {
         oblOrders = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
        lvOrders.setItems(oblOrders);
        lvOrders.setCellFactory(p -> new productList());
+       
       
     }     
     public void back(){
@@ -90,5 +98,12 @@ public class HistoryPresenterDetail implements Initializable {
     
     public void repeat(){
     	System.out.println("REPETIR PEDIDO");
+          for(int i=0;i<oblOrders.size();i++){
+             cart.getProducts().add(oblOrders.get(i));
+            cart.setTotal(cart.getTotal()+oblOrders.get(i).getPrice());
+        }
+        NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), CUSTOMER_VIEW, ViewStackPolicy.SKIP);
+        DrawerManager drawer = new DrawerManager();
+        drawer.updateView(Item);
     }
 }
