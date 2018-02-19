@@ -162,6 +162,20 @@ public class App extends MobileApplication {
         return bundle;
     }
 
+    /**
+     * @return the currentOrder
+     */
+    public static OrderDTO getCurrentOrder() {
+        return currentOrder;
+    }
+
+    /**
+     * @param aCurrentOrder the currentOrder to set
+     */
+    public static void setCurrentOrder(OrderDTO aCurrentOrder) {
+        currentOrder = aCurrentOrder;
+    }
+
     
     
     
