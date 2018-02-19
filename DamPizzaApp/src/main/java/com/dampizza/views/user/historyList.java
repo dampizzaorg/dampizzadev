@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user.manager;
+package com.dampizza.views.user;
 
 import com.gluonhq.charm.glisten.control.CharmListCell;
 import com.gluonhq.charm.glisten.control.ListTile;
@@ -13,14 +13,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 /**
  *
- * @author Jon Xabier Gimenez
+ * @author Carlos Garcia Albinarrate
  */
-public class orderList extends CharmListCell<OrderDTO>{
+public class historyList extends CharmListCell<OrderDTO>{
     
     private final ListTile tile;
     private final ImageView imageView;
 
-    public orderList() {
+    public historyList() {
         this.tile = new ListTile();
         imageView = new ImageView();
         tile.setPrimaryGraphic(imageView);
@@ -34,7 +34,7 @@ public class orderList extends CharmListCell<OrderDTO>{
             
             tile.textProperty().setAll(item.getId()+"  "+item.getDate(),item.getAddress());
             setGraphic(tile);
-            final Image image = new Image("img/order.png",50,50,false,false);
+            final Image image = new Image("img/history.png",50,50,false,false);
             if (image != null) {
                imageView.setImage(image);
             }
