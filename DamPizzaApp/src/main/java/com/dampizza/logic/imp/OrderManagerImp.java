@@ -118,7 +118,7 @@ public class OrderManagerImp implements OrderManagerInterface {
         List<OrderDTO> orderList = new ArrayList();
         try {
             //List<OrderEntity> orderEntities = session.createQuery("from OrderEntity where customer.id in(select id from UserEntity where credential.username = "+user+")").list();
-            List<OrderEntity> orderEntities = session.createQuery("from OrderEntity where customer.id = "+user2.getSESSION().get("id")).list();
+            List<OrderEntity> orderEntities = session.createQuery("from OrderEntity where customer.id = "+user2.getSESSION().get("id")+" order by date").list();
 
             // For each order entity create an add an orderDTO to orderList
             orderEntities.forEach(o -> orderList.add(new OrderDTO(

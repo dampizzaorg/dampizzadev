@@ -87,7 +87,6 @@ public class HistoryPresenter implements Initializable {
            App.setCurrentOrder(lvOrders.getSelectedItem());
            NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), HISTORY_DETAIL, ViewStackPolicy.SKIP);
            DrawerManager drawer = new DrawerManager(); 
-           
            drawer.updateView(Item); 
        });
         }
