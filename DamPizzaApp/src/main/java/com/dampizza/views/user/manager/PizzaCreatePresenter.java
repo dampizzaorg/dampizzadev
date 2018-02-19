@@ -9,8 +9,8 @@ import com.dampizza.App;
 import com.dampizza.exception.ingredient.IngredientQueryException;
 import com.dampizza.logic.dto.IngredientDTO;
 import com.dampizza.logic.dto.ProductDTO;
-import com.dampizza.logic.imp.IngredientManagerImp;
 import com.dampizza.logic.io.IngredientManagerInterface;
+import com.dampizza.util.LogicFactory;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.Alert;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -70,7 +70,6 @@ public class PizzaCreatePresenter implements Initializable {
     private ProductDTO pizza;
     private List<IngredientDTO> pizzaIngredients;
     private Alert alert;
-    private IngredientManagerInterface ingredientManager;
     private ObservableList<IngredientDTO> availeableIngredients;
 
     @Override
@@ -208,12 +207,10 @@ public class PizzaCreatePresenter implements Initializable {
             pizza = new ProductDTO();
             //ingredients of the created pizza
             pizzaIngredients = new ArrayList<>();
-            //ingredient manager
-            ingredientManager = new IngredientManagerImp();
             //Adding to the list all availeable ingredients
-            availeableIngredients = FXCollections.observableList(ingredientManager.getAllIngredients());
-            //Add the String of each ingredient to the list
-            ObservableList<String> allIngredients = FXCollections.observableList(ingredientManager.getAllIngredientsToString());
+            availeableIngredients = FXCollections.observableList(LogicFactory.getIngredientManager().getAllIngredients());
+            //Add the String of each ingredient to the list            
+            ObservableList<String> allIngredients = FXCollections.observableList(getIngredientNames(availeableIngredients));
             //Adding all ingredients to the comboBox
             cbInredients.setItems(allIngredients);
         } catch (IngredientQueryException ex) {
@@ -251,6 +248,20 @@ public class PizzaCreatePresenter implements Initializable {
         }
         return price;
         
+    }
+    
+    private ArrayList<String> getIngredientNames(ObservableList<IngredientDTO> ingredientList){
+        ArrayList <String> names= new ArrayList<>();
+        if(ingredientList.size()<1){
+            System.out.println("ingredient list < 1");
+        }
+        //for each UserDTO object take the name and surnames on a string and add to the name list
+        for (IngredientDTO ingredient : ingredientList) {
+            names.add(ingredient.getName());
+            System.out.println(names.size());
+            System.out.println(ingredient.getName());
+        }
+        return names;
     }
 
 }
