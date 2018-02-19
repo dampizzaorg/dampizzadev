@@ -1,6 +1,5 @@
 package com.dampizza.model.entity;
 
-import com.dampizza.cfg.AppConstants;
 import com.dampizza.logic.dto.ProductDTO;
 import java.io.Serializable;
 import java.util.List;
@@ -49,9 +48,6 @@ public class ProductEntity implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
-    
-    @Column(name = "url", length = 200)
-    private String url;
       
     public ProductEntity(){
         
@@ -64,10 +60,8 @@ public class ProductEntity implements Serializable{
      * @param price
      * @param category
      * @param ingredients 
-     * @param user
-     * @param url img url
      */
-    public ProductEntity(String name, String description, Double price, Integer category, List<IngredientEntity> ingredients, UserEntity user, String url){
+    public ProductEntity(String name, String description, Double price, Integer category, List<IngredientEntity> ingredients, UserEntity user){
               
         this.name=name;
         this.description=description;
@@ -75,7 +69,6 @@ public class ProductEntity implements Serializable{
         this.category=category;
         this.ingredients=ingredients;
         this.user=user;
-        this.url = (url == null || url.isEmpty()) ?  AppConstants.DEFAULT_PRODUCT_IMG : url;
     }
     
     /**
@@ -211,20 +204,6 @@ public class ProductEntity implements Serializable{
      */
     public void setUser(UserEntity user) {
         this.user = user;
-    }
-
-    /**
-     * @return the url
-     */
-    public String getUrl() {
-        return url;
-    }
-
-    /**
-     * @param url the url to set
-     */
-    public void setUrl(String url) {
-        this.url = url;
     }
     
     

@@ -6,10 +6,8 @@
 package com.dampizza.logic.dto;
 
 import com.dampizza.cfg.AppConstants;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -29,7 +27,6 @@ public class OrderDTO {
     private SimpleObjectProperty<UserDTO> customer;
     private SimpleObjectProperty<UserDTO> dealer;
     private SimpleIntegerProperty status;
-    private SimpleDoubleProperty total;
 
     public OrderDTO() {
         this.id = new SimpleLongProperty();
@@ -39,22 +36,6 @@ public class OrderDTO {
         this.customer = new SimpleObjectProperty<UserDTO>();
         this.dealer = new SimpleObjectProperty<UserDTO>();
         this.status = new SimpleIntegerProperty();
-        //this.total = new SimpleDoubleProperty(products.get().stream().mapToDouble(p -> p.getPrice()).sum());
-        this.total = new SimpleDoubleProperty();
-    }
-    
-    /**
-     * Shopping cart constructor
-     */
-    public OrderDTO(UserDTO customer) {
-        this.id = new SimpleLongProperty();
-        this.date = new SimpleObjectProperty<Date>();
-        this.address = new SimpleStringProperty(customer.getAddress());
-        this.products = new SimpleObjectProperty<List<ProductDTO>>(new ArrayList<>());
-        this.customer = new SimpleObjectProperty<UserDTO>(customer);
-        this.dealer = new SimpleObjectProperty<UserDTO>();
-        this.status = new SimpleIntegerProperty();
-        this.total = new SimpleDoubleProperty();
     }
     
     public OrderDTO(UserDTO customer, List<ProductDTO> products, UserDTO dealer) {
@@ -68,8 +49,6 @@ public class OrderDTO {
         this.customer = new SimpleObjectProperty<UserDTO>(customer);
         this.dealer = new SimpleObjectProperty<UserDTO>(dealer);
         this.status = new SimpleIntegerProperty(AppConstants.STATUS_PREPARING);
-        this.total = new SimpleDoubleProperty();
-        
     }
     
     public OrderDTO(UserDTO customer, String address, List<ProductDTO> products, UserDTO dealer, Integer status) {
@@ -80,7 +59,6 @@ public class OrderDTO {
         this.customer = new SimpleObjectProperty<UserDTO>(customer);
         this.dealer = new SimpleObjectProperty<UserDTO>(dealer);
         this.status = new SimpleIntegerProperty(status);
-        this.total = new SimpleDoubleProperty();
     }
     
     public OrderDTO(Long id, Date date, UserDTO customer, String address, List<ProductDTO> products, UserDTO dealer, Integer status) {
@@ -91,7 +69,6 @@ public class OrderDTO {
         this.customer = new SimpleObjectProperty<UserDTO>(customer);
         this.dealer = new SimpleObjectProperty<UserDTO>(dealer);
         this.status = new SimpleIntegerProperty(status);
-        this.total = new SimpleDoubleProperty();
     }
 
     /**
@@ -197,20 +174,6 @@ public class OrderDTO {
                 ", products: "+this.getProducts().toString()+", customer: "+this.getCustomer()+
                 ", dealer: "+this.getDealer()+", status: "+this.getStatus();
     }
-
-    /**
-     * @return the total
-     */
-    public Double getTotal() {
-        return total.get();
-    }
-
-    /**
-     * @param total the total to set
-     */
-    public void setTotal(Double total) {
-        this.total.set(total);
-    }
     
-    
+
 }

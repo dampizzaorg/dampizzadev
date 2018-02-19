@@ -11,7 +11,6 @@ import com.dampizza.exception.user.UserCreateException;
 import com.dampizza.exception.user.UserDeleteException;
 import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.exception.user.UserUpdateException;
-import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.io.UserManagerInterface;
 import com.dampizza.model.entity.CredentialEntity;
@@ -42,7 +41,7 @@ public class UserManagerImp implements UserManagerInterface {
     @Override
     public Integer createUser(UserDTO user, String password) throws UserCreateException, UserQueryException {
         Integer res = 0;
-
+        	
         // If user is not in the database already
         if (userExists(user.getUsername()) == 2) {
             logger.log(Level.INFO, "Creating user <{0}>.", user.getUsername());
@@ -155,13 +154,6 @@ public class UserManagerImp implements UserManagerInterface {
                 // Update user in db
                 session.update(userToUpdate);
                 res = 1;
-                
-                // Update session
-                SESSION.replace("name", user.getName());
-                SESSION.replace("surnames", user.getSurnames());
-                SESSION.replace("address", user.getAddress());
-                SESSION.replace("email", user.getEmail());
-                
             } else {
                 res = 2;
             }
@@ -335,12 +327,12 @@ public class UserManagerImp implements UserManagerInterface {
                 SESSION.put("username", user.getCredential().getUsername());
                 SESSION.put("name", user.getName());
                 SESSION.put("surnames", user.getSurnames());
-                SESSION.put("address", user.getAddress());
                 SESSION.put("email", user.getEmail());
                 SESSION.put("type", user.getCredential().getCredentialType());
-                SESSION.put("cart", new OrderDTO(getUserByUsername(user.getCredential().getUsername())));
+                SESSION.put("cart", null);
+                
+                //System.out.println("Session username: "+LogicFactory.getUserManager().getSESSION().get("username").toString());
 
-                //System.out.println("Session username: "+LogicFactory.getUserManager().getSession().get("username").toString());
                 res = 1;
             } else {
                 res = 2;
@@ -352,8 +344,6 @@ public class UserManagerImp implements UserManagerInterface {
                 tx.rollback();
             }
             e.printStackTrace();
-        } catch (UserQueryException ex) {
-            Logger.getLogger(UserManagerImp.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             session.close();
         }
@@ -493,42 +483,11 @@ public class UserManagerImp implements UserManagerInterface {
         return userResult;
     }
 
-    @Override
-    public HashMap getSession() {
+    /**
+     * @return the SESSION
+     */
+    public static HashMap getSESSION() {
         return SESSION;
-    }
-
-    @Override
-    public List<UserDTO> getUsersByType(Integer type) throws UserQueryException {
-        logger.info("Getting list of users by type.");
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<UserDTO> userList = new ArrayList();
-        String hql = "from UserEntity where credential.credentialType = :type";
-
-        try {
-
-            Query query = session.createQuery("from UserEntity where credential.credentialType = :type");
-            query.setParameter("type", type);
-            List<UserEntity> userEntities = query.list();
-            if (userEntities != null) {
-                userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
-                        u.getSurnames(), u.getEmail(), u.getAddress())));
-            }
-
-        } catch (HibernateException e) {
-            logger.severe("An error has ocurred while getting users by type:");
-            throw new UserQueryException("Error on getUsersByType(): \n" + e.getMessage());
-        } finally {
-            session.close();
-        }
-
-        return userList;
-    }
-
-    @Override
-    public void resetCart() throws UserQueryException{
-        SESSION.remove("cart");
-        SESSION.put("cart", new OrderDTO(getUserByUsername((String)SESSION.get("username"))));
     }
 
 }

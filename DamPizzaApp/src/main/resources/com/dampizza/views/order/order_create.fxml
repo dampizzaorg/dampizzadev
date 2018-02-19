@@ -4,25 +4,23 @@
 <?import com.gluonhq.charm.glisten.mvc.View?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.order.OrderCreatePresenter">
    <top>
       <VBox alignment="TOP_CENTER" prefHeight="651.0" prefWidth="350.0" BorderPane.alignment="CENTER">
          <children>
-            <TabPane maxHeight="480.0" minHeight="480.0" prefHeight="480.0" prefWidth="350.0" style="-fx-tab-min-width: 60;" tabClosingPolicy="UNAVAILABLE">
+            <TabPane prefHeight="647.0" prefWidth="350.0" style="-fx-tab-min-width: 60;" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab id="tabPizzas" fx:id="tabClassic" text="PIZZAS CLASICAS">
+                <Tab id="tabPizzas" text="PIZZAS CLASICAS">
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ScrollPane hbarPolicy="NEVER">
+                              <ScrollPane>
                                  <content>
                                     <CharmListView id="lvClassic" fx:id="lvClassic" prefHeight="562.0" prefWidth="350.0" />
                                  </content>
@@ -31,18 +29,18 @@
                         </VBox>
                      </content>
                 </Tab>
-                <Tab id="tabBebidas" fx:id="tabDrinks" onSelectionChanged="#loadDrinks" text="BEBIDAS">
+                <Tab id="tabBebidas" text="BEBIDAS">
                      <content>
-                        <ScrollPane hbarPolicy="NEVER">
+                        <ScrollPane>
                            <content>
                               <CharmListView id="lvDrinks" fx:id="lvDrinks" prefHeight="540.0" prefWidth="351.0" />
                            </content>
                         </ScrollPane>
                      </content>
                 </Tab>
-                  <Tab id="tabMispizzas" fx:id="tabCustom" onSelectionChanged="#loadCustomPizzas" text="MIS PIZZAS">
+                  <Tab id="tabMispizzas" text="MIS PIZZAS">
                      <content>
-                        <ScrollPane hbarPolicy="NEVER">
+                        <ScrollPane>
                            <content>
                               <CharmListView id="lvCustom" fx:id="lvCustom" prefHeight="531.0" prefWidth="342.0" />
                            </content>
@@ -54,12 +52,6 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </TabPane>
-            <HBox alignment="CENTER" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="350.0" spacing="20.0">
-               <children>
-                  <Button fx:id="btnAdd" disable="true" mnemonicParsing="false" onAction="#btnAddAction" text="%dampizza.views.order.add" />
-                  <Button fx:id="btnDetails" disable="true" mnemonicParsing="false" onAction="#btnDetailsAction" text="%dampizza.views.order.view" />
-               </children>
-            </HBox>
          </children>
       </VBox>
    </top>

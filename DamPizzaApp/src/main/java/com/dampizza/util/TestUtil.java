@@ -103,19 +103,10 @@ public class TestUtil {
         }
     }
 
-    public void testGetUsersByType() {
-        logger.info("List of Users by type:");
-        try {
-            umi.getUsersByType(AppConstants.USER_DEALER).forEach(u -> System.out.println(u.getName()));
-        } catch (UserQueryException ex) {
-            Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////
     //                              INGREDIENT                                //
     ////////////////////////////////////////////////////////////////////////////
-    public void testCreateIngredients() {
+    public void testCreateIngredients(){
         try {
             imi.createIngredient(new IngredientDTO("Tomate", 1.50));
             imi.createIngredient(new IngredientDTO("Cebolla", 1.50));
@@ -143,16 +134,16 @@ public class TestUtil {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void testDeleteIngredient() {
+    
+    public void testDeleteIngredient(){
         try {
             imi.deleteIngredient(new Long(3));
         } catch (IngredientDeleteException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void testGetIngredients() {
+    
+    public void testGetIngredients(){
         logger.info("List of Ingredients:");
         try {
             imi.getAllIngredients().forEach(u -> logger.info(u.toString()));
@@ -160,82 +151,83 @@ public class TestUtil {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     ////////////////////////////////////////////////////////////////////////////
     //                                PRODUCT                                 //
     ////////////////////////////////////////////////////////////////////////////
-    public void testCreateProducts() {
+    public void testCreateProducts(){
         try {
             List<IngredientDTO> ingredientProduct = new ArrayList<IngredientDTO>();
-
+            
             ingredientProduct.add(new IngredientDTO(new Long(1), "Tomate", 1.50));
             ingredientProduct.add(new IngredientDTO(new Long(7), "Queso", 1.50));
-            pmi.createProduct(new ProductDTO("Margarita", "", 6.00, ingredientProduct, new Long(7)));
-
+//            pmi.createProduct(new ProductDTO("Margarita", "", 6.00, ingredientProduct, new Long(7)));
+            
             ingredientProduct.add(new IngredientDTO(new Long(4), "Pimiento verde", 1.50));
             ingredientProduct.add(new IngredientDTO(new Long(10), "Champiñones", 1.50));
-            pmi.createProduct(new ProductDTO("Pepperoni", "", 6.00, ingredientProduct, ""));
-
+            pmi.createProduct(new ProductDTO("Pepperoni", "", 6.00, ingredientProduct));
+            
             ingredientProduct.add(new IngredientDTO(new Long(5), "Peperoni", 2.00));
             ingredientProduct.add(new IngredientDTO(new Long(2), "Cebolla", 1.50));
-            pmi.createProduct(new ProductDTO("Manhattan", "", 6.00, ingredientProduct, ""));
-
+            pmi.createProduct(new ProductDTO("Manhattan", "", 6.00, ingredientProduct));
+            
             ingredientProduct.add(new IngredientDTO(new Long(5), "Peperoni", 2.00));
             ingredientProduct.add(new IngredientDTO(new Long(2), "Cebolla", 1.50));
             pmi.createProduct(new ProductDTO("CustomCS", "", 6.00, ingredientProduct, new Long(7)));
-
-            pmi.createProduct(new ProductDTO("Vegetal", "", 6.00, ingredientProduct, ""));
-            pmi.createProduct(new ProductDTO("Cesar", "", 6.00, ingredientProduct, ""));
-
-            pmi.createProduct(new ProductDTO("Agua", "", 1.00, ""));
-            pmi.createProduct(new ProductDTO("Coca Cola", "", 2.00, ""));
-            pmi.createProduct(new ProductDTO("7up", "", 2.00, ""));
-            pmi.createProduct(new ProductDTO("Fanta Naranja", "", 2.00, ""));
-            pmi.createProduct(new ProductDTO("Heineken", "", 3.00, ""));
+            
+            pmi.createProduct(new ProductDTO("Vegetal", "", 6.00, null));
+            pmi.createProduct(new ProductDTO("Cesar", "", 6.00, null));
+            
+            pmi.createProduct(new ProductDTO("Agua", "", 1.00));
+            pmi.createProduct(new ProductDTO("Coca Cola", "", 2.00));
+            pmi.createProduct(new ProductDTO("7up", "", 2.00));
+            pmi.createProduct(new ProductDTO("Fanta Naranja", "", 2.00));
+            pmi.createProduct(new ProductDTO("Heineken", "", 3.00));
         } catch (ProductCreateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ProductQueryException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void testUpdateProducts() {
+    
+    public void testUpdateProducts(){
         try {
-            pmi.updateProduct(new ProductDTO(new Long(7), "Fanta UPDATED", "", 2.00, AppConstants.PRODUCT_DRINK, null, null, ""));
+            pmi.updateProduct(new ProductDTO(new Long(7),"Fanta UPDATED", "", 2.00, AppConstants.PRODUCT_DRINK, null, null));
         } catch (ProductUpdateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void testDeleteProduct() {
+    
+    public void testDeleteProduct(){
         try {
             pmi.deleteProduct(new Long(5));
         } catch (ProductDeleteException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void testGetProducts() {
+    
+    public void testGetProducts(){
         try {
             pmi.getAllProducts().forEach(p -> logger.info(p.toString()));
         } catch (ProductQueryException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     ////////////////////////////////////////////////////////////////////////////
     //                                 ORDER                                  //
     ////////////////////////////////////////////////////////////////////////////
-    public void testCreateOrder() {
+    
+    public void testCreateOrder(){
         try {
             List<ProductDTO> products = new ArrayList<>();
             products.add(pmi.getProductById(new Long(1)));
             products.add(pmi.getProductById(new Long(2)));
-
+            
             products.forEach(p -> System.out.println(p.getName()));
-
+            
             omi.createOrder(new OrderDTO(umi.getUserByUsername("username1"),
-                    products, umi.getUserByUsername("dealer1")));
+                products, umi.getUserByUsername("dealer1")));
         } catch (OrderCreateException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         } catch (OrderQueryException ex) {
@@ -246,13 +238,16 @@ public class TestUtil {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void testGetOrders() {
+    
+    public void testGetOrders(){
         try {
             omi.getAllOrders().toString();
         } catch (OrderQueryException ex) {
             Logger.getLogger(TestUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    
+    
+    
 }

@@ -16,6 +16,7 @@ public class AppConstants {
     // PRODUCT TYPES
     public static final Integer PRODUCT_PIZZA = 1;
     public static final Integer PRODUCT_DRINK = 2;
+    public static final Integer PRODUCT_CUSTOM= 3;
     
     // USER TYPES
     public static final Integer USER_MANAGER = 1;
@@ -30,9 +31,6 @@ public class AppConstants {
     
     //ACTUAL ORDER
     public static final OrderDTO CURRENT_ORDER = new OrderDTO();
-    
-    // PRODUCT IMG URL
-    public static final String DEFAULT_PRODUCT_IMG = "img/pizza_margarita.png";
     
     
 }

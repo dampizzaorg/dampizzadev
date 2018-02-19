@@ -34,6 +34,10 @@ public class orderList extends CharmListCell<OrderDTO>{
             
             tile.textProperty().setAll(item.getId()+"  "+item.getDate(),item.getAddress());
             setGraphic(tile);
+            final Image image = new Image("img/order.png",50,50,false,false);
+            if (image != null) {
+               imageView.setImage(image);
+            }
         } else {
             setGraphic(null);
         }

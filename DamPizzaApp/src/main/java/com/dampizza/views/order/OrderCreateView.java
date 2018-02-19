@@ -1,6 +1,5 @@
 package com.dampizza.views.order;
 
-import com.dampizza.App;
 import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -25,7 +24,7 @@ public class OrderCreateView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(OrderCreateView.class.getResource("/com/dampizza/views/order/order_create.fxml"), App.getBundle());
+            View view = FXMLLoader.load(OrderCreateView.class.getResource("/com/dampizza/views/order/order_create.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

@@ -1,6 +1,5 @@
 package com.dampizza;
 
-import static com.dampizza.App.CART_VIEW;
 import static com.dampizza.App.CUSTOMER_VIEW;
 import static com.dampizza.App.DEALER_VIEW;
 import static com.dampizza.App.HISTORY_VIEW;
@@ -22,7 +21,7 @@ import static com.dampizza.App.ORDER_CREATE_VIEW;
 import static com.dampizza.App.PROFILE_VIEW;
 import static com.dampizza.App.RECOVER_VIEW;
 import static com.dampizza.App.SIGNUP_VIEW;
-import static com.dampizza.App.MANAGER_DEALER_VIEW;
+import static com.dampizza.App.MANAGER_SELECT_DEALER_VIEW;
 import static com.dampizza.App.PIZZA_CREATE_VIEW;
 import com.dampizza.cfg.AppConstants;
 import javafx.scene.Node;
@@ -37,6 +36,7 @@ public class DrawerManager {
 
     private final NavigationDrawer drawer;
     private static Integer usu = 1;
+    
 
     public DrawerManager(Integer status) {
         this.drawer = new NavigationDrawer();
@@ -59,21 +59,20 @@ public class DrawerManager {
             final Item historyItem = new ViewItem("History Orders", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), HISTORY_VIEW);
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
             final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
-            final Item cartItem = new ViewItem("Carrito", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), CART_VIEW);
 
             /* REMEMBER TO ADD ITEMS TO THE DRAWER */
-            drawer.getItems().addAll(customerItem, orderItem, historyItem, profileItem, cartItem, logoutItem);
+            drawer.getItems().addAll(customerItem, orderItem, historyItem, profileItem,logoutItem);
         } else if (usu == AppConstants.USER_MANAGER) {
             final Item managerItem = new ViewItem("Manager", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_VIEW);
             final Item managerOrderItem = new ViewItem("Manager Order", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_ORDER_VIEW);
             final Item registerItem = new ViewItem("Register a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), SIGNUP_VIEW);
-            final Item managerDealerItem = new ViewItem("Delete a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_DEALER_VIEW);
+            final Item deleteItem = new ViewItem("Delete a dealer", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), MANAGER_SELECT_DEALER_VIEW);
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
             final Item logoutItem = new ViewItem("Logout", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), LOGIN_VIEW);
 
             final Item pizzaCreateItem= new ViewItem("Create Pizza", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PIZZA_CREATE_VIEW);
  
-            drawer.getItems().addAll(managerItem, managerOrderItem,pizzaCreateItem ,registerItem, profileItem,managerDealerItem,logoutItem);
+            drawer.getItems().addAll(managerItem, managerOrderItem,pizzaCreateItem ,registerItem, profileItem,logoutItem);
 
         } else if (usu == AppConstants.USER_DEALER){
             final Item profileItem = new ViewItem("Profile", MaterialDesignIcon.ACCOUNT_CIRCLE.graphic(), PROFILE_VIEW);
@@ -104,7 +103,7 @@ public class DrawerManager {
      *
      * @param viewName
      */
-    private void updateItem(String viewName) {
+    public void updateItem(String viewName) {
         for (Node item : drawer.getItems()) {
             if (item instanceof ViewItem && ((ViewItem) item).getViewName().equals(viewName)) {
                 drawer.setSelectedItem(item);
@@ -112,6 +111,7 @@ public class DrawerManager {
             }
         }
     }
+    
 
     /**
      * Update view
@@ -131,4 +131,6 @@ public class DrawerManager {
     public NavigationDrawer getDrawer() {
         return drawer;
     }
+    
+
 }

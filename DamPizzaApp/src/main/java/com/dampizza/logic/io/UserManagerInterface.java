@@ -12,7 +12,6 @@ import com.dampizza.exception.user.UserUpdateException;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.model.entity.UserEntity;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -89,14 +88,6 @@ public interface UserManagerInterface {
     public UserEntity getUserEntityById(Long id) throws UserQueryException;
     
     /**
-     * Get user entity by username
-     * @param type
-     * @return UserDTO List
-     * @throws UserQueryException
-     */
-    public List<UserDTO> getUsersByType(Integer type) throws UserQueryException;
-    
-    /**
      * Check if user is already on the database.
      * @param username
      * @return 1 yes, 2 no, 0 error.
@@ -141,16 +132,6 @@ public interface UserManagerInterface {
      */
     public Integer emailExist(String email)throws UserQueryException;
 
-    /**
-     * Returns session
-     * @return 
-     */
-    public HashMap getSession();
 
-    /**
-     * Reset shopping cart
-     */
-    public void resetCart() throws UserQueryException;
-    
 
 }

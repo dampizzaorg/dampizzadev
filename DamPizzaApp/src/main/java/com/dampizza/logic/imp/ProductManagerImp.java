@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.dampizza.logic.imp;
 
 import com.dampizza.exception.ingredient.IngredientQueryException;
@@ -45,20 +50,21 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             try {
                 tx = session.beginTransaction();
-                System.out.println("User_id:" + String.valueOf(product.getUserId()));
+                System.out.println("User_id:"+String.valueOf(product.getUserId()));
                 ProductEntity productEntity = null;
-
+                
                 // Creating product
-                if (product.getUserId() != 0) {
+                if(product.getUserId()!=0){
                     productEntity = new ProductEntity(product.getName(),
-                            product.getDescription(), product.getPrice(), product.getCategory(),
-                            imi.dtoToEntity(product.getIngredients()), umi.getUserEntityById(product.getUserId()), product.getUrl());
-                } else {
-                    productEntity = new ProductEntity(product, imi.dtoToEntity(product.getIngredients()));
+                        product.getDescription(), product.getPrice(), product.getCategory(),
+                        imi.dtoToEntity(product.getIngredients()), umi.getUserEntityById(product.getUserId()));
+                }else{
+                        productEntity = new ProductEntity(product, imi.dtoToEntity(product.getIngredients()));     
                 }
-
+                
+                
                 Long productId = (Long) session.save(productEntity);
-
+                
                 tx.commit();
                 if (productId != null) {
                     res = 1;
@@ -75,9 +81,9 @@ public class ProductManagerImp implements ProductManagerInterface {
             } catch (UserQueryException ex) {
                 Logger.getLogger(ProductManagerImp.class.getName()).log(Level.SEVERE, "An error ocurred while retrieving associated user.", ex);
             } finally {
-                if (session != null) {
+                if(session!=null){
                     session.close();
-                }
+                }  
             }
         } else {
             res = 2;
@@ -192,7 +198,7 @@ public class ProductManagerImp implements ProductManagerInterface {
             if (productEntities != null) {
 
                 productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
-                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
             }
 
         } catch (HibernateException e) {
@@ -245,7 +251,7 @@ public class ProductManagerImp implements ProductManagerInterface {
     public List<ProductDTO> getProductByCategory(Integer category) throws ProductQueryException {
         logger.log(Level.INFO, "Getting list of products by category<{0}>.", category);
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String hql = "from ProductEntity where category = :category and user=null";
+        String hql = "from ProductEntity where category = :category";
         List<ProductDTO> productList = new ArrayList<>();
 
         try {
@@ -255,7 +261,7 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             if (productEntities != null) {
                 productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
-                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
             }
 
         } catch (HibernateException e) {
@@ -270,12 +276,12 @@ public class ProductManagerImp implements ProductManagerInterface {
     @Override
     public Integer productExists(String name) throws ProductQueryException {
         logger.log(Level.INFO, "Checking if product name<{0}> already exists.", name);
-
+        
         Integer res = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = "from ProductEntity where name = :name";
         System.out.println(name);
-
+        
         try {
             Query query = session.createQuery(hql);
             query.setParameter("name", name);
@@ -348,7 +354,7 @@ public class ProductManagerImp implements ProductManagerInterface {
         if (products != null) {
             products.forEach(p -> productDtoList.add(
                     new ProductDTO(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getCategory(),
-                            imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
+                            imi.EntityToDTO(p.getIngredients()), p.getUserId())));
         }
 
         return productDtoList;
@@ -368,7 +374,7 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             if (productEntities != null) {
                 productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
-                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId())));
             }
 
         } catch (HibernateException e) {

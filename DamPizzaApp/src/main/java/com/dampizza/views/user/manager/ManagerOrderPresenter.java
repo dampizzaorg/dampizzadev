@@ -7,7 +7,7 @@ package com.dampizza.views.user.manager;
 
 import com.dampizza.App;
 import static com.dampizza.App.MANAGER_VIEW;
-import static com.dampizza.App.MANAGER_DEALER_VIEW;
+import static com.dampizza.App.MANAGER_SELECT_DEALER_VIEW;
 import static com.dampizza.App.MANAGER_VIEW;
 import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
@@ -66,15 +66,16 @@ public class ManagerOrderPresenter {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 
                 appBar.setVisible(true);
-                
-                appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e -> 
-                        back()));
+                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
+                MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
+//                appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e -> 
+//                        back()));
                 appBar.setTitleText("Manager order"); 
                 
                 taOrder.setEditable(false);
-//                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
+                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
                 
-//                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
+                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
                 lvOrder.setItems(oblItems);
                 lvOrder.setCellFactory(p -> new productList());
                 
@@ -91,22 +92,18 @@ public class ManagerOrderPresenter {
                 
             }
         });
-      
-      
-      
-      
-      
+       
     }
      @FXML
      public void confirm(){
-//        try {
-//            //Llamada la BD para actualizar el estado del pedido
-//            //App.getCurrentOrder().setDealer(dealer);
-//            new OrderManagerImp().updateOrder(App.getCurrentOrder());
-//            back();
-//        } catch (OrderUpdateException ex) {
-//            Logger.getLogger(ManagerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            //Llamada la BD para actualizar el estado del pedido
+            //App.getCurrentOrder().setDealer(dealer);
+            new OrderManagerImp().updateOrder(App.getCurrentOrder());
+            back();
+        } catch (OrderUpdateException ex) {
+            Logger.getLogger(ManagerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
      }
      
      public void back(){

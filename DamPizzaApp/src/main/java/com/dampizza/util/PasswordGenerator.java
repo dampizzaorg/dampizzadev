@@ -44,11 +44,11 @@ public class PasswordGenerator {
             int index = (int) (RANDOM.nextDouble() * letters.length());
             pw += letters.substring(index, index + 1);
         }
+        System.out.println(pw);
         sendEmail(pw, email);
-
         //Update the user password on the DB
         //UserManagerInterface i=new UserManagerImp();
-       LogicFactory.getUserManager().changePassword(email, EncrypterUtil.encrypt(pw));
+        new UserManagerImp().changePassword(email, EncrypterUtil.encrypt(pw));
     }
 
     private static void sendEmail(String pw, String email) {
@@ -56,15 +56,5 @@ public class PasswordGenerator {
                 + "cant send you your password.\nThis is yor new password: " + pw + "\n dont forget changing the password before get logged";
         MailUtil.sendEmail(email, "Password recover", message);
     }
-    
-    public static String random(){
-        String letters = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789+@!#$%&/()=?¿";
 
-        String pw = "";
-        for (int i = 0; i < PASSWORD_LENGTH; i++) {
-            int index = (int) (RANDOM.nextDouble() * letters.length());
-            pw += letters.substring(index, index + 1);
-        }
-        return pw;
-    }
 }

@@ -28,7 +28,6 @@ public class ProductDTO {
     private SimpleIntegerProperty category;
     private SimpleObjectProperty<List<IngredientDTO>> ingredients;
     private SimpleLongProperty userId;
-    private SimpleStringProperty url;
 
     public ProductDTO() {
         this.id = new SimpleLongProperty();
@@ -38,7 +37,6 @@ public class ProductDTO {
         this.category = new SimpleIntegerProperty();
         this.ingredients = new SimpleObjectProperty();
         this.userId = new SimpleLongProperty();
-        this.url = new SimpleStringProperty(AppConstants.DEFAULT_PRODUCT_IMG);
     }
 
     /**
@@ -52,7 +50,7 @@ public class ProductDTO {
      * @param ingredients
      * @param userid
      */
-    public ProductDTO(Long id, String name, String description, Double price, Integer category, List<IngredientDTO> ingredients, Long userid, String url) {
+    public ProductDTO(Long id, String name, String description, Double price, Integer category, List<IngredientDTO> ingredients, Long userid) {
         this.id = new SimpleLongProperty(id);
         this.name = new SimpleStringProperty(name);
         this.description = new SimpleStringProperty(description);
@@ -60,9 +58,6 @@ public class ProductDTO {
         this.category = new SimpleIntegerProperty(category);
         this.ingredients = new SimpleObjectProperty(ingredients);
         this.userId = userid != null ? new SimpleLongProperty(userid) : new SimpleLongProperty();
-        this.url = (url == null || url.isEmpty()) ? 
-                new SimpleStringProperty(AppConstants.DEFAULT_PRODUCT_IMG) : 
-                new SimpleStringProperty(url);
     }
 
     /**
@@ -73,7 +68,7 @@ public class ProductDTO {
      * @param price
      * @param ingredients
      */
-    public ProductDTO(String name, String description, Double price, List<IngredientDTO> ingredients, String url) {
+    public ProductDTO(String name, String description, Double price, List<IngredientDTO> ingredients) {
         this.id = new SimpleLongProperty();
         this.name = new SimpleStringProperty(name);
         this.description = new SimpleStringProperty(description);
@@ -81,9 +76,6 @@ public class ProductDTO {
         this.category = new SimpleIntegerProperty(AppConstants.PRODUCT_PIZZA);
         this.ingredients = new SimpleObjectProperty(ingredients);
         this.userId = new SimpleLongProperty();
-        this.url = (url == null || url.isEmpty()) ? 
-                new SimpleStringProperty(AppConstants.DEFAULT_PRODUCT_IMG) : 
-                new SimpleStringProperty(url);
     }
 
     /**
@@ -102,7 +94,6 @@ public class ProductDTO {
         this.category = new SimpleIntegerProperty(AppConstants.PRODUCT_PIZZA);
         this.ingredients = new SimpleObjectProperty(ingredients);
         this.userId = userid != null ? new SimpleLongProperty(userid) : new SimpleLongProperty();
-        this.url = new SimpleStringProperty(AppConstants.DEFAULT_PRODUCT_IMG);
     }
 
     /**
@@ -112,7 +103,7 @@ public class ProductDTO {
      * @param description
      * @param price
      */
-    public ProductDTO(String name, String description, Double price, String url) {
+    public ProductDTO(String name, String description, Double price) {
         this.id = new SimpleLongProperty();
         this.name = new SimpleStringProperty(name);
         this.description = new SimpleStringProperty(description);
@@ -120,9 +111,6 @@ public class ProductDTO {
         this.category = new SimpleIntegerProperty(AppConstants.PRODUCT_DRINK);
         this.ingredients = new SimpleObjectProperty(null);
         this.userId = new SimpleLongProperty();
-        this.url = (url == null || url.isEmpty()) ? 
-                new SimpleStringProperty(AppConstants.DEFAULT_PRODUCT_IMG) : 
-                new SimpleStringProperty(url);
     }
 
     /**
@@ -222,19 +210,6 @@ public class ProductDTO {
         this.userId.set(userId);
     }
 
-    /**
-     * @return the url
-     */
-    public String getUrl() {
-        return url.get();
-    }
-
-    /**
-     * @param url the url to set
-     */
-    public void setUrl(String url) {
-        this.url.set(url);
-    }
     
     @Override
     public String toString() {
