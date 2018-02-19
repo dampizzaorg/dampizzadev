@@ -76,7 +76,7 @@ public class ManagerPresenter {
         
         lbOrders.selectedItemProperty().addListener((obs,ov,nv) ->{
             //Cargar la order en una constante
-//            App.setCurrentOrder(lbOrders.getSelectedItem());
+            App.setCurrentOrder(lbOrders.getSelectedItem());
             NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_ORDER_VIEW, ViewStackPolicy.SKIP);
             DrawerManager drawer = new DrawerManager();
             drawer.updateView(Item);          

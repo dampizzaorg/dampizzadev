@@ -75,9 +75,9 @@ public class ManagerOrderPresenter {
                 appBar.setTitleText("Manager order");
 
                 taOrder.setEditable(false);
-//                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
+                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
 
-//                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
+                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
                 lvOrder.setItems(oblItems);
                 lvOrder.setCellFactory(p -> new productList());
 
