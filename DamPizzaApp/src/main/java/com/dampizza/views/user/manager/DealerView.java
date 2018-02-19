@@ -1,4 +1,4 @@
-package com.dampizza.views.user.manager.dealer;
+package com.dampizza.views.user.manager;
 
 import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * Customer view provider (FXML Loader)
- * @author Carlos Santos
+ * @author Jon Xabier Gimenez
  */
 public class DealerView {
 
@@ -24,7 +24,7 @@ public class DealerView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(DealerView.class.getResource("dealer_main.fxml"));
+            View view = FXMLLoader.load(DealerView.class.getResource("/com/dampizza/views/user/dealer/dealer_main.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

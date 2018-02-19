@@ -67,7 +67,8 @@ public class ManagerDealerPresenter {
             if (newValue) {
                 
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                
+                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
+                        -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setVisible(true);
                 
                

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user.manager.dealer;
+package com.dampizza.views.user.manager;
 
 import com.dampizza.util.LogicFactory;
 import com.dampizza.views.user.manager.orderList;
@@ -39,7 +39,7 @@ import javafx.fxml.FXML;
 /**
  * FXML Controller class
  *
- * @author 2dam
+ * @author Jon Xabier Gimenez
  */
 public class DealerPresenter implements Initializable {
 
