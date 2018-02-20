@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.CharmListView?>
+<?import com.gluonhq.charm.glisten.mvc.View?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/9.0.1" 
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.user.manager.PizzaDeletePresenter">
+   <center>
+      <CharmListView fx:id="clvPizzas" prefHeight="643.0" prefWidth="335.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btDeletePizza" mnemonicParsing="false" onAction="#deletePizza" prefHeight="50.0" prefWidth="115.0" text="Delete" />
+         </children>
+      </HBox>
+   </bottom>
+</View>

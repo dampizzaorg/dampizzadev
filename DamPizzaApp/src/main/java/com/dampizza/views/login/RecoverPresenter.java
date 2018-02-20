@@ -10,6 +10,7 @@ import com.dampizza.DrawerManager;
 import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.logic.imp.UserManagerImp;
 import com.dampizza.logic.io.UserManagerInterface;
+import com.dampizza.util.LogicFactory;
 import com.dampizza.util.MailUtil;
 import com.dampizza.util.PasswordGenerator;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
@@ -29,11 +30,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 /**
- * Presenter for recover.fxml
+ * FXML Controller class for recover.fxml
  *
- * @author ???
+ * @author Jon Xabier Gimenez
+ * 
+ *  Class that controls the recover.fxml.
+ *  Class that makes possible for the user
+ *  to recover the password once is forgotten.
  */
 public class RecoverPresenter {
+    private static final Logger logger = Logger.getLogger(RecoverPresenter.class.getName());
     // <editor-fold defaultstate="collapsed" desc="@FXML NODES">
     @FXML
     private View primary;
@@ -44,30 +50,25 @@ public class RecoverPresenter {
     @FXML
     private ImageView imgBackground;
     //</editor-fold>
-    private UserManagerInterface userManager;
     private Alert alert;
 
     public void initialize() {
-        userManager = new UserManagerImp();
         imgBackground.setImage(new Image("/img/pizza_avatar_128.png"));
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-
                 /* Leave on true for testing, change to false when the app is finished */
                 appBar.setVisible(true);
-
+                
                 appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
                         -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setTitleText("Recover");
-                /*appBar.getActionItems().add(MaterialDesignIcon.CASINO.button(e
-                        -> System.out.println("Search")));*/
-
             }
         });
     }
 
     /**
+     * 
      * Method to change change the password if the user forget it
      */
     @FXML
@@ -84,21 +85,26 @@ public class RecoverPresenter {
                 Integer exist = checkEmail();
                 if (exist == 1) {
                     //the email exist, then ask if the user wnt to recover the password
+                    logger.info("Recovering password");
                     alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to recover the password");
                     Optional<ButtonType> result = alert.showAndWait();
                     if (!result.get().getButtonData().isCancelButton()) {
                         ////If the user click on the accept button, generate a new password and send an email
+                        logger.info("Sending email to recover password");
                         PasswordGenerator.generateRandomPassword(tfEmail.getText());
+                        logger.info("Email sent");
                         alert= new Alert(AlertType.INFORMATION,"Your password has change, we send you an email with the new password");
                         alert.showAndWait();
                         tfEmail.setText("");
                         goLogin();
                     }else{
+                        logger.info("Recover cancelled");
                         alert= new Alert(AlertType.INFORMATION, "Your password will not change");
                     }
                 } else {
-                    //if the email dosent exist
-                    alert = new Alert(AlertType.WARNING, "Wrong email, this email dosent exist on the DB");
+                    //if the email doesnt exist
+                    logger.info("Invalid email");
+                    alert = new Alert(AlertType.WARNING, "Wrong email, this email doesn´t exist on the DB");
                     alert.showAndWait();
                 }
             } catch (UserQueryException ex) {
@@ -112,12 +118,20 @@ public class RecoverPresenter {
      * @throws UserQueryException 
      */
     private Integer checkEmail() throws UserQueryException {
-        return userManager.emailExist(tfEmail.getText());
+        //Call to the DB to check if the email exist
+        logger.info("Checking email exists");
+        return LogicFactory.getUserManager().emailExist(tfEmail.getText());
     }
     
+    /**
+     * Method that checks the value of TextField Email
+     * and according to that puts the label with a color red if empty.
+     * Stills black if have content.
+     */
     private void checkViodFields(){
+        logger.info("Checking if fields are void");
         String email= tfEmail.getText().trim();
-        
+        //Puts color into the label depending on the value of the texfield
         if(email.equals("")){
             lbEmail.setTextFill(Color.RED);
         }else{
@@ -125,9 +139,11 @@ public class RecoverPresenter {
         }
     }
     /**
-     * Method to go to the login
+     * Method that opens the view that handles login.fxml
      */
     private void goLogin() {
+        //Open a view with the login
+        logger.info("Going to Login View");
         NavigationDrawer.ViewItem loginItem = new NavigationDrawer.ViewItem("Login", MaterialDesignIcon.HOME.graphic(), LOGIN_VIEW, ViewStackPolicy.SKIP);
         DrawerManager drawer = new DrawerManager();
         drawer.updateView(loginItem);
