@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user.manager;
+package com.dampizza.views.user;
 
-import com.dampizza.views.user.HistoryView;
+import com.dampizza.views.user.customer.HistoryView;
 import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;

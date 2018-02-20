@@ -9,8 +9,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- *
- * @author Carlos
+ * Encrypter util
+ * @author Ismael
+ * @author Jonxa
  */
 public class EncrypterUtil {
     

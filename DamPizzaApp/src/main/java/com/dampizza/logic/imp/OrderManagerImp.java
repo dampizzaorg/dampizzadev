@@ -160,4 +160,9 @@ public class OrderManagerImp implements OrderManagerInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Integer updateDealer(Long id, Long dealerId) throws OrderUpdateException, OrderQueryException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

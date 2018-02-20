@@ -1,7 +1,7 @@
 package com.dampizza.views.order;
 
+import com.dampizza.views.user.customer.HistoryPresenter;
 import com.dampizza.views.custom.PizzaCLV;
-import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -86,6 +86,9 @@ public class OrderCreatePresenter {
 
     }
 
+    /**
+     * Populate classic pizza list
+     */
     @FXML
     public void loadClassicPizzas() {
         try {
@@ -98,6 +101,9 @@ public class OrderCreatePresenter {
         lvClassic.setItems(oblClassicPizzas);
     }
 
+    /**
+     * Populate drink's list
+     */
     @FXML
     public void loadDrinks() {
         try {
@@ -110,6 +116,9 @@ public class OrderCreatePresenter {
         lvDrinks.setItems(oblDrinks);
     }
 
+    /**
+     * Populate user custom pizzas list
+     */
     @FXML
     public void loadCustomPizzas() {
         try {
@@ -125,7 +134,11 @@ public class OrderCreatePresenter {
         lvCustom.setItems(oblCustomPizzas);
     }
 
+    
     public void addListeners() {
+        /**
+         * Enable/disable buttons on listview selected item change.
+         */
         lvClassic.selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 btnAdd.setDisable(false);
@@ -135,6 +148,10 @@ public class OrderCreatePresenter {
                 btnDetails.setDisable(true);
             }
         });
+        
+        /**
+         * Enable/disable buttons on listview selected item change.
+         */
         lvDrinks.selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 btnAdd.setDisable(false);
@@ -144,6 +161,10 @@ public class OrderCreatePresenter {
                 btnDetails.setDisable(true);
             }
         });
+        
+        /**
+         * Enable/disable buttons on listview selected item change.
+         */
         lvCustom.selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 btnAdd.setDisable(false);
@@ -155,6 +176,9 @@ public class OrderCreatePresenter {
         });
     }
     
+    /**
+     * Add product to order(cart)
+     */
     @FXML
     public void btnAddAction(){
         ProductDTO selectedProduct = null;
@@ -176,9 +200,13 @@ public class OrderCreatePresenter {
         }
     }
     
+    /**
+     * Show product details
+     */
     @FXML
     public void btnDetailsAction(){
         new Toast("Mostrar detalles del producto.").show();
+        // TODO SHOW PRODUCT DETAILS (Dialog?)
     }
 
 }

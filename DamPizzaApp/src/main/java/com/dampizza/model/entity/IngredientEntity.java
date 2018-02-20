@@ -14,8 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Ingredient Entity POJO
- * @author Carlos
+ * Ingredient Entity
+ * @author Carlos Santos
  */
 @Entity
 @Table(name="ingredient", schema="dampizzadb")

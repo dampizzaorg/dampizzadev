@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * Recover password view provider (FXML Loader)
- * @author Carlos Santos
+ * @author ???
  */
 public class RecoverView {
     

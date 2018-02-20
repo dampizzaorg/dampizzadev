@@ -1,4 +1,4 @@
-package com.dampizza.views.user;
+package com.dampizza.views.user.customer;
 
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -6,14 +6,14 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 
 /**
- * Profile view provider (FXML Loader)
- * @author Carlos Santos
+ * Dealer view provider (FXML Loader)
+ * @author ???
  */
-public class ProfileView {
+public class HistoryView {
 
     private final String name;
 
-    public ProfileView(String name) {
+    public HistoryView(String name) {
         this.name = name;
     }
     
@@ -23,7 +23,7 @@ public class ProfileView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(ProfileView.class.getResource("/com/dampizza/views/user/profile.fxml"));
+            View view = FXMLLoader.load(HistoryView.class.getResource("/com/dampizza/views/user/customer/history.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

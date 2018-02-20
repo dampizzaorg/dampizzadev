@@ -7,7 +7,7 @@ package com.dampizza.model.entity;
 
 /**
  * Item POJO
- * @author Carlos
+ * @author Carlos Santos
  */
 public class Item {
     private Integer qty;
