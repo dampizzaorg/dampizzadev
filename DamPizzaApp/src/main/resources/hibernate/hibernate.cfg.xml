@@ -44,13 +44,13 @@ Contributor(s):
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <!--        LOCALHOST-->
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>
+    <!--<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">ubuntu</property>
+    <property name="hibernate.connection.password">ubuntu</property> -->
     <!--        CLASSROOM SERVER-->
-    <!--        <property name="hibernate.connection.url">jdbc:mysql://10.22.82.146:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>
+         <property name="hibernate.connection.url">jdbc:mysql://10.22.82.146:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">iker2</property>
-        <property name="hibernate.connection.password">iker2</property>-->
+        <property name="hibernate.connection.password">iker2</property>
     <!--        AMAZON WEB SERVICES-->
     <!--        <property name="hibernate.connection.url">jdbc:mysql://dampizza.ccpqhuol0sfg.eu-west-3.rds.amazonaws.com?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">admin</property>

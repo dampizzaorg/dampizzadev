@@ -1,5 +1,11 @@
-package com.dampizza.views.user.dealer;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.dampizza.views.user.manager;
 
+import com.dampizza.views.user.manager.*;
 import com.dampizza.App;
 import static com.dampizza.App.DEALER_VIEW;
 
@@ -35,7 +41,8 @@ import javafx.scene.control.TextArea;
 public class DealerOrderPresenter {
     
     private ObservableList<ProductDTO> oblItems;
-    
+     private static final Logger logger = Logger.getLogger(DealerOrderPresenter.class.getName());
+    // <editor-fold defaultstate="collapsed" desc="@FXML NODES">   
     @FXML
     private View primary;
     
@@ -47,12 +54,12 @@ public class DealerOrderPresenter {
     
     @FXML
     private CharmListView<ProductDTO, ? extends Comparable> lvOrder;
+    //</editor-fold>
     
      public void initialize() {
         
       primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
-                
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 
                 appBar.setVisible(true);
@@ -63,37 +70,38 @@ public class DealerOrderPresenter {
                 
                 taDatos.setEditable(false);
                 taDatos.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
-                
+                logger.info("textArea loaded");
                 oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
                 lvOrder.setItems(oblItems);
                 lvOrder.setCellFactory(p -> new productList());  
+                logger.info("Producs loaded");
             }
         });
-      
-      
-      
-      
-      
-    }
+}
+     
+     /**
+      * Metho
+      * @throws OrderQueryException 
+      */
      @FXML
-     public void handlerMarkAsDone(){
+     public void handlerMarkAsDone() throws OrderQueryException{
         try {
             //Se cambia el estado del pedido
             App.getCurrentOrder().setStatus(AppConstants.STATUS_DELIVERED);
             //Llamada la BD para actualizar el estado del pedido
-            LogicFactory.getOrderManager().updateOrder(App.getCurrentOrder());
-             MobileApplication.getInstance().showMessage("Order updated");
+            LogicFactory.getOrderManager().updateStatus(App.getCurrentOrder().getId(), AppConstants.STATUS_DELIVERED);
+            MobileApplication.getInstance().showMessage("Order updated");
             back();
         } catch (OrderUpdateException ex) {
-            Logger.getLogger(DealerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (OrderQueryException ex) {
-            Logger.getLogger(DealerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
+            logger.severe(ex.getMessage());
+            logger.severe("Could not be updated order");
         }
      }
      
      public void back(){
         //Metodo que te lleva a la ventana anterior
-        NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), DEALER_VIEW, ViewStackPolicy.SKIP);
+        logger.info("Going to main dealer view");
+        NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Dealer view", MaterialDesignIcon.HOME.graphic(), DEALER_VIEW, ViewStackPolicy.SKIP);
         DrawerManager drawer = new DrawerManager();
         drawer.updateView(Item);
      }

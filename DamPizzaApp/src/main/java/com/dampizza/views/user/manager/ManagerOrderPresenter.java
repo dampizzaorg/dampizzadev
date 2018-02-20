@@ -12,6 +12,7 @@ import static com.dampizza.App.MANAGER_DEALER_VIEW;
 import static com.dampizza.App.MANAGER_VIEW;
 import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
+import com.dampizza.exception.order.OrderQueryException;
 import com.dampizza.exception.order.OrderUpdateException;
 import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.logic.dto.OrderDTO;
@@ -26,6 +27,7 @@ import com.gluonhq.charm.glisten.control.CharmListView;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,19 +76,20 @@ public class ManagerOrderPresenter {
                 appBar.setTitleText("Manager order");
 
                 taOrder.setEditable(false);
-//                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
+                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
 
-//                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
+                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
                 lvOrder.setItems(oblItems);
                 lvOrder.setCellFactory(p -> new productList());
 
                 //Se necesita un metodo que devuelva una List de string nombres + apellido de una lista de UserDTO
-                try {
+                //Se necesita un metodo que devuelva una List de string nombres + apellido de una lista de UserDTO
+               /* try {
                     List<UserDTO> e = new UserManagerImp().getAllUsers();
                     cbDealer.setItems(FXCollections.observableArrayList(e.get(0).getName().toString()));
                 } catch (UserQueryException ex) {
                     Logger.getLogger(ManagerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
 
             }
         });
@@ -94,15 +97,15 @@ public class ManagerOrderPresenter {
     }
 
     @FXML
-    public void confirm() {
-//        try {
-//            //Llamada la BD para actualizar el estado del pedido
-//            //App.getCurrentOrder().setDealer(dealer);
-//            new OrderManagerImp().updateOrder(App.getCurrentOrder());
-//            back();
-//        } catch (OrderUpdateException ex) {
-//            Logger.getLogger(ManagerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+    public void confirm() throws OrderQueryException {
+        try {
+            //Llamada la BD para actualizar el estado del pedido
+            //App.getCurrentOrder().setDealer(dealer);
+            new OrderManagerImp().updateOrder(App.getCurrentOrder());
+            back();
+        } catch (OrderUpdateException ex) {
+            Logger.getLogger(ManagerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void back() {
@@ -124,6 +127,14 @@ public class ManagerOrderPresenter {
      */
     public void setOrder(OrderDTO order) {
         this.order = order;
+    }
+      private ArrayList<String> getNames(ObservableList<UserDTO> dealerList) {
+        ArrayList<String> names = new ArrayList<>();
+        //for each UserDTO object take the name and surnames on a string and add to the name list
+        dealerList.forEach((dealer) -> {
+            names.add(dealer.getName() + " " + dealer.getSurnames());
+        });
+        return names;
     }
     
     
