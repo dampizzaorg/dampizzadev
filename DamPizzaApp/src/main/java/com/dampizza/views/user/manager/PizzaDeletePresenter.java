@@ -80,7 +80,7 @@ public class PizzaDeletePresenter implements Initializable {
         //set to the list an touch event
         clvPizzas.selectedItemProperty().addListener((obs, ov, nv) -> {
             //on item click set enabeled the button of delete pizza
-            btDeletePizza.setDisable(false);
+        btDeletePizza.setDisable(false);
         });
     }
 

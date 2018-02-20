@@ -80,7 +80,7 @@ public class IngredientDTO {
     
     @Override
     public String toString(){
-        return "name: "+this.getName()+", price: "+this.getPrice();
+        return this.getName();
     }
     
     

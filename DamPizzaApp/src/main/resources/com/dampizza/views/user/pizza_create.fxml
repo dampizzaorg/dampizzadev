@@ -28,7 +28,7 @@
                         <Insets left="15.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="btnOk" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="OK" />
+                  <Button fx:id="btnOk"   minWidth="32.0" mnemonicParsing="false" onAction="#chargeImage" prefHeight="32.0" prefWidth="32.0" text="OK" />
                </children>
             </HBox>
             <HBox prefHeight="37.0" prefWidth="315.0">
@@ -58,8 +58,8 @@
    <bottom>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAddingredients" mnemonicParsing="false" text="Add Ingredients" />
-            <Button fx:id="btnAddpizza" mnemonicParsing="false" text="Add pizza" />
+            <!--<Button fx:id="btnAddingredients"  mnemonicParsing="false" text="Add Ingredients" />-->
+            <Button fx:id="btnAddpizza"   mnemonicParsing="false" onAction="#addPizza" text="Add pizza" />
          </children>
       </HBox>
    </bottom>

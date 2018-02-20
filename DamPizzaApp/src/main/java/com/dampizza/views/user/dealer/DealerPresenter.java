@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user.manager.dealer;
+package com.dampizza.views.user.dealer;
 
 import com.dampizza.util.LogicFactory;
 import com.dampizza.views.user.manager.orderList;
@@ -26,6 +26,7 @@ import com.dampizza.DrawerManager;
 
 import com.dampizza.exception.order.OrderQueryException;
 import com.dampizza.logic.dto.OrderDTO;
+import com.dampizza.views.user.manager.orderList;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
 

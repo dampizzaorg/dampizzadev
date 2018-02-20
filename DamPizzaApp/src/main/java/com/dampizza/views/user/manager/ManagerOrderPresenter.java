@@ -11,6 +11,7 @@ import static com.dampizza.App.MANAGER_DEALER_VIEW;
 import static com.dampizza.App.MANAGER_VIEW;
 import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
+import com.dampizza.cfg.AppConstants;
 import com.dampizza.exception.order.OrderUpdateException;
 import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.logic.dto.UserDTO;
@@ -75,16 +76,16 @@ public class ManagerOrderPresenter {
                 appBar.setTitleText("Manager order");
 
                 taOrder.setEditable(false);
-//                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
+                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
 
-//                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
+                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
                 lvOrder.setItems(oblItems);
                 lvOrder.setCellFactory(p -> new productList());
 
                 //Se necesita un metodo que devuelva una List de string nombres + apellido de una lista de UserDTO
                 try {
-                    List<UserDTO> e = new UserManagerImp().getAllUsers();
-                    cbDealer.setItems(FXCollections.observableArrayList(e.get(0).getName().toString()));
+                    ObservableList<UserDTO> e = FXCollections.observableList(LogicFactory.getUserManager().getUsersByType(AppConstants.USER_DEALER));
+                    cbDealer.setItems(FXCollections.observableArrayList( getNames(e))/*e.get(0).getName().toString())*/);
                 } catch (UserQueryException ex) {
                     Logger.getLogger(ManagerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -23,17 +23,17 @@
             </ImageView>
             <HBox prefHeight="57.0" prefWidth="315.0">
                <children>
-                  <TextField fx:id="tfUrl" prefHeight="57.0" prefWidth="229.0" promptText="PEGA  AQUI LA URL DE LA IMAGEN">
+                  <TextField fx:id="tfUrl" prefHeight="57.0" prefWidth="229.0" promptText="URL DE LA IMAGEN">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="btnOk" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="OK" />
+                  <Button fx:id="btnOk" onAction="#chargeImage" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="Cargar imagen" />
                </children>
             </HBox>
             <HBox prefHeight="37.0" prefWidth="315.0">
                <children>
-                  <TextField prefHeight="27.0" prefWidth="315.0" />
+                  <TextField fx:id="tfPizzaName" prefHeight="27.0" prefWidth="315.0" promptText="NOMBRE DE LA PIZZA"/>
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="31.0" prefWidth="315.0" spacing="5.0">
@@ -58,8 +58,8 @@
    <bottom>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAddingredients" mnemonicParsing="false" text="Add Ingredients" />
-            <Button fx:id="btnAddpizza" mnemonicParsing="false" text="Add pizza" />
+            <!--Button fx:id="btnAddingredients" mnemonicParsing="false" text="Add Ingredients" /-->
+            <Button fx:id="btnAddpizza" onAction="#addPizza" mnemonicParsing="false" text="Add pizza" />
          </children>
       </HBox>
    </bottom>
