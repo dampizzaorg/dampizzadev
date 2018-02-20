@@ -1,3 +1,5 @@
+package com.dampizza.views.user.manager;
+
 import com.dampizza.util.LogicFactory;
 import com.dampizza.views.custom.orderList;
 
