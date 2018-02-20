@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * Manager view provider (FXML Loader)
- * @author Carlos Santos
+ * @author ???
  */
 public class ModifyPersonalInfoView {
 

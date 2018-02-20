@@ -35,7 +35,7 @@ import javafx.scene.control.PasswordField;
 /**
  * Presenter for login.fxml
  *
- * @author Carlos Santos
+ * @author ???
  */
 public class LoginPresenter {
 

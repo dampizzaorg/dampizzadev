@@ -1,14 +1,13 @@
 package com.dampizza.views.order;
 
 import com.dampizza.App;
-import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 
 /**
- * Manager view provider (FXML Loader)
+ * Cart view provider (FXML Loader)
  *
  * @author Carlos Santos
  */

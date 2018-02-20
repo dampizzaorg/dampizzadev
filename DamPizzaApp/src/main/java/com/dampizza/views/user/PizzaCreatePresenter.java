@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user.manager;
+package com.dampizza.views.user;
 
 import com.dampizza.App;
 import com.dampizza.exception.ingredient.IngredientQueryException;

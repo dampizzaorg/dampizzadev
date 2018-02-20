@@ -1,7 +1,6 @@
 package com.dampizza.views.order;
 
 import com.dampizza.views.custom.PizzaCLV;
-import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -32,7 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 /**
- * Presenter for order_create.fxml
+ * Presenter for cart.fxml
  *
  * @author Carlos Santos
  */
@@ -73,12 +72,21 @@ public class CartPresenter {
         });
     }
 
+    /**
+     * Initializes cart list view.
+     */
     public void initCartView() {
         oblCartProducts = FXCollections.observableArrayList(cart.getProducts());
         lvCart.setItems(oblCartProducts);
         lblTotal.setText(String.valueOf(cart.getTotal()) + " €");
     }
 
+    /**
+     * Create order as long as the cart is not empty.
+     * @throws OrderCreateException
+     * @throws OrderQueryException
+     * @throws UserQueryException 
+     */
     @FXML
     public void btnConfirmAction() throws OrderCreateException, OrderQueryException, UserQueryException {
         if (lvCart.itemsProperty().size()>0) {
@@ -96,6 +104,9 @@ public class CartPresenter {
         }
     }
 
+    /**
+     * Remove product from the cart.
+     */
     @FXML
     public void btnDeleteAction() {
         ProductDTO selectedProduct = lvCart.getSelectedItem();
@@ -115,7 +126,7 @@ public class CartPresenter {
     @FXML
     public void addListeners() {
 
-        // Disable buttons if tv is empty (Using bindings)
+        // Disable button if tv is empty (Using bindings)
         btnConfirm.disableProperty().bind(lvCart.itemsProperty().emptyProperty());
         //btnDelete.disableProperty().bind(lvCart.itemsProperty().emptyProperty());
         

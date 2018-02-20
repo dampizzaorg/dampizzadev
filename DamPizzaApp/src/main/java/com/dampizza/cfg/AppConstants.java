@@ -8,8 +8,8 @@ package com.dampizza.cfg;
 import com.dampizza.logic.dto.OrderDTO;
 
 /**
- *
- * @author Carlos
+ * Application constants
+ * @author Carlos Santos
  */
 public class AppConstants {
     

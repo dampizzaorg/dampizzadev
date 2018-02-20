@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Ingredient manager interface.
  * CRUD methods for Ingredients.
- * @author Carlos
+ * @author Carlos Santos
  */
 public interface IngredientManagerInterface {
     

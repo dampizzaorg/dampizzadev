@@ -5,6 +5,7 @@
  */
 package com.dampizza.views.user.manager;
 
+import com.dampizza.views.custom.productList;
 import com.dampizza.App;
 import static com.dampizza.App.MANAGER_VIEW;
 import static com.dampizza.App.MANAGER_DEALER_VIEW;

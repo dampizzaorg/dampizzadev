@@ -37,7 +37,7 @@ import javafx.scene.paint.Color;
 /**
  * Presenter for signup.fxml
  *
- * @author Carlos Santos
+ * @author ???
  */
 public class SignupPresenter {
 

@@ -13,8 +13,8 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
 /**
- *
- * @author Carlos
+ * Mail utility
+ * @author Ismael
  */
 public class MailUtil {
     /**

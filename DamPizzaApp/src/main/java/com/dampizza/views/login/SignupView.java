@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * Login view provider (FXML Loader)
- * @author Carlos Santos
+ * @author ???
  */
 public class SignupView {
 

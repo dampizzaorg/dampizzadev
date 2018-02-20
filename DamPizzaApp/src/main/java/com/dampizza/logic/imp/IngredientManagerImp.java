@@ -26,8 +26,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- *
- * @author Carlos
+ * Ingredient Manager Implementation
+ * @author Carlos Santos
  */
 public class IngredientManagerImp implements IngredientManagerInterface {
 

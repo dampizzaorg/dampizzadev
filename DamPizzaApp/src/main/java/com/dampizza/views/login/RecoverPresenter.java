@@ -31,7 +31,7 @@ import javafx.scene.paint.Color;
 /**
  * Presenter for recover.fxml
  *
- * @author Carlos Santos
+ * @author ???
  */
 public class RecoverPresenter {
     // <editor-fold defaultstate="collapsed" desc="@FXML NODES">

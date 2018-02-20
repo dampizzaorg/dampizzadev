@@ -11,17 +11,17 @@ import com.dampizza.views.login.LoginView;
 import com.dampizza.views.login.RecoverView;
 import com.dampizza.views.login.SignupView;
 import com.dampizza.views.order.CartView;
-import com.dampizza.views.user.CustomerView;
+import com.dampizza.views.user.customer.CustomerView;
 import com.dampizza.views.user.manager.dealer.DealerView;
 import com.dampizza.views.user.manager.dealer.DealerOrderView;
-import com.dampizza.views.user.HistoryView;
+import com.dampizza.views.user.customer.HistoryView;
 import com.dampizza.views.user.manager.ManagerView;
 import com.dampizza.views.user.manager.ManagerOrderView;
 import com.dampizza.views.user.manager.ManagerDealerView;
 import com.dampizza.views.user.manager.RegisterDealerView;
 import com.dampizza.views.user.ModifyPersonalInfoView;
 import com.dampizza.views.order.OrderCreateView;
-import com.dampizza.views.user.manager.PizzaCreateView;
+import com.dampizza.views.user.PizzaCreateView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -48,11 +48,6 @@ public class App extends MobileApplication {
     public static Locale locale;
     private static ResourceBundle bundle;
 
-    /* TODO research about java session managament for mobile apps.
-     * Change implementation?
-     */
-    // Remove after changing to hashmap session
-    private static UserEntity userLoggedIn = null;
     private static OrderDTO currentOrder = null;
 
     private static TestUtil test = null;

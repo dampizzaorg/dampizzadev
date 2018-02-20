@@ -1,5 +1,6 @@
 package com.dampizza.views.user.manager;
 
+import com.dampizza.views.custom.orderList;
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -11,7 +12,7 @@ import com.dampizza.DrawerManager;
 import com.dampizza.exception.order.OrderQueryException;
 import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.imp.OrderManagerImp;
-import com.dampizza.views.user.HistoryPresenter;
+import com.dampizza.views.user.customer.HistoryPresenter;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.CharmListView;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
@@ -25,7 +26,7 @@ import javafx.scene.control.Label;
 /**
  * Presenter for manager.fxml
  * 
- * @author Carlos Santos
+ * @author ???
  */
 public class ManagerPresenter {
     

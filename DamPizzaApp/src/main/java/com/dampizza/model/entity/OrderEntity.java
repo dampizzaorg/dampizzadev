@@ -26,8 +26,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author Carlos
+ * Order Entity
+ * @author Carlos Santos
  */
 @Entity
 @Table(name="order", schema="dampizzadb")
