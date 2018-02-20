@@ -87,7 +87,7 @@ public class DealerOrderPresenter {
             App.getCurrentOrder().setStatus(AppConstants.STATUS_DELIVERED);
             //Llamada la BD para actualizar el estado del pedido
             LogicFactory.getOrderManager().updateOrder(App.getCurrentOrder());
-             MobileApplication.getInstance().showMessage("Order updated");
+            MobileApplication.getInstance().showMessage("Order updated");
             back();
         } catch (OrderUpdateException ex) {
             Logger.getLogger(DealerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);

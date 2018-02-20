@@ -40,7 +40,7 @@ import javafx.fxml.FXML;
 /**
  * FXML Controller class
  *
- * @author 2dam
+ * @author Jon Xabier Gimenez, 2dam, isma
  */
 public class DealerPresenter implements Initializable {
 

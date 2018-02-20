@@ -109,6 +109,35 @@ public class OrderManagerImp implements OrderManagerInterface {
 
         return orderList;
     }
+    
+    @Override
+    public List<OrderDTO> getAllOrdersByUser() throws OrderQueryException {
+        logger.info("Getting list of all orders.");
+        UserManagerImp user2=new UserManagerImp();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<OrderDTO> orderList = new ArrayList();
+        try {
+            //List<OrderEntity> orderEntities = session.createQuery("from OrderEntity where customer.id in(select id from UserEntity where credential.username = "+user+")").list();
+            List<OrderEntity> orderEntities = session.createQuery("from OrderEntity where customer.id = "+user2.getSESSION().get("id")+" order by date").list();
+
+            // For each order entity create an add an orderDTO to orderList
+            orderEntities.forEach(o -> orderList.add(new OrderDTO(
+            		o.getId(),o.getDate(), 
+                    new UserDTO(o.getCustomer().getCredential().getUsername(), o.getCustomer().getName(),
+                                o.getCustomer().getSurnames(), o.getCustomer().getEmail(), o.getCustomer().getAddress()),
+                            o.getAddress(), pmi.EntityToDTO(o.getProducts()), 
+                    new UserDTO(o.getDealer().getCredential().getUsername(), o.getDealer().getName(),
+                                o.getDealer().getSurnames(), o.getDealer().getEmail(), 
+                                o.getDealer().getAddress()), o.getStatus())));
+        } catch (HibernateException e) {
+            logger.severe("An error has ocurred while getting orders:");
+            throw new OrderQueryException("Error on getAllOrders(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return orderList;
+    }
 
     @Override
     public OrderDTO getOrderById(Long id) throws OrderQueryException {

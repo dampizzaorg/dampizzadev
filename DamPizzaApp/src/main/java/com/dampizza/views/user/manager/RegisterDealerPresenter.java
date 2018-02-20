@@ -86,16 +86,12 @@ public class RegisterDealerPresenter {
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-
-                /* Leave on true for testing, change to false when the app is finished */
+                 appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e
+                        -> goBack()));
                 appBar.setVisible(true);
 
-                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e
-                        -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
                 appBar.setTitleText("SignUp");
-                appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e
-                        -> System.out.println("Search")));
-
+             
             }
         });
         
@@ -120,7 +116,7 @@ public class RegisterDealerPresenter {
                 //SEND A EMAIL AFTER REGISTRATION FALTA MANDARLE SU USUARIO Y CONTRASEÑA
                 String message = "You has request  recover passwod, unfortunaly we "
                                 + "cant send you your password.\nThis is yor new password: " + pw + "\n dont forget changing the password before get logged";
-                 MailUtil.sendEmail(tfEmail.getText(), "Deliver Man Sign up", message);
+                MailUtil.sendEmail(tfEmail.getText(), "Deliver Man Sign up", message);
 
             } catch (UserCreateException ex) {
                 Logger.getLogger(RegisterDealerPresenter.class.getName()).log(Level.SEVERE, null, ex);

@@ -8,9 +8,12 @@ package com.dampizza.views.user;
 import com.dampizza.App;
 import com.dampizza.DrawerManager;
 import com.dampizza.exception.order.OrderQueryException;
+import com.dampizza.exception.product.ProductQueryException;
 import com.dampizza.logic.dto.OrderDTO;
+import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.imp.OrderManagerImp;
 import com.dampizza.views.user.manager.orderList;
+import com.dampizza.views.user.manager.productList;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -20,7 +23,10 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 
 import static com.dampizza.App.MANAGER_ORDER_VIEW;
-import static com.dampizza.App.HISTORY_DETAIL;
+import static com.dampizza.App.HISTORY_VIEW;
+import static com.dampizza.App.CUSTOMER_VIEW;
+import com.dampizza.util.LogicFactory;
+import com.gluonhq.charm.glisten.control.Alert;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,22 +36,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
  *
  * @author 2dam
  */
-public class HistoryPresenter implements Initializable {
+public class HistoryPresenterDetail implements Initializable {
 
     private OrderManagerImp omi;
-    private ObservableList<OrderDTO> oblOrders;
+    private OrderDTO cart;
+    private ObservableList<ProductDTO> oblOrders;
     private ObservableList<String> names;
 
     @FXML
-    private CharmListView<OrderDTO, ? extends Comparable> lvOrders;
+    private CharmListView<ProductDTO, ? extends Comparable> lvOrders;
     @FXML
     private View primary;
+    @FXML
+    private Button btnRepeat;
     
     
 
@@ -61,34 +71,39 @@ public class HistoryPresenter implements Initializable {
                 
                 appBar.setVisible(true);
                 
-                appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> 
-                        MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-                appBar.setTitleText("History");
-                appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> 
-                        System.out.println("Search")));
+                appBar.setTitleText("History Detail");
+                appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e -> 
+                back()));
+                
+                cart = (OrderDTO) LogicFactory.getUserManager().getSession().get("cart");
                 
             }
-            System.out.println("shjgshjgshjgsj");
+          
             
         });
        
        omi = new OrderManagerImp();
-     
-        try {
-            oblOrders = FXCollections.observableArrayList(omi.getAllOrdersByUser());
-        } catch (OrderQueryException ex) {
-            Logger.getLogger(HistoryPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       if(oblOrders!=null){
+        oblOrders = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
        lvOrders.setItems(oblOrders);
-       lvOrders.setCellFactory(p -> new historyList());
-       lvOrders.selectedItemProperty().addListener((obs,ov,nv) ->{
-           //Cargar la order en una constante
-           App.setCurrentOrder(lvOrders.getSelectedItem());
-           NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), HISTORY_DETAIL, ViewStackPolicy.SKIP);
-           DrawerManager drawer = new DrawerManager(); 
-           drawer.updateView(Item); 
-       });
-        }
+       lvOrders.setCellFactory(p -> new productList());
+       
+      
     }     
+    public void back(){
+        //Metodo que te lleva a la ventana anterior
+        NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), HISTORY_VIEW, ViewStackPolicy.SKIP);
+        DrawerManager drawer = new DrawerManager();
+        drawer.updateView(Item);
+     }
+    
+    public void repeat(){
+    	System.out.println("REPETIR PEDIDO");
+          for(int i=0;i<oblOrders.size();i++){
+             cart.getProducts().add(oblOrders.get(i));
+            cart.setTotal(cart.getTotal()+oblOrders.get(i).getPrice());
+        }
+        NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), CUSTOMER_VIEW, ViewStackPolicy.SKIP);
+        DrawerManager drawer = new DrawerManager();
+        drawer.updateView(Item);
+    }
 }

@@ -6,6 +6,7 @@
 package com.dampizza.views.user;
 
 import com.dampizza.App;
+import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.exception.user.UserUpdateException;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.imp.UserManagerImp;
@@ -21,6 +22,7 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,9 +32,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 
 /**
- * FXML Controller class
+ * FXML Controller class for modifyPersonalInfo.fxml
  *
  * @author Jon Xabier Gimenez
+ * 
  * Class that controls the modifyPersonalInfo.fxml.
  * This have the work on updating user information and credentials.
  * Class 
@@ -41,7 +44,7 @@ import javafx.scene.control.PasswordField;
 public class ModifyPersonalInfoPresenter implements Initializable {
 
     private UserManagerImp userManager;
-    
+    // <editor-fold defaultstate="collapsed" desc="@FXML NODES">
     @FXML
     private Label lbUserName;
     @FXML
@@ -78,12 +81,14 @@ public class ModifyPersonalInfoPresenter implements Initializable {
     private PasswordField tfRepeatPassword;
     @FXML
     private View primary;
+    //</editor-fold>
     
     private static final Logger logger =Logger.getLogger(ModifyPersonalInfoPresenter.class.getName());
 
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -109,7 +114,8 @@ public class ModifyPersonalInfoPresenter implements Initializable {
                 tfFirstSurName.setText(surnames[0]);
                 tfSecondSurName.setText(surnames[1]);
                 tfDirection.setText((String )userManager.getSession().get("address"));
-                tfEmail.setText((String )userManager.getSession().get("email"));           
+                tfEmail.setText((String )userManager.getSession().get("email"));
+                logger.info("All user data loaded");
             }    
      });
     }
@@ -131,8 +137,8 @@ public class ModifyPersonalInfoPresenter implements Initializable {
             alert.showAndWait();
         }else{
             try {
-                //Checks if the email is correct
-                if(new EmailValidator().validate(tfEmail.getText())){
+                //Checks if the email is correct and doesn´t exist
+                if(new EmailValidator().validate(tfEmail.getText()) && userManager.emailExist(tfEmail.getText())!=1){
                     Alert alert;
                     //load a UserDTO class with the current information in the fields
                     UserDTO user= new UserDTO(tfUserName.getText(),tfName.getText(),
@@ -173,9 +179,12 @@ public class ModifyPersonalInfoPresenter implements Initializable {
                     
                 }
             } catch (UserUpdateException ex) {
-                //Put in the logger the information of the error
                 logger.severe(ex.getMessage());
                 //Alert with the current error
+                Alert alert = new Alert(javafx.scene.control.Alert.AlertType.ERROR, ex.getMessage());
+                alert.showAndWait();
+            } catch (UserQueryException ex) {
+                logger.severe(ex.getMessage());
                 Alert alert = new Alert(javafx.scene.control.Alert.AlertType.ERROR, ex.getMessage());
                 alert.showAndWait();
             }
