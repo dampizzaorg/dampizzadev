@@ -6,33 +6,48 @@
 package com.dampizza.logic.dto;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
  * User Data Transfer Object
+ *
  * @author Carlos Santos
  */
 public class UserDTO {
+
+    private SimpleLongProperty id;
     private SimpleStringProperty username;
     private SimpleStringProperty name;
     private SimpleStringProperty surnames;
     private SimpleStringProperty email;
     private SimpleStringProperty address;
-    
-    public UserDTO(){
+
+    public UserDTO() {
+        this.id = new SimpleLongProperty();
         this.username = new SimpleStringProperty();
         this.name = new SimpleStringProperty();
         this.surnames = new SimpleStringProperty();
         this.email = new SimpleStringProperty();
-        this.address = new SimpleStringProperty();  
+        this.address = new SimpleStringProperty();
     }
-    
-    public UserDTO(String username, String name, String surnames, String email, String address){
+
+    public UserDTO(String username, String name, String surnames, String email, String address) {
+        this.id = new SimpleLongProperty();
         this.username = new SimpleStringProperty(username);
         this.name = new SimpleStringProperty(name);
         this.surnames = new SimpleStringProperty(surnames);
         this.email = new SimpleStringProperty(email);
-        this.address = new SimpleStringProperty(address);  
+        this.address = new SimpleStringProperty(address);
+    }
+    
+    public UserDTO(Long id,String username, String name, String surnames, String email, String address) {
+        this.id = new SimpleLongProperty();
+        this.username = new SimpleStringProperty(username);
+        this.name = new SimpleStringProperty(name);
+        this.surnames = new SimpleStringProperty(surnames);
+        this.email = new SimpleStringProperty(email);
+        this.address = new SimpleStringProperty(address);
     }
 
     /**
@@ -105,11 +120,27 @@ public class UserDTO {
         this.address.set(address);
     }
     
+    
+
     @Override
-    public String toString(){
-        return "username: "+this.getUsername()+", name: "+this.getName()+
-                ", surnames: "+this.getSurnames()+", email: "+this.getEmail()+
-                ", address: "+this.getAddress();
-    }  
+    public String toString() {
+        return "username: " + this.getUsername() + ", name: " + this.getName()
+                + ", surnames: " + this.getSurnames() + ", email: " + this.getEmail()
+                + ", address: " + this.getAddress();
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id.get();
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id.set(id);
+    }
 
 }

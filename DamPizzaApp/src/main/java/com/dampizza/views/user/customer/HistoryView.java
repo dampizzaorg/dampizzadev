@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * Dealer view provider (FXML Loader)
+ *
  * @author ???
  */
 public class HistoryView {
@@ -16,14 +17,16 @@ public class HistoryView {
     public HistoryView(String name) {
         this.name = name;
     }
-    
+
     /**
      * Load and returns fxml view.
+     *
      * @return view object
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(HistoryView.class.getResource("/com/dampizza/views/user/customer/history.fxml"));
+//            View view = FXMLLoader.load(HistoryView.class.getResource("/com/dampizza/views/user/customer/history.fxml"));
+            View view = FXMLLoader.load(HistoryView.class.getResource("history.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

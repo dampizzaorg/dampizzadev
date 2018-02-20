@@ -15,6 +15,7 @@ import com.dampizza.views.user.customer.CustomerView;
 import com.dampizza.views.user.dealer.DealerView;
 import com.dampizza.views.user.dealer.DealerOrderView;
 import com.dampizza.views.user.customer.HistoryView;
+import com.dampizza.views.user.customer.HistoryViewDetail;
 import com.dampizza.views.user.manager.ManagerView;
 import com.dampizza.views.user.manager.ManagerOrderView;
 import com.dampizza.views.user.manager.ManagerDealerView;
@@ -65,6 +66,7 @@ public class App extends MobileApplication {
     public static final String DEALER_VIEW = "Dealer  view";
     public static final String DEALER_ORDER_VIEW = "Dealer order view";
     public static final String HISTORY_VIEW = "History view";
+    public static final String HISTORY_DETAIL = "History detail";
     public static final String MENU_LAYER = "Side Menu";
     public static final String PIZZA_CREATE_VIEW = "Create pizza view";
     public static final String PIZZA_DELETE_VIEW ="Delete pizza view";
@@ -105,6 +107,7 @@ public class App extends MobileApplication {
         addViewFactory(DEALER_ORDER_VIEW, () -> new DealerOrderView(DEALER_ORDER_VIEW).getView());
         addViewFactory(ORDER_CREATE_VIEW, () -> new OrderCreateView(ORDER_CREATE_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
+        addViewFactory(HISTORY_DETAIL, () -> new HistoryViewDetail(HISTORY_DETAIL).getView());
         addViewFactory(PIZZA_CREATE_VIEW, () -> new PizzaCreateView(PIZZA_CREATE_VIEW).getView());
         addViewFactory(PIZZA_DELETE_VIEW, () -> new PizzaDeleteView(PIZZA_DELETE_VIEW).getView());
         addViewFactory(CART_VIEW, () -> new CartView(CART_VIEW).getView());

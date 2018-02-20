@@ -226,7 +226,7 @@ public class UserManagerImp implements UserManagerInterface {
         try {
             List<UserEntity> userEntities = session.createQuery("from UserEntity").list();
             if (userEntities != null) {
-                userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
+                userEntities.forEach(u -> userList.add(new UserDTO(u.getId(), u.getCredential().getUsername(), u.getName(),
                         u.getSurnames(), u.getEmail(), u.getAddress())));
             }
 
@@ -252,7 +252,7 @@ public class UserManagerImp implements UserManagerInterface {
             query.setParameter("username", username);
             UserEntity userResult = (UserEntity) query.uniqueResult();
             if (userResult != null) {
-                user = new UserDTO(userResult.getCredential().getUsername(), userResult.getName(),
+                user = new UserDTO(userResult.getId(), userResult.getCredential().getUsername(), userResult.getName(),
                         userResult.getSurnames(), userResult.getEmail(), userResult.getAddress());
             }
 
@@ -512,7 +512,7 @@ public class UserManagerImp implements UserManagerInterface {
             query.setParameter("type", type);
             List<UserEntity> userEntities = query.list();
             if (userEntities != null) {
-                userEntities.forEach(u -> userList.add(new UserDTO(u.getCredential().getUsername(), u.getName(),
+                userEntities.forEach(u -> userList.add(new UserDTO(u.getId(), u.getCredential().getUsername(), u.getName(),
                         u.getSurnames(), u.getEmail(), u.getAddress())));
             }
 
@@ -531,5 +531,5 @@ public class UserManagerImp implements UserManagerInterface {
         SESSION.remove("cart");
         SESSION.put("cart", new OrderDTO(getUserByUsername((String) SESSION.get("username"))));
     }
-
+    
 }
