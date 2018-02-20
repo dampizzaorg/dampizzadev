@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.logic.io;
+package com.dampizza.views.user.dealer;
 
 import com.dampizza.exception.order.OrderCreateException;
 import com.dampizza.exception.order.OrderDeleteException;

@@ -14,7 +14,7 @@ import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.exception.user.UserUpdateException;
 import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.dto.UserDTO;
-import com.dampizza.logic.io.OrderManagerInterface;
+import com.dampizza.views.user.dealer.OrderManagerInterface;
 import com.dampizza.model.entity.OrderEntity;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.HibernateUtil;
