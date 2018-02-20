@@ -19,9 +19,10 @@ import com.dampizza.views.user.manager.ManagerView;
 import com.dampizza.views.user.manager.ManagerOrderView;
 import com.dampizza.views.user.manager.ManagerDealerView;
 import com.dampizza.views.user.manager.RegisterDealerView;
-import com.dampizza.views.user.ModifyPersonalInfoView;
+import com.dampizza.views.user.common.ModifyPersonalInfoView;
 import com.dampizza.views.order.OrderCreateView;
-import com.dampizza.views.user.PizzaCreateView;
+import com.dampizza.views.user.common.PizzaCreateView;
+import com.dampizza.views.user.manager.PizzaDeleteView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -66,6 +67,7 @@ public class App extends MobileApplication {
     public static final String HISTORY_VIEW = "History view";
     public static final String MENU_LAYER = "Side Menu";
     public static final String PIZZA_CREATE_VIEW = "Create pizza view";
+    public static final String PIZZA_DELETE_VIEW ="Delete pizza view";
 
     /*
      * ORDER OPERATIONS VIEWS (Create order, order detail)
@@ -104,6 +106,7 @@ public class App extends MobileApplication {
         addViewFactory(ORDER_CREATE_VIEW, () -> new OrderCreateView(ORDER_CREATE_VIEW).getView());
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
         addViewFactory(PIZZA_CREATE_VIEW, () -> new PizzaCreateView(PIZZA_CREATE_VIEW).getView());
+        addViewFactory(PIZZA_DELETE_VIEW, () -> new PizzaDeleteView(PIZZA_DELETE_VIEW).getView());
         addViewFactory(CART_VIEW, () -> new CartView(CART_VIEW).getView());
 
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));

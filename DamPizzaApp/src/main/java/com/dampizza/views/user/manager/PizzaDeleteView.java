@@ -5,7 +5,7 @@
  */
 package com.dampizza.views.user.manager;
 
-import com.dampizza.views.user.PizzaCreateView;
+import com.dampizza.views.user.common.PizzaCreateView;
 import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +27,7 @@ public class PizzaDeleteView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(PizzaCreateView.class.getResource("pizza_delete_view.fxml"));
+            View view = FXMLLoader.load(PizzaCreateView.class.getResource("/com/dampizza/views/user/manager/pizza_delete_view.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

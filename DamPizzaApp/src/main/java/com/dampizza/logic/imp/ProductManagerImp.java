@@ -154,14 +154,14 @@ public class ProductManagerImp implements ProductManagerInterface {
             tx = session.beginTransaction();
 
             // Retrieve user to delete
+            ProductEntity productToUpdate = (ProductEntity) session.get(ProductEntity.class, id);
 
-            ProductEntity productToDelete = (ProductEntity) session.get(ProductEntity.class, id);
-
-            if (productToDelete != null) {
-                session.delete(productToDelete);
+            if (productToUpdate != null) {
+                productToUpdate.setActive(Boolean.FALSE);
+                session.update(productToUpdate);
 
                 res = 1;
-                logger.log(Level.INFO, "Product id<{0}>, name<{1}> deleted.", new Object[]{id, productToDelete.getName()});
+                logger.log(Level.INFO, "Product id<{0}>, name<{1}> deleted.", new Object[]{id, productToUpdate.getName()});
             } else {
                 res = 2;
                 logger.log(Level.INFO, "Product id<{0}> not found.", id);
@@ -327,10 +327,9 @@ public class ProductManagerImp implements ProductManagerInterface {
              * ingredientDTO(ingredients paramater) = tomate queso.
              * filteredList = tomate, queso.
                  */
-                if(productEntities!=null){
+                if (productEntities != null) {
                     filteredProducts = productEntities.stream().filter(i -> productIds.contains(i.getId())).collect(Collectors.toList());
                 }
-                
 
             } catch (HibernateException e) {
                 logger.log(Level.SEVERE, "An error has ocurred while getting product entities from dtos.");
@@ -377,6 +376,32 @@ public class ProductManagerImp implements ProductManagerInterface {
         } catch (HibernateException e) {
             logger.log(Level.SEVERE, "An error has ocurred while getting products by user id<{0}>", id);
             throw new ProductQueryException("Error on getProductByCategory(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return productList;
+    }
+    
+    @Override
+    public List<ProductDTO> getActiveProducts(Integer category) throws ProductQueryException {
+         logger.log(Level.INFO, "Getting list of active products by category<{0}>.", category);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from ProductEntity where category = :category and user = null and active = true";
+        List<ProductDTO> productList = new ArrayList<>();
+
+        try {
+            Query query = session.createQuery(hql);
+            query.setParameter("category", category);
+            List<ProductEntity> productEntities = (List<ProductEntity>) query.list();
+
+            if (productEntities != null) {
+                productEntities.forEach(p -> productList.add(new ProductDTO(p.getId(), p.getName(),
+                        p.getDescription(), p.getPrice(), p.getCategory(), imi.EntityToDTO(p.getIngredients()), p.getUserId(), p.getUrl())));
+            }
+
+        } catch (HibernateException e) {
+            logger.log(Level.SEVERE, "An error has ocurred while getting active products by category<{0}>", category);
+            throw new ProductQueryException("Error on getActiveProducts(): \n" + e.getMessage());
         } finally {
             session.close();
         }

@@ -23,7 +23,9 @@ public class ManagerView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(ManagerView.class.getResource("manager_main.fxml"));
+
+            View view = FXMLLoader.load(ManagerView.class.getResource("/com/dampizza/views/user/manager/manager_main.fxml"));
+
             view.setName(name);
             return view;
         } catch (IOException e) {

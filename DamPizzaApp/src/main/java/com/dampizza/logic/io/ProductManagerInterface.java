@@ -100,4 +100,11 @@ public interface ProductManagerInterface {
      * @return ProductDTO List
      */
     public List<ProductDTO> EntityToDTO(List<ProductEntity> products);
+    /**
+     * Method to get all active products filtered by category
+     * @param category type of products
+     * @return ProductDTO List
+     * @throws ProductQueryException 
+     */
+    public List<ProductDTO> getActiveProducts(Integer category) throws ProductQueryException;
 }
