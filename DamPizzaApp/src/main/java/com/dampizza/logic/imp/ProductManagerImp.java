@@ -155,13 +155,14 @@ public class ProductManagerImp implements ProductManagerInterface {
 
             // Retrieve user to delete
 
-            ProductEntity productToDelete = (ProductEntity) session.get(ProductEntity.class, id);
+            ProductEntity productToUpdate = (ProductEntity) session.get(ProductEntity.class, id);
 
-            if (productToDelete != null) {
-                session.delete(productToDelete);
+            if (productToUpdate != null) {
+                productToUpdate.setActive(Boolean.FALSE);
+                session.update(productToUpdate);
 
                 res = 1;
-                logger.log(Level.INFO, "Product id<{0}>, name<{1}> deleted.", new Object[]{id, productToDelete.getName()});
+                logger.log(Level.INFO, "Product id<{0}>, name<{1}> deleted.", new Object[]{id, productToUpdate.getName()});
             } else {
                 res = 2;
                 logger.log(Level.INFO, "Product id<{0}> not found.", id);

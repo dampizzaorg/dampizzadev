@@ -52,6 +52,9 @@ public class ProductEntity implements Serializable{
     
     @Column(name = "url", length = 200)
     private String url;
+    
+    @Column(name = "active")
+    private Boolean active;
       
     public ProductEntity(){
         
@@ -76,6 +79,7 @@ public class ProductEntity implements Serializable{
         this.ingredients=ingredients;
         this.user=user;
         this.url = (url == null || url.isEmpty()) ?  AppConstants.DEFAULT_PRODUCT_IMG : url;
+        this.active=true;
     }
     
     /**
@@ -92,6 +96,7 @@ public class ProductEntity implements Serializable{
         this.category=category;
         this.ingredients=null;
         this.user=null;
+        this.active=true;
     }
     
     public ProductEntity(ProductDTO product, List<IngredientEntity> ingredientes){
@@ -101,6 +106,7 @@ public class ProductEntity implements Serializable{
         this.category=product.getCategory();
         this.ingredients=ingredientes;
         this.user=null;
+        this.active=true;
     }
 
     /**
@@ -226,6 +232,18 @@ public class ProductEntity implements Serializable{
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    
+    
+    
     
     
 }

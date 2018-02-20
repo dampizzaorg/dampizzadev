@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -16,21 +15,7 @@
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="314.0" prefWidth="335.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="img" fitHeight="115.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-            </ImageView>
-            <HBox prefHeight="57.0" prefWidth="315.0">
-               <children>
-                  <TextField fx:id="tfUrl" prefHeight="57.0" prefWidth="229.0" promptText="PEGA  AQUI LA URL DE LA IMAGEN">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button fx:id="btnOk" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="OK" />
-               </children>
-            </HBox>
+            <HBox prefHeight="57.0" prefWidth="315.0" />
             <HBox prefHeight="37.0" prefWidth="315.0">
                <children>
                   <TextField prefHeight="27.0" prefWidth="315.0" />
@@ -58,7 +43,6 @@
    <bottom>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAddingredients" mnemonicParsing="false" text="Add Ingredients" />
             <Button fx:id="btnAddpizza" mnemonicParsing="false" text="Add pizza" />
          </children>
       </HBox>

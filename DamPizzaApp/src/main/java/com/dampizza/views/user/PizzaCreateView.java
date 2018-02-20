@@ -28,7 +28,8 @@ public class PizzaCreateView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(PizzaCreateView.class.getResource("pizza_create.fxml"));
+            
+            View view = FXMLLoader.load(PizzaCreateView.class.getResource("/com/dampizza/views/user/pizza_create.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

@@ -34,7 +34,7 @@ import javafx.scene.control.ButtonType;
  *
  * @author Ismael
  */
-public class PizzaDeletePresenter{
+public class PizzaDeletePresenter {
 
     //<editor-fold defaultstate="collapsed" desc="@FXML NODES">
     @FXML
@@ -47,7 +47,7 @@ public class PizzaDeletePresenter{
 
     private ObservableList<ProductDTO> pizzas;
 
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
         primary.showingProperty().addListener((obs, oldValue, newValue) -> {
 
             if (newValue) {
@@ -68,18 +68,18 @@ public class PizzaDeletePresenter{
         try {
             pizzas = FXCollections.observableList(LogicFactory.getProductManager()
                     .getProductByCategory(AppConstants.PRODUCT_PIZZA));
+            //charge the list with the pizzas
+            chargeList();
+            //set the button disabled
+            btDeletePizza.setDisable(true);
+            //set to the list an touch event
+            clvPizzas.selectedItemProperty().addListener((obs, ov, nv) -> {
+                //on item click set enabeled the button of delete pizza
+                btDeletePizza.setDisable(false);
+            });
         } catch (ProductQueryException ex) {
             Logger.getLogger(PizzaDeletePresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //charge the list with the pizzas
-        chargeList();
-        //set the button disabled
-        btDeletePizza.setDisable(true);
-        //set to the list an touch event
-        clvPizzas.selectedItemProperty().addListener((obs, ov, nv) -> {
-            //on item click set enabeled the button of delete pizza
-            btDeletePizza.setDisable(false);
-        });
     }
 
     @FXML

@@ -27,7 +27,7 @@ public class PizzaDeleteView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(PizzaCreateView.class.getResource("pizza_delete_view.fxml"));
+            View view = FXMLLoader.load(PizzaCreateView.class.getResource("/com/dampizza/views/user/manager/pizza_delete_view.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {
