@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+
 /**
  * Presenter for manager.fxml
  * 
@@ -41,6 +42,9 @@ public class ManagerPresenter {
 
     @FXML
     private Label label;
+    
+   
+    private OrderDTO order;
 
     public void initialize() {
         
@@ -76,10 +80,11 @@ public class ManagerPresenter {
         
         lbOrders.selectedItemProperty().addListener((obs,ov,nv) ->{
             //Cargar la order en una constante
-            App.setCurrentOrder(lbOrders.getSelectedItem());
-            NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_ORDER_VIEW, ViewStackPolicy.SKIP);
+            //App.setCurrentOrder(lbOrders.getSelectedItem());
+             order = lbOrders.getSelectedItem();
+            /*NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_ORDER_VIEW, ViewStackPolicy.SKIP);
             DrawerManager drawer = new DrawerManager();
-            drawer.updateView(Item);          
+            drawer.updateView(Item);   */       
         });
          
          
