@@ -67,7 +67,7 @@ public class PizzaDeletePresenter {
     private void chargeData() {
         try {
             pizzas = FXCollections.observableList(LogicFactory.getProductManager()
-                    .getProductByCategory(AppConstants.PRODUCT_PIZZA));
+                    .getActiveProducts(AppConstants.PRODUCT_PIZZA));
             //charge the list with the pizzas
             chargeList();
             //set the button disabled

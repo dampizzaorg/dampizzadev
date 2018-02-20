@@ -11,14 +11,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<View maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.user.manager.PizzaCreatePresenter">
+<View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+        fx:controller="com.dampizza.views.user.common.PizzaCreatePresenter">
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="314.0" prefWidth="335.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <HBox prefHeight="57.0" prefWidth="315.0" />
             <HBox prefHeight="37.0" prefWidth="315.0">
                <children>
-                  <TextField prefHeight="27.0" prefWidth="315.0" />
+                  <TextField fx:id="tfPizzaName" prefHeight="27.0" prefWidth="315.0" />
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="31.0" prefWidth="315.0" spacing="5.0">
@@ -43,7 +44,7 @@
    <bottom>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAddpizza" mnemonicParsing="false" text="Add pizza" />
+            <Button fx:id="btnAddpizza" onAction="#addPizza" mnemonicParsing="false" text="Add pizza" />
          </children>
       </HBox>
    </bottom>

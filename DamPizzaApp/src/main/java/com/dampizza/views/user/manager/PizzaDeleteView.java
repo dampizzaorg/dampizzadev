@@ -5,7 +5,7 @@
  */
 package com.dampizza.views.user.manager;
 
-import com.dampizza.views.user.PizzaCreateView;
+import com.dampizza.views.user.common.PizzaCreateView;
 import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;

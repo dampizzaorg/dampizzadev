@@ -1,4 +1,4 @@
-package com.dampizza.views.user;
+package com.dampizza.views.user.common;
 
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.mvc.View;

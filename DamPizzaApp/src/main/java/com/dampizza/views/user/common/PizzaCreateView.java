@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user;
+package com.dampizza.views.user.common;
 
 import com.dampizza.views.user.customer.HistoryView;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -29,7 +29,7 @@ public class PizzaCreateView {
     public View getView() {
         try {
             
-            View view = FXMLLoader.load(PizzaCreateView.class.getResource("/com/dampizza/views/user/pizza_create.fxml"));
+            View view = FXMLLoader.load(PizzaCreateView.class.getResource("pizza_create.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

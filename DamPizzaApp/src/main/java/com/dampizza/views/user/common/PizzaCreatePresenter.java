@@ -1,4 +1,4 @@
-package com.dampizza.views.user;
+package com.dampizza.views.user.common;
 
 import com.dampizza.App;
 import com.dampizza.exception.ingredient.IngredientQueryException;
@@ -141,7 +141,7 @@ public class PizzaCreatePresenter implements Initializable {
      * @param selectedIngredent the ingredient selected
      * @return true if is added, false if it is not added
      */
-    private Boolean ingredientIsSelected(IngredientDTO selectedIngredent) {
+    public Boolean ingredientIsSelected(IngredientDTO selectedIngredent) {
         Boolean isSelected = false;
         for (IngredientDTO ingredient : pizzaIngredients) {
             //check if the selected ingredient is on the pizza ingredient list
@@ -158,15 +158,11 @@ public class PizzaCreatePresenter implements Initializable {
      */
     @FXML
     private void addPizza() {
-        if (tfPizzaName.getText().trim().equals("")) {
-            Alert a = new Alert(AlertType.WARNING, "set a name of the pizza first");
-            a.showAndWait();
-        } else {
+        if (!tfPizzaName.getText().trim().equals("")) {
             try {
                 //set data
                 pizza.setName(tfPizzaName.getText());
                 pizza.setPrice(priceCalculation());
-                pizza.setUrl(tfUrl.getText());
                 pizza.setDescription("");
                 pizza.setIngredients(pizzaIngredients);
                 pizza.setCategory(1);
@@ -178,6 +174,9 @@ public class PizzaCreatePresenter implements Initializable {
             } catch (ProductQueryException ex) {
                 Logger.getLogger(PizzaCreatePresenter.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            Alert a = new Alert(AlertType.WARNING, "set a name of the pizza first");
+            a.showAndWait();
         }
 
     }
@@ -219,7 +218,7 @@ public class PizzaCreatePresenter implements Initializable {
      */
     private void chargeData() {
         try {
-            tfPizzaName.setPromptText("Pizza Name");
+            //tfPizzaName.setPromptText("Pizza Name");
             //Created pizza
             pizza = new ProductDTO();
             //ingredients of the created pizza
@@ -271,7 +270,7 @@ public class PizzaCreatePresenter implements Initializable {
      */
     private void cleanData() {
         tfPizzaName.setText("");
-        tfUrl.setText("");
-        img= new ImageView();
+        taIngredients.setText("");
+        pizzaIngredients.clear();
     }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user;
+package com.dampizza.views.user.common;
 
 import com.dampizza.App;
 import com.dampizza.exception.user.UserUpdateException;

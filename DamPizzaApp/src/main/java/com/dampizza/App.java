@@ -19,9 +19,9 @@ import com.dampizza.views.user.manager.ManagerView;
 import com.dampizza.views.user.manager.ManagerOrderView;
 import com.dampizza.views.user.manager.ManagerDealerView;
 import com.dampizza.views.user.manager.RegisterDealerView;
-import com.dampizza.views.user.ModifyPersonalInfoView;
+import com.dampizza.views.user.common.ModifyPersonalInfoView;
 import com.dampizza.views.order.OrderCreateView;
-import com.dampizza.views.user.PizzaCreateView;
+import com.dampizza.views.user.common.PizzaCreateView;
 import com.dampizza.views.user.manager.PizzaDeleteView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
@@ -111,7 +111,7 @@ public class App extends MobileApplication {
 
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
 
-        testHibernate();
+        //testHibernate();
     }
 
     @Override
