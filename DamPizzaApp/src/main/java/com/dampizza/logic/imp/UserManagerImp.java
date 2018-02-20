@@ -531,5 +531,11 @@ public class UserManagerImp implements UserManagerInterface {
         SESSION.remove("cart");
         SESSION.put("cart", new OrderDTO(getUserByUsername((String) SESSION.get("username"))));
     }
-
+    
+      /**
+     * @return the SESSION
+     */
+    public static HashMap getSESSION() {
+        return SESSION;
+    }
 }

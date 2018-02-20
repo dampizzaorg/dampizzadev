@@ -94,6 +94,10 @@ public class OrderDTO {
         this.total = new SimpleDoubleProperty(total);
     }
 
+    public OrderDTO(Long id, Date date, UserDTO userDTO, String address, List<ProductDTO> EntityToDTO, UserDTO userDTO0, Integer status) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * @return the id
      */
