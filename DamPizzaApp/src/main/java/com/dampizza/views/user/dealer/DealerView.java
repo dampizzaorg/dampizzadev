@@ -1,4 +1,4 @@
-package com.dampizza.views.user.manager;
+package com.dampizza.views.user.manager.dealer;
 
 import com.dampizza.views.login.*;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -9,11 +9,11 @@ import javafx.fxml.FXMLLoader;
  * Customer view provider (FXML Loader)
  * @author ???
  */
-public class DealerOrderView {
+public class DealerView {
 
     private final String name;
 
-    public DealerOrderView(String name) {
+    public DealerView(String name) {
         this.name = name;
     }
     
@@ -23,7 +23,7 @@ public class DealerOrderView {
      */
     public View getView() {
         try {
-            View view = FXMLLoader.load(DealerOrderView.class.getResource("dealer_order.fxml"));
+            View view = FXMLLoader.load(DealerView.class.getResource("dealer_main.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

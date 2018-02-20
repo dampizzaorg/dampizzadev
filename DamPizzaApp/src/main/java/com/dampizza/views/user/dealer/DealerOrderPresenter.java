@@ -1,4 +1,4 @@
-package com.dampizza.views.user.manager;
+package com.dampizza.views.user.dealer;
 
 import com.dampizza.App;
 import static com.dampizza.App.DEALER_VIEW;
