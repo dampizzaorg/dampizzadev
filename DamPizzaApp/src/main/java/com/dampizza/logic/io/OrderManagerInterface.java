@@ -40,7 +40,7 @@ public interface OrderManagerInterface {
     public Integer updateStatus(Long id, Integer status) throws OrderUpdateException, OrderQueryException;
     
     /**
-     * 
+     * Update dealer
      * @param id order id
      * @param dealerId dealer id
      * @return 1 success, 2 order not found, 0 error.
