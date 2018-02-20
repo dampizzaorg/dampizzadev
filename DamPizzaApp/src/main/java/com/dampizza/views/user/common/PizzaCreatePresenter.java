@@ -1,6 +1,7 @@
 package com.dampizza.views.user.common;
 
 import com.dampizza.App;
+import com.dampizza.cfg.AppConstants;
 import com.dampizza.exception.ingredient.IngredientQueryException;
 import com.dampizza.exception.product.ProductCreateException;
 import com.dampizza.exception.product.ProductQueryException;
@@ -166,6 +167,10 @@ public class PizzaCreatePresenter implements Initializable {
                 pizza.setDescription("");
                 pizza.setIngredients(pizzaIngredients);
                 pizza.setCategory(1);
+                //if the user is a customer set userID 
+                if(!LogicFactory.getUserManager().getSession().get("type").equals(AppConstants.USER_MANAGER)){
+                    pizza.setUserId((Long) LogicFactory.getUserManager().getSession().get("id"));
+                }
                 System.out.println(pizza.getName());
                 LogicFactory.getProductManager().createProduct(pizza);
                 cleanData();

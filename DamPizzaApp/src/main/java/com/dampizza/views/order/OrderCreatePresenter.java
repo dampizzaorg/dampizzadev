@@ -10,10 +10,12 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.dampizza.App;
 import com.dampizza.cfg.AppConstants;
 import com.dampizza.exception.product.ProductQueryException;
+import com.dampizza.logic.dto.IngredientDTO;
 import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.imp.ProductManagerImp;
 import com.dampizza.util.LogicFactory;
+import com.gluonhq.charm.glisten.control.Alert;
 import com.gluonhq.charm.glisten.control.CharmListCell;
 import com.gluonhq.charm.glisten.control.CharmListView;
 import com.gluonhq.charm.glisten.control.ListTile;
@@ -26,6 +28,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 
 /**
@@ -205,8 +208,34 @@ public class OrderCreatePresenter {
      */
     @FXML
     public void btnDetailsAction(){
-        new Toast("Mostrar detalles del producto.").show();
-        // TODO SHOW PRODUCT DETAILS (Dialog?)
+        //get the selected product
+        ProductDTO selectedProduct=null;
+        if(tabClassic.isSelected()){
+            selectedProduct = lvClassic.getSelectedItem();
+        }else if(tabDrinks.isSelected()){
+            selectedProduct = lvDrinks.getSelectedItem();
+        }else if(tabCustom.isSelected()){
+            selectedProduct = lvCustom.getSelectedItem();
+        }
+        //Create an alert 
+        Alert a= new Alert(javafx.scene.control.Alert.AlertType.NONE);
+        //create a TextArea and add the data of the selected item
+        TextArea ta= new TextArea(selectedProduct.getName()+"\n\n");
+        ta.appendText("Precio: "+selectedProduct.getPrice()+"€\n");
+        //if has ingfredient add the ingredient data
+        if(selectedProduct.getIngredients().size()!=0){
+            ta.appendText("Ingredients:\n");
+            for (IngredientDTO ingredient : selectedProduct.getIngredients()) {
+                ta.appendText("\t-"+ingredient.getName()+"  "+ingredient.getPrice()+"€\n");
+                
+            }
+        }
+        //set the TextArea no editable
+        ta.setEditable(false);
+        //add to the alert the TextArea
+        a.setContent(ta);
+        //show the textArea
+        a.showAndWait();
     }
 
 }
