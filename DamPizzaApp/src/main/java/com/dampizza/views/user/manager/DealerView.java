@@ -1,4 +1,4 @@
-package com.dampizza.views.user.dealer;
+package com.dampizza.views.user.manager;
 
 import com.dampizza.views.user.*;
 import com.dampizza.views.login.*;
