@@ -83,7 +83,7 @@ public class OrderDTO {
         this.total = new SimpleDoubleProperty();
     }
     
-    public OrderDTO(Long id, Date date, UserDTO customer, String address, List<ProductDTO> products, UserDTO dealer, Integer status) {
+    public OrderDTO(Long id, Date date, UserDTO customer, String address, List<ProductDTO> products, UserDTO dealer, Integer status, Double total) {
         this.id = new SimpleLongProperty();
         this.date = new SimpleObjectProperty<Date>(date);
         this.address = new SimpleStringProperty(address);
@@ -91,7 +91,7 @@ public class OrderDTO {
         this.customer = new SimpleObjectProperty<UserDTO>(customer);
         this.dealer = new SimpleObjectProperty<UserDTO>(dealer);
         this.status = new SimpleIntegerProperty(status);
-        this.total = new SimpleDoubleProperty();
+        this.total = new SimpleDoubleProperty(total);
     }
 
     /**
@@ -195,7 +195,7 @@ public class OrderDTO {
     public String toString(){
         return "id: "+this.getId()+", date: "+this.getDate()+", address: "+this.getAddress()+
                 ", products: "+this.getProducts().toString()+", customer: "+this.getCustomer()+
-                ", dealer: "+this.getDealer()+", status: "+this.getStatus();
+                ", dealer: "+this.getDealer()+", status: "+this.getStatus()+", total: "+this.getTotal();
     }
 
     /**

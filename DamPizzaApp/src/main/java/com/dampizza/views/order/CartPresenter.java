@@ -66,7 +66,7 @@ public class CartPresenter {
 
                 lvCart.setCellFactory(p -> new PizzaCLV());
                 cart = (OrderDTO) LogicFactory.getUserManager().getSession().get("cart");
-               
+
                 initCartView();
                 addListeners();
             }
@@ -81,18 +81,19 @@ public class CartPresenter {
 
     @FXML
     public void btnConfirmAction() throws OrderCreateException, OrderQueryException, UserQueryException {
-        Integer res = LogicFactory.getOrderManager().createOrder(cart);
-        
-        if(res==1){
-            LogicFactory.getUserManager().resetCart();
-            cart = (OrderDTO) LogicFactory.getUserManager().getSession().get("cart");
-            initCartView();
-            new Toast("Pedido realizado exitosamente").show();
-        }else{
-            new Toast("Ha ocurrido un error").show();
-            // TODO show error msg
-        }
+        if (lvCart.itemsProperty().size()>0) {
+            Integer res = LogicFactory.getOrderManager().createOrder(cart);
 
+            if (res == 1) {
+                LogicFactory.getUserManager().resetCart();
+                cart = (OrderDTO) LogicFactory.getUserManager().getSession().get("cart");
+                initCartView();
+                new Toast("Pedido realizado exitosamente").show();
+            } else {
+                new Toast("Ha ocurrido un error").show();
+                // TODO show error msg
+            }
+        }
     }
 
     @FXML
@@ -104,7 +105,7 @@ public class CartPresenter {
             initCartView();
             lvCart.refresh();
             new Toast("Producto: " + selectedProduct.getName() + " eliminado.").show();
-            
+
         } else {
             new Toast("Debes seleccionar un producto primero.").show();
         }
@@ -115,9 +116,9 @@ public class CartPresenter {
     public void addListeners() {
 
         // Disable buttons if tv is empty (Using bindings)
-        //btnConfirm.disableProperty().bind(lvCart.itemsProperty().emptyProperty());
+        btnConfirm.disableProperty().bind(lvCart.itemsProperty().emptyProperty());
         //btnDelete.disableProperty().bind(lvCart.itemsProperty().emptyProperty());
-
+        
         // Disable/Enable btnDelete on tableview selection change
         lvCart.selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {

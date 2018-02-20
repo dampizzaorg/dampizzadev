@@ -327,7 +327,10 @@ public class ProductManagerImp implements ProductManagerInterface {
              * ingredientDTO(ingredients paramater) = tomate queso.
              * filteredList = tomate, queso.
                  */
-                filteredProducts = productEntities.stream().filter(i -> productIds.contains(i.getId())).collect(Collectors.toList());
+                if(productEntities!=null){
+                    filteredProducts = productEntities.stream().filter(i -> productIds.contains(i.getId())).collect(Collectors.toList());
+                }
+                
 
             } catch (HibernateException e) {
                 logger.log(Level.SEVERE, "An error has ocurred while getting product entities from dtos.");

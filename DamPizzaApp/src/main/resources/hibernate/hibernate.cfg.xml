@@ -46,7 +46,7 @@ Contributor(s):
     <!--        LOCALHOST-->
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">root</property>
+    <property name="hibernate.connection.password">ubuntu</property>
     <!--        CLASSROOM SERVER-->
     <!--        <property name="hibernate.connection.url">jdbc:mysql://10.22.82.146:3306/dampizzadb?zeroDateTimeBehavior=convertToNull</property>
         <property name="hibernate.connection.username">iker2</property>

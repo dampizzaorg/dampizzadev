@@ -13,6 +13,7 @@ import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
 import com.dampizza.exception.order.OrderUpdateException;
 import com.dampizza.exception.user.UserQueryException;
+import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.imp.OrderManagerImp;
@@ -34,71 +35,65 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 
-
 /**
  *
  * @author 2dam
  */
 public class ManagerOrderPresenter {
-    
+
     private ObservableList<ProductDTO> oblItems;
-    
+    private OrderDTO order;
+
     @FXML
     private View primary;
-    
+
     @FXML
     private TextArea taOrder;
-    
+
     @FXML
-    private Button btnSelect,btnConfirm;
-    
+    private Button btnSelect, btnConfirm;
+
     @FXML
     private ComboBox<String> cbDealer;
-    
+
     @FXML
     private CharmListView<ProductDTO, ? extends Comparable> lvOrder;
-    
-     public void initialize() {
-        
-      primary.showingProperty().addListener((obs, oldValue, newValue) -> {
+
+    public void initialize() {
+
+        primary.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
-                
+
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                
+
                 appBar.setVisible(true);
-                
-                appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e -> 
-                        back()));
-                appBar.setTitleText("Manager order"); 
-                
+
+                appBar.getActionItems().add(MaterialDesignIcon.ARROW_BACK.button(e
+                        -> back()));
+                appBar.setTitleText("Manager order");
+
                 taOrder.setEditable(false);
 //                taOrder.setText(App.getCurrentOrder().getId()+"\n"+  App.getCurrentOrder().getDate()+"\n"+ App.getCurrentOrder().getAddress());
-                
+
 //                oblItems = FXCollections.observableArrayList(App.getCurrentOrder().getProducts());
                 lvOrder.setItems(oblItems);
                 lvOrder.setCellFactory(p -> new productList());
-                
-                
-                
+
                 //Se necesita un metodo que devuelva una List de string nombres + apellido de una lista de UserDTO
                 try {
-                    List <UserDTO> e= new UserManagerImp().getAllUsers();
-                    cbDealer.setItems(FXCollections.observableArrayList(e.get(0).getName().toString()));   
+                    List<UserDTO> e = new UserManagerImp().getAllUsers();
+                    cbDealer.setItems(FXCollections.observableArrayList(e.get(0).getName().toString()));
                 } catch (UserQueryException ex) {
                     Logger.getLogger(ManagerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                
             }
         });
-      
-      
-      
-      
-      
+
     }
-     @FXML
-     public void confirm(){
+
+    @FXML
+    public void confirm() {
 //        try {
 //            //Llamada la BD para actualizar el estado del pedido
 //            //App.getCurrentOrder().setDealer(dealer);
@@ -107,12 +102,28 @@ public class ManagerOrderPresenter {
 //        } catch (OrderUpdateException ex) {
 //            Logger.getLogger(ManagerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-     }
-     
-     public void back(){
+    }
+
+    public void back() {
         //Metodo que te lleva a la ventana anterior
         NavigationDrawer.ViewItem Item = new NavigationDrawer.ViewItem("Select", MaterialDesignIcon.HOME.graphic(), MANAGER_VIEW, ViewStackPolicy.SKIP);
         DrawerManager drawer = new DrawerManager();
         drawer.updateView(Item);
-     }
+    }
+
+    /**
+     * @return the order
+     */
+    public OrderDTO getOrder() {
+        return order;
+    }
+
+    /**
+     * @param order the order to set
+     */
+    public void setOrder(OrderDTO order) {
+        this.order = order;
+    }
+    
+    
 }

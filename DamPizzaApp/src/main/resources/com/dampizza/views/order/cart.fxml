@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.order.CartPresenter">
+<View fx:id="primary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dampizza.views.order.CartPresenter">
    <top>
       <VBox alignment="TOP_CENTER" prefHeight="651.0" prefWidth="350.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane hbarPolicy="NEVER" maxHeight="480.0" minHeight="480.0" prefHeight="480.0" prefWidth="350.0">
+            <ScrollPane hbarPolicy="NEVER" maxHeight="470.0" minHeight="470.0" prefHeight="470.0" prefWidth="350.0">
                <content>
-                  <CharmListView fx:id="lvCart" maxHeight="540.0" maxWidth="340.0" minWidth="340.0" prefHeight="540.0" prefWidth="340.0" />
+                  <CharmListView fx:id="lvCart" maxWidth="340.0" minWidth="340.0" prefWidth="340.0" />
                </content>
             </ScrollPane>
             <VBox prefHeight="200.0" prefWidth="100.0">
@@ -31,13 +31,16 @@
                         <Label fx:id="lblTotal" text="0 €" />
                      </children>
                      <padding>
-                        <Insets right="12.0" top="4.0" />
+                        <Insets right="20.0" top="4.0" />
                      </padding>
                   </HBox>
                   <HBox alignment="CENTER" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="350.0" spacing="10.0">
                      <children>
                         <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#btnConfirmAction" text="%dampizza.views.order.cart.confirm" />
-                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#btnDeleteAction" text="%dampizza.views.order.cart.delete" />
+                        <Button fx:id="btnDelete" disable="true" mnemonicParsing="false" onAction="#btnDeleteAction" text="%dampizza.views.order.cart.delete">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin></Button>
                      </children>
                   </HBox>
                </children>

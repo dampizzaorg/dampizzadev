@@ -183,6 +183,21 @@ public class OrderEntity implements Serializable{
     public void setDealer(UserEntity dealer) {
         this.dealer = dealer;
     }
+
+    /**
+     * @return the total
+     */
+    public Double getTotal() {
+        return total;
+    }
+
+    /**
+     * @param total the total to set
+     */
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+    
     
     
     

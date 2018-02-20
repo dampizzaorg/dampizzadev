@@ -155,13 +155,13 @@ public class UserManagerImp implements UserManagerInterface {
                 // Update user in db
                 session.update(userToUpdate);
                 res = 1;
-                
+
                 // Update session
                 SESSION.replace("name", user.getName());
                 SESSION.replace("surnames", user.getSurnames());
                 SESSION.replace("address", user.getAddress());
                 SESSION.replace("email", user.getEmail());
-                
+
             } else {
                 res = 2;
             }
@@ -429,19 +429,24 @@ public class UserManagerImp implements UserManagerInterface {
     public UserEntity getUserEntityByUsername(String username) throws UserQueryException {
         logger.log(Level.INFO, "Getting user entity by username<{0}>", username);
         UserEntity userResult = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        String hql = "from UserEntity where credential.username = :username";
+        
+        if (username != null) {
+            
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "from UserEntity where credential.username = :username";
 
-        try {
-            Query query = session.createQuery(hql);
-            query.setParameter("username", username);
-            userResult = (UserEntity) query.uniqueResult();
-        } catch (HibernateException e) {
-            logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", username);
-            throw new UserQueryException("Error on getUserEntityByUsername(): \n" + e.getMessage());
-        } finally {
-            session.close();
+            try {
+                Query query = session.createQuery(hql);
+                query.setParameter("username", username);
+                userResult = (UserEntity) query.uniqueResult();
+            } catch (HibernateException e) {
+                logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", username);
+                throw new UserQueryException("Error on getUserEntityByUsername(): \n" + e.getMessage());
+            } finally {
+                session.close();
+            }
         }
+
         return userResult;
     }
 
@@ -477,12 +482,8 @@ public class UserManagerImp implements UserManagerInterface {
 
         if (id != 0) {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "from UserEntity where id = :id";
-
             try {
-                Query query = session.createQuery(hql);
-                query.setParameter("id", id);
-                userResult = (UserEntity) query.uniqueResult();
+                userResult = (UserEntity) session.get(UserEntity.class, id);
             } catch (HibernateException e) {
                 logger.log(Level.SEVERE, "An error has ocurred while getting user <{0}>:", String.valueOf(id));
                 throw new UserQueryException("Error on getUserEntityByUsername(): \n" + e.getMessage());
@@ -526,9 +527,9 @@ public class UserManagerImp implements UserManagerInterface {
     }
 
     @Override
-    public void resetCart() throws UserQueryException{
+    public void resetCart() throws UserQueryException {
         SESSION.remove("cart");
-        SESSION.put("cart", new OrderDTO(getUserByUsername((String)SESSION.get("username"))));
+        SESSION.put("cart", new OrderDTO(getUserByUsername((String) SESSION.get("username"))));
     }
 
 }

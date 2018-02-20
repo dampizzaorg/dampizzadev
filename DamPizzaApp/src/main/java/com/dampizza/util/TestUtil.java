@@ -170,7 +170,7 @@ public class TestUtil {
 
             ingredientProduct.add(new IngredientDTO(new Long(1), "Tomate", 1.50));
             ingredientProduct.add(new IngredientDTO(new Long(7), "Queso", 1.50));
-            pmi.createProduct(new ProductDTO("Margarita", "", 6.00, ingredientProduct, new Long(7)));
+            pmi.createProduct(new ProductDTO("Margarita", "", 6.00, ingredientProduct, ""));
 
             ingredientProduct.add(new IngredientDTO(new Long(4), "Pimiento verde", 1.50));
             ingredientProduct.add(new IngredientDTO(new Long(10), "Champiñones", 1.50));

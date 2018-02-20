@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dampizza.views.user.manager.dealer;
-
 import com.dampizza.views.user.manager.*;
 import com.dampizza.App;
 import static com.dampizza.App.DEALER_VIEW;
 
 import com.dampizza.DrawerManager;
 import com.dampizza.cfg.AppConstants;
+import com.dampizza.exception.order.OrderQueryException;
 import com.dampizza.exception.order.OrderUpdateException;
 import com.dampizza.logic.dto.ProductDTO;
 import com.dampizza.logic.imp.OrderManagerImp;
@@ -89,6 +88,8 @@ public class DealerOrderPresenter {
              MobileApplication.getInstance().showMessage("Order updated");
             back();
         } catch (OrderUpdateException ex) {
+            Logger.getLogger(DealerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (OrderQueryException ex) {
             Logger.getLogger(DealerOrderPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
      }

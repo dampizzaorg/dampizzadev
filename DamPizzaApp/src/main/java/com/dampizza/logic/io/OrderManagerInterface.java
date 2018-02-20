@@ -33,7 +33,15 @@ public interface OrderManagerInterface {
      * @return Success: 1, Order not found:2, Error:0
      * @throws OrderUpdateException 
      */
-    public Integer updateOrder(OrderDTO order) throws OrderUpdateException;
+    public Integer updateOrder(OrderDTO order) throws OrderUpdateException, OrderQueryException;
+    
+    /**
+     * Update order status
+     * @param order order to update
+     * @return Success: 1, Order not found:2, Error:0
+     * @throws OrderUpdateException 
+     */
+    public Integer updateStatus(Long id, Integer status) throws OrderUpdateException, OrderQueryException;
     
     /**
      * deleter order entity
@@ -49,6 +57,14 @@ public interface OrderManagerInterface {
      * @throws OrderQueryException 
      */
     public List<OrderDTO> getAllOrders() throws OrderQueryException;
+    
+    /**
+     * Get orders by status.
+     * @param status order status
+     * @return OrderDTO List
+     * @throws OrderQueryException 
+     */
+    public List<OrderDTO> getOrdersByStatus(Integer status) throws OrderQueryException;
     
     /**
      * Get order entity by id

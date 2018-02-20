@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.dampizza.views.custom;
 
 import com.gluonhq.charm.glisten.control.CharmListCell;
@@ -12,6 +7,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * 
+ * @author Jon Xabier 
+ * @author Carlos Garcia
+ */
 public class PizzaCLV extends CharmListCell<ProductDTO> {
 
     private final ListTile tile;

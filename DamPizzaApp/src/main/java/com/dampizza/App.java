@@ -1,5 +1,8 @@
 package com.dampizza;
 
+import com.dampizza.cfg.AppConstants;
+import com.dampizza.exception.order.OrderQueryException;
+import com.dampizza.exception.order.OrderUpdateException;
 import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.LogicFactory;
@@ -21,9 +24,11 @@ import com.dampizza.views.order.OrderCreateView;
 import com.dampizza.views.user.manager.PizzaCreateView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
+import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -38,21 +43,18 @@ import javafx.stage.Stage;
  * @author Carlos Santos
  */
 public class App extends MobileApplication {
-    
-    
+
     private static final Logger logger = Logger.getLogger(App.class.getName());
     public static Locale locale;
     private static ResourceBundle bundle;
 
-    
     /* TODO research about java session managament for mobile apps.
      * Change implementation?
-    */
+     */
     // Remove after changing to hashmap session
     private static UserEntity userLoggedIn = null;
     private static OrderDTO currentOrder = null;
 
-   
     private static TestUtil test = null;
 
     public static final String LOGIN_VIEW = HOME_VIEW;
@@ -69,7 +71,7 @@ public class App extends MobileApplication {
     public static final String HISTORY_VIEW = "History view";
     public static final String MENU_LAYER = "Side Menu";
     public static final String PIZZA_CREATE_VIEW = "Create pizza view";
-    
+
     /*
      * ORDER OPERATIONS VIEWS (Create order, order detail)
      * These views are common for all user types.
@@ -77,28 +79,29 @@ public class App extends MobileApplication {
     public static final String ORDER_CREATE_VIEW = "Create order view";
     public static final String ORDER_DETAIL_VIEW = "Order details view";
     public static final String CART_VIEW = "Shopping cart view";
-    
-    
-    
-    
+
     @Override
     public void init() {
         // Init ResourceBundle
         //locale = new Locale("es");
         bundle = ResourceBundle.getBundle("properties.MessageString");
-        
-        // Implementation example
-        //App.bundle.getString("dampizza.views.login.btnlogin")
 
+        // Implementation example
+        //App.getBundle().getString("dampizza.views.login.btnlogin")
         logger.info("Init App");
         /* ADD VIEWS TO VIEW FACTORY */
+        addViewFactory(MANAGER_ORDER_VIEW, () -> {
+            ManagerOrderView managerOrderView = new ManagerOrderView(MANAGER_ORDER_VIEW);
+            return (View) managerOrderView.getView();
+        });
+
         addViewFactory(LOGIN_VIEW, () -> new LoginView(LOGIN_VIEW).getView());
         addViewFactory(SIGNUP_VIEW, () -> new SignupView(SIGNUP_VIEW).getView());
         addViewFactory(RECOVER_VIEW, () -> new RecoverView(RECOVER_VIEW).getView());
         addViewFactory(PROFILE_VIEW, () -> new ModifyPersonalInfoView(PROFILE_VIEW).getView());
         addViewFactory(CUSTOMER_VIEW, () -> new CustomerView(CUSTOMER_VIEW).getView());
         addViewFactory(MANAGER_VIEW, () -> new ManagerView(MANAGER_VIEW).getView());
-        addViewFactory(MANAGER_ORDER_VIEW, () -> new ManagerOrderView(MANAGER_ORDER_VIEW).getView());
+        //addViewFactory(MANAGER_ORDER_VIEW, () -> new ManagerOrderView(MANAGER_ORDER_VIEW).getView());
         addViewFactory(MANAGER_DEALER_VIEW, () -> new ManagerDealerView(MANAGER_DEALER_VIEW).getView());
         addViewFactory(MANAGER_ADD_DEALER_VIEW, () -> new RegisterDealerView(MANAGER_ADD_DEALER_VIEW).getView());
         addViewFactory(DEALER_VIEW, () -> new DealerView(DEALER_VIEW).getView());
@@ -107,11 +110,10 @@ public class App extends MobileApplication {
         addViewFactory(HISTORY_VIEW, () -> new HistoryView(HISTORY_VIEW).getView());
         addViewFactory(PIZZA_CREATE_VIEW, () -> new PizzaCreateView(PIZZA_CREATE_VIEW).getView());
         addViewFactory(CART_VIEW, () -> new CartView(CART_VIEW).getView());
-        
+
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
 
         //testHibernate();
-
     }
 
     @Override
@@ -127,14 +129,12 @@ public class App extends MobileApplication {
         logger.info("Testing database operations");
         test = new TestUtil();
 
-//        // TEST USER
-
-//        test.testCreateUsers();
-//        test.testUpdateUsers();
-//        test.testDeleteUser();
-//        test.testGetUsers();
-          //test.testGetUsersByType();
-
+        // TEST USER
+        test.testCreateUsers();
+        test.testUpdateUsers();
+        test.testDeleteUser();
+        test.testGetUsers();
+        test.testGetUsersByType();
 
         // TEST INGREDIENT
         test.testCreateIngredients();
@@ -147,12 +147,11 @@ public class App extends MobileApplication {
         test.testUpdateProducts();
         test.testDeleteProduct();
         test.testGetProducts();
-        
+
         // TEST ORDER
         test.testCreateOrder();
         test.testGetOrders();
-        
-        
+
     }
 
     /**
@@ -176,7 +175,4 @@ public class App extends MobileApplication {
         currentOrder = aCurrentOrder;
     }
 
-    
-    
-    
 }

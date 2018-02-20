@@ -11,16 +11,19 @@ import com.dampizza.exception.order.OrderQueryException;
 import com.dampizza.exception.order.OrderUpdateException;
 import com.dampizza.exception.product.ProductQueryException;
 import com.dampizza.exception.user.UserQueryException;
+import com.dampizza.exception.user.UserUpdateException;
 import com.dampizza.logic.dto.OrderDTO;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.io.OrderManagerInterface;
 import com.dampizza.model.entity.OrderEntity;
+import com.dampizza.model.entity.UserEntity;
 import com.dampizza.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -37,18 +40,23 @@ public class OrderManagerImp implements OrderManagerInterface {
     @Override
     public Integer createOrder(OrderDTO order) throws OrderCreateException, OrderQueryException {
         Integer res = 0;
-
-        // If user is not in the database already
-      //  logger.log(Level.INFO, "Creating order at {0} for customer {1}", new Object[]{order.getDate(), order.getCustomer().getUsername()});
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
 
         try {
             tx = session.beginTransaction();
-
+            
+            System.out.println(order.toString());
+            UserEntity dealer = order.getDealer() != null ? 
+                    umi.getUserEntityByUsername(order.getDealer().getUsername()) :
+                    null;
+            
+            
             // Creating order
             OrderEntity orderEntity = new OrderEntity(umi.getUserEntityByUsername(order.getCustomer().getUsername()),
-                    pmi.dtoToEntity(order.getProducts()), umi.getUserEntityByUsername(order.getDealer().getUsername()), order.getTotal());
+                    pmi.dtoToEntity(order.getProducts()), 
+                    dealer, 
+                    order.getTotal());
 
             Long userId = (Long) session.save(orderEntity);
             if (userId != null) {
@@ -74,7 +82,7 @@ public class OrderManagerImp implements OrderManagerInterface {
     }
 
     @Override
-    public Integer updateOrder(OrderDTO order) throws OrderUpdateException {
+    public Integer updateOrder(OrderDTO order) throws OrderUpdateException, OrderQueryException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -99,7 +107,7 @@ public class OrderManagerImp implements OrderManagerInterface {
                             o.getAddress(), pmi.EntityToDTO(o.getProducts()), 
                     new UserDTO(o.getDealer().getCredential().getUsername(), o.getDealer().getName(),
                                 o.getDealer().getSurnames(), o.getDealer().getEmail(), 
-                                o.getDealer().getAddress()), o.getStatus())));
+                                o.getDealer().getAddress()), o.getStatus(), o.getTotal())));
         } catch (HibernateException e) {
             logger.severe("An error has ocurred while getting orders:");
             throw new OrderQueryException("Error on getAllOrders(): \n" + e.getMessage());
@@ -112,6 +120,43 @@ public class OrderManagerImp implements OrderManagerInterface {
 
     @Override
     public OrderDTO getOrderById(Long id) throws OrderQueryException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Integer updateStatus(Long id, Integer status) throws OrderUpdateException, OrderQueryException {
+        logger.log(Level.INFO, "Updating order <{0}> status to <{1}>", new Object[]{id, status});
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        Integer res = 0;
+
+        try {
+            tx = session.beginTransaction();
+            OrderEntity orderToUpdate = (OrderEntity)session.get(OrderEntity.class, id);
+            
+            if(orderToUpdate!=null){
+                orderToUpdate.setStatus(status);
+                session.update(orderToUpdate);    
+                res=1;
+            } else {
+                res = 2;
+            }
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            logger.log(Level.SEVERE, "An error has ocurred while updating order<{0}>:", id);
+            throw new OrderUpdateException("Error on updateStatus(): \n" + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return res;
+    }
+
+    @Override
+    public List<OrderDTO> getOrdersByStatus(Integer status) throws OrderQueryException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

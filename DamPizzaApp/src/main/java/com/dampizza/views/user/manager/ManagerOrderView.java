@@ -17,7 +17,7 @@ public class ManagerOrderView {
     
 
     private final String name;
-
+  
     public ManagerOrderView(String name) {
         this.name = name;
     }
