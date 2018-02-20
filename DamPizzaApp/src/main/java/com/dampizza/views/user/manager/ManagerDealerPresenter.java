@@ -15,6 +15,7 @@ import static com.dampizza.App.ORDER_CREATE_VIEW;
 import com.dampizza.DrawerManager;
 import com.dampizza.cfg.AppConstants;
 import com.dampizza.exception.order.OrderUpdateException;
+import com.dampizza.exception.user.UserDeleteException;
 import com.dampizza.exception.user.UserQueryException;
 import com.dampizza.logic.dto.UserDTO;
 import com.dampizza.logic.dto.ProductDTO;
@@ -105,7 +106,7 @@ public class ManagerDealerPresenter {
      }
      
      @FXML
-     public void handlerDeleteDealer(){
+     public void handlerDeleteDealer() throws UserDeleteException{
         Alert alert;
         UserDTO user = new UserDTO();
         user = lvDealers.getSelectedItem();         
@@ -114,7 +115,7 @@ public class ManagerDealerPresenter {
             alert = new Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the deliver man?");
             Optional<ButtonType> result = alert.showAndWait();
             if (!result.get().getButtonData().isCancelButton()){    
-                //Borrar dealer/Cambiar estado a inactivo
+                LogicFactory.getUserManager().deleteUser(user.getId());
             }
         }else{
             alert= new Alert(javafx.scene.control.Alert.AlertType.INFORMATION, "Please select a dealer first");

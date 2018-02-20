@@ -96,7 +96,7 @@ public class DrawerManager {
                 e -> MobileApplication.getInstance().hideLayer(MENU_LAYER));
 
         MobileApplication.getInstance().viewProperty().addListener((obs, oldView, newView) -> updateItem(newView.getName()));
-        updateItem(LOGIN_VIEW);
+        //updateItem(LOGIN_VIEW);
     }
 
     /**
