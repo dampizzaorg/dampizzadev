@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.dampizza.views.user;
 
 import com.dampizza.App;
 import com.dampizza.exception.ingredient.IngredientQueryException;
+import com.dampizza.exception.product.ProductCreateException;
+import com.dampizza.exception.product.ProductQueryException;
 import com.dampizza.logic.dto.IngredientDTO;
 import com.dampizza.logic.dto.ProductDTO;
-import com.dampizza.logic.imp.IngredientManagerImp;
 import com.dampizza.logic.io.IngredientManagerInterface;
+import com.dampizza.util.LogicFactory;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.Alert;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -36,10 +33,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageViewBuilder;
 
 /**
  *
- * @author 2dam
+ * @author Isma
  */
 public class PizzaCreatePresenter implements Initializable {
 
@@ -55,7 +53,7 @@ public class PizzaCreatePresenter implements Initializable {
     @FXML
     private Button btOk;
     @FXML
-    private ComboBox<String> cbInredients;
+    private ComboBox<IngredientDTO> cbIngredients;
     @FXML
     private Label lbIngredients;
     @FXML
@@ -70,7 +68,6 @@ public class PizzaCreatePresenter implements Initializable {
     private ProductDTO pizza;
     private List<IngredientDTO> pizzaIngredients;
     private Alert alert;
-    private IngredientManagerInterface ingredientManager;
     private ObservableList<IngredientDTO> availeableIngredients;
 
     @Override
@@ -97,15 +94,16 @@ public class PizzaCreatePresenter implements Initializable {
      * Method to charge one image by URL
      */
     @FXML
-    private void ChargeImage() {
+    private void chargeImage() {
         //take the url of the image
         String url = tfUrl.getText();
         try {
             //set the image on the imageview
-            img = new ImageView(new Image(url, 50, 50, true, true));
+            img= new ImageView();
+            img.setImage(new Image(url));
         } catch (Exception e) {
             //The URL is null or is invalid
-            img = new ImageView(new Image("/img/pizza_avatar", 50, 50, true, true));
+            img.setImage(new Image("/img/pizza_avatar_128.png"));
         }
 
     }
@@ -116,8 +114,8 @@ public class PizzaCreatePresenter implements Initializable {
     @FXML
     private void addIngredient() {
         //if selected is not null
-        if (cbInredients.getSelectionModel().getSelectedIndex() != -1) {
-            Integer selectedIndex = cbInredients.getSelectionModel().getSelectedIndex();
+        if (cbIngredients.getSelectionModel().getSelectedIndex() != -1) {
+            Integer selectedIndex = cbIngredients.getSelectionModel().getSelectedIndex();
             IngredientDTO selectedIngredient = availeableIngredients.get(selectedIndex);
             //Check if the ingredient is already on the pizza ingredient list
             Boolean isSelected = ingredientIsSelected(selectedIngredient);
@@ -133,6 +131,7 @@ public class PizzaCreatePresenter implements Initializable {
             //if selected is  null            
         } else {
             alert = new Alert(AlertType.WARNING, "Select one item first");
+            alert.showAndWait();
         }
     }
 
@@ -159,10 +158,27 @@ public class PizzaCreatePresenter implements Initializable {
      */
     @FXML
     private void addPizza() {
-        pizza.setName(tfPizzaName.getText());
-        pizza.setPrice(priceCalculation());
-        //pizza.setDescription(description);
-        pizza.setIngredients(pizzaIngredients);
+        if (tfPizzaName.getText().trim().equals("")) {
+            Alert a = new Alert(AlertType.WARNING, "set a name of the pizza first");
+            a.showAndWait();
+        } else {
+            try {
+                //set data
+                pizza.setName(tfPizzaName.getText());
+                pizza.setPrice(priceCalculation());
+                pizza.setUrl(tfUrl.getText());
+                pizza.setDescription("");
+                pizza.setIngredients(pizzaIngredients);
+                pizza.setCategory(1);
+                System.out.println(pizza.getName());
+                LogicFactory.getProductManager().createProduct(pizza);
+                cleanData();
+            } catch (ProductCreateException ex) {
+                Logger.getLogger(PizzaCreatePresenter.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ProductQueryException ex) {
+                Logger.getLogger(PizzaCreatePresenter.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     }
 
@@ -172,8 +188,8 @@ public class PizzaCreatePresenter implements Initializable {
     @FXML
     private void deleteIngredient() {
         //if selected is not null
-        if (cbInredients.getSelectionModel().getSelectedIndex() != -1) {
-            Integer selectedIndex = cbInredients.getSelectionModel().getSelectedIndex();
+        if (cbIngredients.getSelectionModel().getSelectedIndex() != -1) {
+            Integer selectedIndex = cbIngredients.getSelectionModel().getSelectedIndex();
             IngredientDTO selectedIngredient = availeableIngredients.get(selectedIndex);
             //Check if the ingredient is already on the pizza ingredient list
             Boolean isSelected = ingredientIsSelected(selectedIngredient);
@@ -208,14 +224,10 @@ public class PizzaCreatePresenter implements Initializable {
             pizza = new ProductDTO();
             //ingredients of the created pizza
             pizzaIngredients = new ArrayList<>();
-            //ingredient manager
-            ingredientManager = new IngredientManagerImp();
             //Adding to the list all availeable ingredients
-            availeableIngredients = FXCollections.observableList(ingredientManager.getAllIngredients());
-            //Add the String of each ingredient to the list
-            ObservableList<String> allIngredients = FXCollections.observableList(ingredientManager.getAllIngredientsToString());
+            availeableIngredients = FXCollections.observableList(LogicFactory.getIngredientManager().getAllIngredients());
             //Adding all ingredients to the comboBox
-            cbInredients.setItems(allIngredients);
+            cbIngredients.setItems(availeableIngredients);
         } catch (IngredientQueryException ex) {
             Logger.getLogger(PizzaCreatePresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -235,22 +247,31 @@ public class PizzaCreatePresenter implements Initializable {
             taIngredients.appendText("-" + ingredient.getName() + "\n");
         }
     }
+
     /**
      * Method to calculate the price of the created pizza
-     * @return 
+     *
+     * @return
      */
     private Double priceCalculation() {
         //by default all pizzas has the price of 15 Euros
-        Double price = 15.00;
+        Double price = 6.00;
         //If the pizza has more than 5 ingredients
         if (pizzaIngredients.size() > 5) {
             //start adding the price of the ingredients, starting on the 6th ingredient
             for (int i = 5; i < pizzaIngredients.size(); i++) {
-                price=price+pizzaIngredients.get(i).getPrice();
+                price = price + pizzaIngredients.get(i).getPrice();
             }
         }
         return price;
-        
-    }
 
+    }
+    /**
+     * Method to clean all the data, after make the pizza
+     */
+    private void cleanData() {
+        tfPizzaName.setText("");
+        tfUrl.setText("");
+        img= new ImageView();
+    }
 }
